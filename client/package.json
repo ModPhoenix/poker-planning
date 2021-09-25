@@ -1,0 +1,67 @@
+{
+  "name": "poker-planning",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=7.0.0"
+  },
+  "dependencies": {
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-scripts": "4.0.3",
+    "typescript": "4.4.3",
+    "web-vitals": "2.1.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "5.14.1",
+    "@testing-library/react": "12.1.0",
+    "@testing-library/user-event": "13.2.1",
+    "@types/jest": "27.0.2",
+    "@types/node": "16.10.1",
+    "@types/react": "17.0.24",
+    "@types/react-dom": "17.0.9",
+    "@typescript-eslint/eslint-plugin": "4.31.1",
+    "@typescript-eslint/parser": "4.31.1",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-import-resolver-typescript": "2.5.0",
+    "eslint-plugin-import": "2.24.2",
+    "eslint-plugin-jest": "24.4.0",
+    "eslint-plugin-jest-dom": "3.9.2",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-react": "7.25.1",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "eslint-plugin-testing-library": "4.12.2",
+    "prettier": "2.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "test:watch": "react-scripts test --watch",
+    "checkTs": "tsc --noEmit",
+    "format": "prettier '**/*.{css,json,js,ts,tsx,md,mdx}'",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --fix"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
