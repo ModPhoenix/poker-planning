@@ -10,3 +10,16 @@ edition = "2018"
 [dependencies]
 config = "0.11.0"
 serde = { version = "1.0.130", features = ["derive"]}
+
+actix-web = "3.3.2"
+actix-rt = "2.2.0"
+actix-cors = "0.5.4"
+
+async-graphql = {version = "2.10.1", features = ["apollo_tracing"]}
+async-graphql-actix-web = "2.10.1"
+
+env_logger = "0.9.0"
+
+futures = "0.3.17"
+futures-timer = "3.0.2"
+async-stream = "0.3.2"

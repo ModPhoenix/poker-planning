@@ -21,8 +21,6 @@ pub fn get_settings() -> Result<Settings, ConfigError> {
     settings.try_into()
 }
 
-// let address = format!("127.0.0.1:{}", configuration.application_port);
-
 impl Settings {
     pub fn get_server_address(&self) -> String {
         format!("{}:{}", self.host, self.port)
