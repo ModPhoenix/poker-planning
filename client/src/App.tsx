@@ -1,3 +1,4 @@
+import Button from '@mui/material/Button';
 import { ReactElement } from 'react';
 
 import logo from './logo.svg';
@@ -19,6 +20,7 @@ function App(): ReactElement {
           rel="noopener noreferrer"
         >
           Learn React
+          <Button variant="text">Text</Button>
         </a>
       </header>
     </div>

@@ -1,3 +1,4 @@
+import CssBaseline from '@mui/material/CssBaseline';
 import React from 'react';
 import { render } from 'react-dom';
 
@@ -7,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 
 render(
   <React.StrictMode>
+    <CssBaseline />
     <App />
   </React.StrictMode>,
   document.getElementById('root'),
