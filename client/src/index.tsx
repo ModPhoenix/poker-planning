@@ -1,15 +1,19 @@
 import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import { render } from 'react-dom';
 
-import './index.css';
+import { theme } from 'styles';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 render(
   <React.StrictMode>
-    <CssBaseline />
-    <App />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
