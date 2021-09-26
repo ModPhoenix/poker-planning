@@ -5,7 +5,7 @@ import { render } from 'react-dom';
 
 import { theme } from 'styles';
 
-import App from './App';
+import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 
 render(

@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
-function App(): ReactElement {
-  return <div>Poker planning</div>;
-}
+import { HomePage } from 'pages';
 
-export default App;
+export function App(): ReactElement {
+  return <HomePage />;
+}
