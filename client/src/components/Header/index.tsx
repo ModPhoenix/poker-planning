@@ -10,7 +10,6 @@ const List = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   width: 'fit-content',
-  border: `1px solid ${theme.palette.divider}`,
   borderRadius: theme.spacing(1),
   background: theme.palette.background.paper,
   '& svg': {
