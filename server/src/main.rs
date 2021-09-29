@@ -1,16 +1,23 @@
+use std::{
+    collections::HashMap,
+    sync::{Arc, Mutex},
+};
+
 use crate::{
     handlers::{index, index_playground, index_ws},
-    schema::{QueryRoot, SubscriptionRoot},
+    schema::{MutationRoot, QueryRoot, SubscriptionRoot},
     settings::get_settings,
+    types::Storage,
 };
 
 use actix_web::{guard, middleware, web, App, HttpServer};
-use async_graphql::{EmptyMutation, Schema};
+use async_graphql::Schema;
 
 mod domain;
 mod handlers;
 mod schema;
 mod settings;
+mod types;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -20,7 +27,11 @@ async fn main() -> std::io::Result<()> {
     let settings = get_settings().expect("Failed to read settings.");
     let server_address = settings.get_server_address();
 
-    let schema = Schema::build(QueryRoot, EmptyMutation, SubscriptionRoot).finish();
+    let storage: Storage = Arc::new(Mutex::new(HashMap::new()));
+
+    let schema = Schema::build(QueryRoot, MutationRoot, SubscriptionRoot)
+        .data(storage.clone())
+        .finish();
 
     println!("Playground: http://{}", server_address);
 

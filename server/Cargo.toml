@@ -15,7 +15,7 @@ actix-web = "3.3.2"
 actix-rt = "2.2.0"
 actix-cors = "0.5.4"
 
-async-graphql = {version = "2.10.1", features = ["apollo_tracing"]}
+async-graphql = {version = "2.10.1", features = ["apollo_tracing", "uuid"]}
 async-graphql-actix-web = "2.10.1"
 
 env_logger = "0.9.0"
@@ -23,3 +23,5 @@ env_logger = "0.9.0"
 futures = "0.3.17"
 futures-timer = "3.0.2"
 async-stream = "0.3.2"
+
+uuid = { version = "0.8.2", features = ["serde", "v4"] }
