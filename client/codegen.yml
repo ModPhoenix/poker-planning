@@ -1,0 +1,21 @@
+schema: 'http://127.0.0.1:8000/'
+documents: './src/**/*.graphql'
+config:
+  strictScalars: true
+  scalars:
+    UUID: string
+generates:
+  src/types/types.generated.ts:
+    plugins:
+      - 'typescript'
+  src/api/:
+    preset: near-operation-file
+    presetConfig:
+      extension: .generated.ts
+      baseTypesPath: ../types/types.generated.ts
+    plugins:
+      - typescript-operations
+      - typescript-react-apollo
+  src/api/apollo-helpers.generated.ts:
+    plugins:
+      - typescript-apollo-client-helpers

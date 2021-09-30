@@ -1,12 +1,24 @@
+import SendIcon from '@mui/icons-material/Send';
+import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { ReactElement } from 'react';
 
+import { useCreateRoomMutation } from 'api';
 import { PageLayout } from 'components';
 
 export function HomePage(): ReactElement {
+  const [createRoomMutation, { loading, data, error }] =
+    useCreateRoomMutation();
+
+  console.log(`data`, data);
+  console.log(`error`, error);
+
+  function onCreateRoom() {
+    createRoomMutation();
+  }
+
   return (
     <PageLayout>
       <Container maxWidth="md" sx={{ marginTop: 30 }}>
@@ -15,9 +27,16 @@ export function HomePage(): ReactElement {
           game.
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 6 }}>
-          <Button variant="outlined" size="large">
+          <LoadingButton
+            onClick={onCreateRoom}
+            endIcon={<SendIcon />}
+            loading={loading}
+            loadingPosition="end"
+            variant="outlined"
+            size="large"
+          >
             Create room
-          </Button>
+          </LoadingButton>
         </Box>
       </Container>
     </PageLayout>

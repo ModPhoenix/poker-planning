@@ -1,3 +1,5 @@
+export * from './operations.generated';
+
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 import { GRAPHQL_ENDPOINT } from 'settings';

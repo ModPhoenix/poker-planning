@@ -1,0 +1,38 @@
+fragment UserFields on User {
+  id
+  username
+}
+
+fragment DeckFields on Deck {
+  id
+  cards
+}
+
+fragment UserCardFields on UserCard {
+  id
+  userId
+  card
+}
+
+fragment GameFields on Game {
+  id
+  table {
+    ...UserCardFields
+  }
+}
+
+mutation CreateRoom($name: String) {
+  createRoom(name: $name) {
+    id
+    name
+    users {
+      ...UserFields
+    }
+    deck {
+      ...DeckFields
+    }
+    game {
+      ...GameFields
+    }
+  }
+}
