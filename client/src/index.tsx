@@ -1,8 +1,10 @@
+import { ApolloProvider } from '@apollo/client';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import { render } from 'react-dom';
 
+import { client } from 'api';
 import { theme } from 'styles';
 
 import { App } from './App';
@@ -12,7 +14,9 @@ render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root'),
