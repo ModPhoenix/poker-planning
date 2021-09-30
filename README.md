@@ -24,6 +24,7 @@ cargo watch -x run
 
 ```sh
 cd client
+cp .env.local.example .env.local
 npm i
 npm start
 ```

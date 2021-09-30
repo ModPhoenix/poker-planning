@@ -4,15 +4,20 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { ReactElement } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useCreateRoomMutation } from 'api';
 import { PageLayout } from 'components';
 
 export function HomePage(): ReactElement {
-  const [createRoomMutation, { loading, data, error }] =
-    useCreateRoomMutation();
+  const navigate = useNavigate();
 
-  console.log(`data`, data);
+  const [createRoomMutation, { loading, error }] = useCreateRoomMutation({
+    onCompleted: (data) => {
+      navigate(`/room/${data.createRoom.id}`);
+    },
+  });
+
   console.log(`error`, error);
 
   function onCreateRoom() {
