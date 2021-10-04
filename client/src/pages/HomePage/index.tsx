@@ -1,4 +1,4 @@
-import SendIcon from '@mui/icons-material/Send';
+import StarsIcon from '@mui/icons-material/Stars';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -34,7 +34,7 @@ export function HomePage(): ReactElement {
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 6 }}>
           <LoadingButton
             onClick={onCreateRoom}
-            endIcon={<SendIcon />}
+            endIcon={<StarsIcon />}
             loading={loading}
             loadingPosition="end"
             variant="outlined"
