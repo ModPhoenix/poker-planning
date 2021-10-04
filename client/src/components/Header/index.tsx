@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 import { ReactElement } from 'react';
+import { Link } from 'react-router-dom';
 
 const List = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -30,13 +31,18 @@ export function Header(): ReactElement {
       }}
     >
       <List>
-        <Typography
-          component="span"
-          variant="h6"
-          sx={{ marginLeft: 2, marginRight: 2 }}
-        >
-          Poker Planning
-        </Typography>
+        <Link to="/">
+          <Typography
+            component="span"
+            variant="h6"
+            sx={{
+              marginLeft: 2,
+              marginRight: 2,
+            }}
+          >
+            Poker Planning
+          </Typography>
+        </Link>
         <Divider orientation="vertical" variant="middle" flexItem />
         <Typography component="span" sx={{ marginLeft: 2, marginRight: 2 }}>
           Room Name
