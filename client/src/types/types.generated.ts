@@ -47,8 +47,8 @@ export type MutationRootCreateRoomArgs = {
 
 
 export type MutationRootCreateUserArgs = {
-  name?: Maybe<Scalars['String']>;
   roomId?: Maybe<Scalars['UUID']>;
+  username: Scalars['String'];
 };
 
 export type QueryRoot = {

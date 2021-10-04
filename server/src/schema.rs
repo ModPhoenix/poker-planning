@@ -36,11 +36,11 @@ impl MutationRoot {
     async fn create_user(
         &self,
         ctx: &Context<'_>,
-        name: Option<String>,
+        username: String,
         room_id: Option<EntityId>,
     ) -> User {
         let mut storage = ctx.data_unchecked::<Storage>().lock().unwrap();
-        let user = User::new(name);
+        let user = User::new(Some(username));
 
         match room_id {
             Some(room_id) => match storage.get_mut(&room_id) {

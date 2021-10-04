@@ -18,6 +18,14 @@ export type CreateRoomMutationVariables = Types.Exact<{
 
 export type CreateRoomMutation = { __typename?: 'MutationRoot', createRoom: { __typename?: 'Room', id: string, name?: string | null | undefined, users: Array<{ __typename?: 'User', id: string, username?: string | null | undefined }>, deck: { __typename?: 'Deck', id: string, cards: Array<string> }, game: { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', id: string, userId: number, card: string }> } } };
 
+export type CreateUserMutationVariables = Types.Exact<{
+  username: Types.Scalars['String'];
+  roomId?: Types.Maybe<Types.Scalars['UUID']>;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'MutationRoot', createUser: { __typename?: 'User', id: string, username?: string | null | undefined } };
+
 export const UserFieldsFragmentDoc = gql`
     fragment UserFields on User {
   id
@@ -90,3 +98,37 @@ export function useCreateRoomMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateRoomMutationHookResult = ReturnType<typeof useCreateRoomMutation>;
 export type CreateRoomMutationResult = Apollo.MutationResult<CreateRoomMutation>;
 export type CreateRoomMutationOptions = Apollo.BaseMutationOptions<CreateRoomMutation, CreateRoomMutationVariables>;
+export const CreateUserDocument = gql`
+    mutation CreateUser($username: String!, $roomId: UUID) {
+  createUser(username: $username, roomId: $roomId) {
+    ...UserFields
+  }
+}
+    ${UserFieldsFragmentDoc}`;
+export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+
+/**
+ * __useCreateUserMutation__
+ *
+ * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
+ *   variables: {
+ *      username: // value for 'username'
+ *      roomId: // value for 'roomId'
+ *   },
+ * });
+ */
+export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
+      }
+export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
+export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;

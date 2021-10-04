@@ -36,3 +36,9 @@ mutation CreateRoom($name: String) {
     }
   }
 }
+
+mutation CreateUser($username: String!, $roomId: UUID) {
+  createUser(username: $username, roomId: $roomId) {
+    ...UserFields
+  }
+}
