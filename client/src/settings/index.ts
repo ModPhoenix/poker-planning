@@ -1,3 +1,5 @@
+export const USER_KEY = 'user';
+
 export const GRAPHQL_ENDPOINT = process.env
   .REACT_APP_GRAPHQL_ENDPOINT as string;
 

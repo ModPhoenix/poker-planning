@@ -10,9 +10,11 @@ import { ChangeEvent, ReactElement, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useCreateUserMutation } from 'api';
+import { useAuth } from 'contexts';
 
 export function CreateUserDialog(): ReactElement {
-  const [open, setOpen] = useState(true);
+  const { user, login } = useAuth();
+  const [open, setOpen] = useState<boolean>(Boolean(user));
   const [username, setUsername] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const params = useParams();
@@ -31,8 +33,11 @@ export function CreateUserDialog(): ReactElement {
 
     if (!isUsernameEmpty) {
       try {
-        await createUserMutation();
-        setOpen(false);
+        const res = await createUserMutation();
+        if (res.data) {
+          login?.(res.data.createUser);
+          setOpen(false);
+        }
       } catch {}
     }
   };
@@ -45,7 +50,11 @@ export function CreateUserDialog(): ReactElement {
   return (
     <Dialog open={open}>
       <DialogTitle>Enter your Username</DialogTitle>
-      <DialogContent>
+      <DialogContent
+        sx={{
+          paddingBottom: 0,
+        }}
+      >
         <DialogContentText
           sx={{
             marginBottom: 2,
@@ -71,7 +80,7 @@ export function CreateUserDialog(): ReactElement {
           onChange={onChangeUsername}
           value={username}
           error={isUsernameError}
-          helperText={isUsernameError ? 'Username cannot be empty' : null}
+          helperText={isUsernameError ? 'Username cannot be empty' : ' '}
         />
       </DialogContent>
       <DialogActions

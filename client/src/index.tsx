@@ -6,6 +6,7 @@ import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { client } from 'api';
+import { AuthProvider } from 'contexts';
 import { theme } from 'styles';
 
 import { App } from './App';
@@ -17,7 +18,9 @@ render(
       <CssBaseline />
       <ApolloProvider client={client}>
         <Router>
-          <App />
+          <AuthProvider>
+            <App />
+          </AuthProvider>
         </Router>
       </ApolloProvider>
     </ThemeProvider>
