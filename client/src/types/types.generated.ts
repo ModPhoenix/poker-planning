@@ -67,12 +67,12 @@ export type Room = {
 
 export type SubscriptionRoot = {
   __typename?: 'SubscriptionRoot';
-  interval: Scalars['Int'];
+  room: Room;
 };
 
 
-export type SubscriptionRootIntervalArgs = {
-  n?: Scalars['Int'];
+export type SubscriptionRootRoomArgs = {
+  roomId: Scalars['UUID'];
 };
 
 export type User = {

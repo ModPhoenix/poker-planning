@@ -26,9 +26,9 @@ export type RoomFieldPolicy = {
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	users?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type SubscriptionRootKeySpecifier = ('interval' | SubscriptionRootKeySpecifier)[];
+export type SubscriptionRootKeySpecifier = ('room' | SubscriptionRootKeySpecifier)[];
 export type SubscriptionRootFieldPolicy = {
-	interval?: FieldPolicy<any> | FieldReadFunction<any>
+	room?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type UserKeySpecifier = ('id' | 'username' | UserKeySpecifier)[];
 export type UserFieldPolicy = {

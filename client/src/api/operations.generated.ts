@@ -26,6 +26,13 @@ export type CreateUserMutationVariables = Types.Exact<{
 
 export type CreateUserMutation = { __typename?: 'MutationRoot', createUser: { __typename?: 'User', id: string, username?: string | null | undefined } };
 
+export type RoomSubscriptionVariables = Types.Exact<{
+  roomId: Types.Scalars['UUID'];
+}>;
+
+
+export type RoomSubscription = { __typename?: 'SubscriptionRoot', room: { __typename?: 'Room', id: string, name?: string | null | undefined, users: Array<{ __typename?: 'User', id: string, username?: string | null | undefined }>, deck: { __typename?: 'Deck', id: string, cards: Array<string> }, game: { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', id: string, userId: number, card: string }> } } };
+
 export const UserFieldsFragmentDoc = gql`
     fragment UserFields on User {
   id
@@ -132,3 +139,45 @@ export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
+export const RoomDocument = gql`
+    subscription Room($roomId: UUID!) {
+  room(roomId: $roomId) {
+    id
+    name
+    users {
+      ...UserFields
+    }
+    deck {
+      ...DeckFields
+    }
+    game {
+      ...GameFields
+    }
+  }
+}
+    ${UserFieldsFragmentDoc}
+${DeckFieldsFragmentDoc}
+${GameFieldsFragmentDoc}`;
+
+/**
+ * __useRoomSubscription__
+ *
+ * To run a query within a React component, call `useRoomSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useRoomSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRoomSubscription({
+ *   variables: {
+ *      roomId: // value for 'roomId'
+ *   },
+ * });
+ */
+export function useRoomSubscription(baseOptions: Apollo.SubscriptionHookOptions<RoomSubscription, RoomSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<RoomSubscription, RoomSubscriptionVariables>(RoomDocument, options);
+      }
+export type RoomSubscriptionHookResult = ReturnType<typeof useRoomSubscription>;
+export type RoomSubscriptionResult = Apollo.SubscriptionResult<RoomSubscription>;

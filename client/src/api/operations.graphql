@@ -42,3 +42,19 @@ mutation CreateUser($username: String!, $roomId: UUID) {
     ...UserFields
   }
 }
+
+subscription Room($roomId: UUID!) {
+  room(roomId: $roomId) {
+    id
+    name
+    users {
+      ...UserFields
+    }
+    deck {
+      ...DeckFields
+    }
+    game {
+      ...GameFields
+    }
+  }
+}
