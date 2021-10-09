@@ -1,11 +1,11 @@
-use async_graphql::{async_stream, Context, Object, Schema, Subscription};
-use futures::Stream;
-use std::time::Duration;
-
 use crate::{
     domain::{Room, User},
+    simple_broker::SimpleBroker,
     types::{EntityId, Storage},
 };
+use async_graphql::*;
+use futures::Stream;
+use std::iter::Iterator;
 
 pub type PokerPlanningSchema = Schema<QueryRoot, MutationRoot, SubscriptionRoot>;
 
@@ -30,6 +30,8 @@ impl MutationRoot {
 
         storage.insert(room.id.clone(), room.clone());
 
+        SimpleBroker::publish(room.clone());
+
         room
     }
 
@@ -46,6 +48,8 @@ impl MutationRoot {
             Some(room_id) => match storage.get_mut(&room_id) {
                 Some(room) => {
                     room.users.push(user.clone());
+
+                    SimpleBroker::publish(room.clone());
                 }
                 None => {}
             },
@@ -60,14 +64,7 @@ pub struct SubscriptionRoot;
 
 #[Subscription]
 impl SubscriptionRoot {
-    async fn interval(&self, #[graphql(default = 1)] n: i32) -> impl Stream<Item = i32> {
-        let mut value = 0;
-        async_stream::stream! {
-            loop {
-                futures_timer::Delay::new(Duration::from_secs(1)).await;
-                value += n;
-                yield value;
-            }
-        }
+    async fn room(&self) -> impl Stream<Item = Room> {
+        SimpleBroker::<Room>::subscribe()
     }
 }

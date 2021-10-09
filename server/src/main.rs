@@ -18,6 +18,7 @@ mod domain;
 mod handlers;
 mod schema;
 mod settings;
+mod simple_broker;
 mod types;
 
 #[actix_web::main]
