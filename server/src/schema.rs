@@ -4,7 +4,7 @@ use crate::{
     types::{EntityId, Storage},
 };
 use async_graphql::*;
-use futures::Stream;
+use futures::{Stream, StreamExt};
 use std::iter::Iterator;
 
 pub type PokerPlanningSchema = Schema<QueryRoot, MutationRoot, SubscriptionRoot>;
@@ -64,7 +64,11 @@ pub struct SubscriptionRoot;
 
 #[Subscription]
 impl SubscriptionRoot {
-    async fn room(&self) -> impl Stream<Item = Room> {
-        SimpleBroker::<Room>::subscribe()
+    async fn room(&self, room_id: EntityId) -> impl Stream<Item = Room> {
+        SimpleBroker::<Room>::subscribe().filter(move |event| {
+            let res = room_id == event.id;
+
+            async move { res }
+        })
     }
 }
