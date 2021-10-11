@@ -9,10 +9,11 @@ export type GameFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	table?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationRootKeySpecifier = ('createRoom' | 'createUser' | MutationRootKeySpecifier)[];
+export type MutationRootKeySpecifier = ('createRoom' | 'createUser' | 'joinRoom' | MutationRootKeySpecifier)[];
 export type MutationRootFieldPolicy = {
 	createRoom?: FieldPolicy<any> | FieldReadFunction<any>,
-	createUser?: FieldPolicy<any> | FieldReadFunction<any>
+	createUser?: FieldPolicy<any> | FieldReadFunction<any>,
+	joinRoom?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type QueryRootKeySpecifier = ('rooms' | QueryRootKeySpecifier)[];
 export type QueryRootFieldPolicy = {

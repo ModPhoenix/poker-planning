@@ -38,6 +38,7 @@ export type MutationRoot = {
   __typename?: 'MutationRoot';
   createRoom: Room;
   createUser: User;
+  joinRoom?: Maybe<Room>;
 };
 
 
@@ -47,8 +48,13 @@ export type MutationRootCreateRoomArgs = {
 
 
 export type MutationRootCreateUserArgs = {
-  roomId?: Maybe<Scalars['UUID']>;
   username: Scalars['String'];
+};
+
+
+export type MutationRootJoinRoomArgs = {
+  roomId: Scalars['UUID'];
+  user: UserInput;
 };
 
 export type QueryRoot = {
@@ -78,7 +84,7 @@ export type SubscriptionRootRoomArgs = {
 export type User = {
   __typename?: 'User';
   id: Scalars['UUID'];
-  username?: Maybe<Scalars['String']>;
+  username: Scalars['String'];
 };
 
 export type UserCard = {
@@ -86,4 +92,9 @@ export type UserCard = {
   card: Scalars['String'];
   id: Scalars['UUID'];
   userId: Scalars['Int'];
+};
+
+export type UserInput = {
+  id: Scalars['UUID'];
+  username: Scalars['String'];
 };

@@ -40,10 +40,12 @@ export function AuthProvider({ children }: Props): ReactElement {
 
   const handleLogin = useCallback((user: User) => {
     setUserToLocalStorage(user);
+    setUser(user);
   }, []);
 
   const handleLogout = useCallback(() => {
     removeUserFromLocalStorage();
+    setUser(null);
   }, []);
 
   return (

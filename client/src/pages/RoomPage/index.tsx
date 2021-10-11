@@ -1,30 +1,43 @@
-import Typography from '@mui/material/Typography';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useRoomSubscription } from 'api';
-import { PageLayout } from 'components';
+import { useJoinRoomMutation, useRoomSubscription } from 'api';
+import { Deck, PageLayout } from 'components';
 import { CreateUserDialog } from 'components/CreateUserDialog';
+import { useAuth } from 'contexts';
 
 export function RoomPage(): ReactElement {
   const params = useParams();
+  const { user } = useAuth();
 
-  const { loading, data, error } = useRoomSubscription({
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    variables: { roomId: params.id! },
+  const { data: subscriptionData } = useRoomSubscription({
+    variables: { roomId: params?.id || '' },
+    skip: !params?.id,
   });
 
+  const [joinRoomMutation, { loading, data: joinRoomData, error }] =
+    useJoinRoomMutation();
+
+  const room = subscriptionData?.room || joinRoomData?.joinRoom;
+
+  useEffect(() => {
+    if (params?.id && user) {
+      joinRoomMutation({
+        variables: {
+          roomId: params.id,
+          user: { id: user.id, username: user.username },
+        },
+      });
+    }
+  }, [joinRoomMutation, params.id, user]);
+
   console.log('loading :>> ', loading);
-  console.log('data :>> ', data);
+  console.log('room :>> ', room);
   console.log('error :>> ', error);
 
   return (
     <>
-      <PageLayout>
-        <Typography component="h1" variant="h1" gutterBottom>
-          Room
-        </Typography>
-      </PageLayout>
+      <PageLayout>{room && <Deck cards={room.deck.cards} />}</PageLayout>
       <CreateUserDialog />
     </>
   );

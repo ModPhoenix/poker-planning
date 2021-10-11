@@ -7,7 +7,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 import { useCreateUserMutation } from 'api';
 import { useAuth } from 'contexts';
@@ -17,7 +16,6 @@ export function CreateUserDialog(): ReactElement {
   const [open, setOpen] = useState<boolean>(!Boolean(user));
   const [username, setUsername] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const params = useParams();
 
   useEffect(() => {
     setOpen(!Boolean(user));
@@ -26,7 +24,6 @@ export function CreateUserDialog(): ReactElement {
   const [createUserMutation, { loading, error }] = useCreateUserMutation({
     variables: {
       username,
-      roomId: params.id,
     },
   });
 

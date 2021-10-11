@@ -1,60 +1,60 @@
-fragment UserFields on User {
+fragment UserFragment on User {
   id
   username
 }
 
-fragment DeckFields on Deck {
+fragment DeckFragment on Deck {
   id
   cards
 }
 
-fragment UserCardFields on UserCard {
+fragment UserCardFragment on UserCard {
   id
   userId
   card
 }
 
-fragment GameFields on Game {
+fragment GameFragment on Game {
   id
   table {
-    ...UserCardFields
+    ...UserCardFragment
+  }
+}
+
+fragment RoomFragment on Room {
+  id
+  name
+  users {
+    ...UserFragment
+  }
+  deck {
+    ...DeckFragment
+  }
+  game {
+    ...GameFragment
   }
 }
 
 mutation CreateRoom($name: String) {
   createRoom(name: $name) {
-    id
-    name
-    users {
-      ...UserFields
-    }
-    deck {
-      ...DeckFields
-    }
-    game {
-      ...GameFields
-    }
+    ...RoomFragment
   }
 }
 
-mutation CreateUser($username: String!, $roomId: UUID) {
-  createUser(username: $username, roomId: $roomId) {
-    ...UserFields
+mutation CreateUser($username: String!) {
+  createUser(username: $username) {
+    ...UserFragment
+  }
+}
+
+mutation JoinRoom($roomId: UUID!, $user: UserInput!) {
+  joinRoom(roomId: $roomId, user: $user) {
+    ...RoomFragment
   }
 }
 
 subscription Room($roomId: UUID!) {
   room(roomId: $roomId) {
-    id
-    name
-    users {
-      ...UserFields
-    }
-    deck {
-      ...DeckFields
-    }
-    game {
-      ...GameFields
-    }
+    ...RoomFragment
   }
 }

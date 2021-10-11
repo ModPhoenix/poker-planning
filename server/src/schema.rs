@@ -1,5 +1,8 @@
 use crate::{
-    domain::{room::Room, user::User},
+    domain::{
+        room::Room,
+        user::{User, UserInput},
+    },
     simple_broker::SimpleBroker,
     types::{EntityId, Storage},
 };
@@ -35,28 +38,34 @@ impl MutationRoot {
         room
     }
 
-    async fn create_user(
+    async fn create_user(&self, username: String) -> User {
+        User::new(username)
+    }
+
+    async fn join_room(
         &self,
         ctx: &Context<'_>,
-        username: String,
-        room_id: Option<EntityId>,
-    ) -> User {
+        room_id: EntityId,
+        user: UserInput,
+    ) -> Option<Room> {
         let mut storage = ctx.data_unchecked::<Storage>().lock().unwrap();
-        let user = User::new(Some(username));
 
-        match room_id {
-            Some(room_id) => match storage.get_mut(&room_id) {
-                Some(room) => {
-                    room.users.push(user.clone());
+        match storage.get_mut(&room_id) {
+            Some(room) => {
+                if !room.users.iter().any(|u| u.id == user.id) {
+                    room.users.push(user.into());
 
                     SimpleBroker::publish(room.clone());
-                }
-                None => {}
-            },
-            None => {}
-        }
 
-        user
+                    Some(room.clone())
+                } else {
+                    SimpleBroker::publish(room.clone());
+
+                    Some(room.clone())
+                }
+            }
+            None => None,
+        }
     }
 }
 
