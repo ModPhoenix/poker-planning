@@ -1,5 +1,5 @@
 use crate::{
-    domain::{Room, User},
+    domain::{room::Room, user::User},
     simple_broker::SimpleBroker,
     types::{EntityId, Storage},
 };
@@ -66,9 +66,9 @@ pub struct SubscriptionRoot;
 impl SubscriptionRoot {
     async fn room(&self, room_id: EntityId) -> impl Stream<Item = Room> {
         SimpleBroker::<Room>::subscribe().filter(move |event| {
-            let res = room_id == event.id;
+            let is_current_room = room_id == event.id;
 
-            async move { res }
+            async move { is_current_room }
         })
     }
 }

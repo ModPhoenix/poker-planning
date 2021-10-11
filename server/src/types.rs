@@ -5,7 +5,7 @@ use std::{
 
 use uuid::Uuid;
 
-use crate::domain::Room;
+use crate::domain::room::Room;
 
 pub type EntityId = Uuid;
 
