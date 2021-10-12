@@ -3,7 +3,7 @@ import { ReactElement, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useJoinRoomMutation, useRoomSubscription } from 'api';
-import { Deck, PageLayout, Table } from 'components';
+import { Deck, PageLayout, Room } from 'components';
 import { CreateUserDialog } from 'components/CreateUserDialog';
 import { useAuth } from 'contexts';
 
@@ -34,30 +34,23 @@ export function RoomPage(): ReactElement {
   return (
     <>
       <PageLayout>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-            height: 'calc(100vh - 80px)',
-            paddingBottom: '100px',
-          }}
-        >
-          <Table />
-        </Box>
-        <Box
-          sx={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 24,
-            maxWidth: 900,
-            margin: '0 auto',
-          }}
-        >
-          {room && <Deck cards={room.deck.cards} />}
-        </Box>
+        {room && (
+          <>
+            <Room room={room} />
+            <Box
+              sx={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                bottom: 24,
+                maxWidth: 900,
+                margin: '0 auto',
+              }}
+            >
+              <Deck cards={room.deck.cards} />
+            </Box>
+          </>
+        )}
       </PageLayout>
       <CreateUserDialog />
     </>
