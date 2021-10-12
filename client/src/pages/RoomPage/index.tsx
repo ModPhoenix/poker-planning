@@ -3,7 +3,7 @@ import { ReactElement, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useJoinRoomMutation, useRoomSubscription } from 'api';
-import { Deck, PageLayout } from 'components';
+import { Deck, PageLayout, Table } from 'components';
 import { CreateUserDialog } from 'components/CreateUserDialog';
 import { useAuth } from 'contexts';
 
@@ -34,6 +34,18 @@ export function RoomPage(): ReactElement {
   return (
     <>
       <PageLayout>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: 'calc(100vh - 80px)',
+            paddingBottom: '100px',
+          }}
+        >
+          <Table />
+        </Box>
         <Box
           sx={{
             position: 'absolute',
