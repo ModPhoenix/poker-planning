@@ -1,3 +1,4 @@
+import Box from '@mui/material/Box';
 import { ReactElement, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -32,7 +33,20 @@ export function RoomPage(): ReactElement {
 
   return (
     <>
-      <PageLayout>{room && <Deck cards={room.deck.cards} />}</PageLayout>
+      <PageLayout>
+        <Box
+          sx={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 24,
+            maxWidth: 900,
+            margin: '0 auto',
+          }}
+        >
+          {room && <Deck cards={room.deck.cards} />}
+        </Box>
+      </PageLayout>
       <CreateUserDialog />
     </>
   );

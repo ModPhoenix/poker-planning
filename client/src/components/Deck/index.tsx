@@ -13,7 +13,6 @@ export function Deck({ cards }: DeckProps): ReactElement {
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
-        width: '80%',
       }}
     >
       {cards.map((card) => (

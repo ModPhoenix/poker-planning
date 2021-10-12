@@ -3,8 +3,9 @@ import { styled } from '@mui/material/styles';
 import { ReactElement, ReactNode } from 'react';
 
 const CardButton = styled(Button)<ButtonProps>({
+  minWidth: '52px',
   fontSize: 20,
-  padding: '36px 12px',
+  padding: '24px 12px',
   border: '2px solid',
   lineHeight: 1.5,
 });
