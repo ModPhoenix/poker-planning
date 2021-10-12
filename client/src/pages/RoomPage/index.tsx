@@ -11,17 +11,16 @@ export function RoomPage(): ReactElement {
   const { user } = useAuth();
 
   const { data: subscriptionData } = useRoomSubscription({
-    variables: { roomId: params?.id || '' },
-    skip: !params?.id,
+    variables: { roomId: params.id || '' },
+    skip: !params.id,
   });
 
-  const [joinRoomMutation, { loading, data: joinRoomData, error }] =
-    useJoinRoomMutation();
+  const [joinRoomMutation, { data: joinRoomData }] = useJoinRoomMutation();
 
   const room = subscriptionData?.room || joinRoomData?.joinRoom;
 
   useEffect(() => {
-    if (params?.id && user) {
+    if (params.id && user) {
       joinRoomMutation({
         variables: {
           roomId: params.id,
@@ -30,10 +29,6 @@ export function RoomPage(): ReactElement {
       });
     }
   }, [joinRoomMutation, params.id, user]);
-
-  console.log('loading :>> ', loading);
-  console.log('room :>> ', room);
-  console.log('error :>> ', error);
 
   return (
     <>

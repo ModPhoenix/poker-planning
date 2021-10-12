@@ -1,4 +1,7 @@
+import Box from '@mui/material/Box';
 import { ReactElement } from 'react';
+
+import { Card } from 'components/Card';
 
 interface DeckProps {
   cards: string[];
@@ -6,10 +9,16 @@ interface DeckProps {
 
 export function Deck({ cards }: DeckProps): ReactElement {
   return (
-    <div>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '80%',
+      }}
+    >
       {cards.map((card) => (
-        <div key={card}>{card}</div>
+        <Card key={card}>{card}</Card>
       ))}
-    </div>
+    </Box>
   );
 }
