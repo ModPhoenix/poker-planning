@@ -52,6 +52,12 @@ mutation JoinRoom($roomId: UUID!, $user: UserInput!) {
   }
 }
 
+mutation PickCard($userId: UUID!, $roomId: UUID!, $card: String!) {
+  pickCard(userId: $userId, roomId: $roomId, card: $card) {
+    ...RoomFragment
+  }
+}
+
 subscription Room($roomId: UUID!) {
   room(roomId: $roomId) {
     ...RoomFragment

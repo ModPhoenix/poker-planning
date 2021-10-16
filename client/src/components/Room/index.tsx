@@ -5,6 +5,7 @@ import { ReactElement } from 'react';
 import { Player } from 'components/Player';
 import { Table } from 'components/Table';
 import { Room as RoomType } from 'types';
+import { getUserPickedCart } from 'utils';
 
 interface RoomProps {
   room: RoomType;
@@ -29,15 +30,17 @@ export function Room({ room }: RoomProps): ReactElement {
       }}
     >
       <Stack direction="row" spacing={2} sx={{ marginBottom: 2 }}>
-        {topUsersHalf.map(({ id, username }) => (
-          <Player key={id} username={username} />
-        ))}
+        {topUsersHalf.map(({ id, username }) => {
+          const pickedCart = getUserPickedCart(id, room.game.table);
+          return <Player key={id} username={username} card={pickedCart} />;
+        })}
       </Stack>
       <Table />
       <Stack direction="row" spacing={2} sx={{ marginTop: 2 }}>
-        {bottomUsersHalf.map(({ id, username }) => (
-          <Player key={id} username={username} />
-        ))}
+        {bottomUsersHalf.map(({ id, username }) => {
+          const pickedCart = getUserPickedCart(id, room.game.table);
+          return <Player key={id} username={username} card={pickedCart} />;
+        })}
       </Stack>
     </Box>
   );

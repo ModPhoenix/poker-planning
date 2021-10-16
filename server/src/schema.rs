@@ -1,5 +1,6 @@
 use crate::{
     domain::{
+        game::UserCard,
         room::Room,
         user::{User, UserInput},
     },
@@ -66,6 +67,34 @@ impl MutationRoot {
             }
             None => None,
         }
+    }
+
+    async fn pick_card(
+        &self,
+        ctx: &Context<'_>,
+        user_id: EntityId,
+        room_id: EntityId,
+        card: String,
+    ) -> Result<Room> {
+        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
+
+        let room = storage.get_mut(&room_id).unwrap();
+
+        let mut table: Vec<UserCard> = room
+            .game
+            .table
+            .clone()
+            .into_iter()
+            .filter(|u| u.user_id != user_id)
+            .collect();
+
+        table.push(UserCard::new(user_id, card));
+
+        room.game.table = table.clone();
+
+        SimpleBroker::publish(room.clone());
+
+        Ok(room.clone())
     }
 }
 

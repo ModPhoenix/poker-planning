@@ -9,13 +9,12 @@ import { CreateUserDialog } from 'components/CreateUserDialog';
 import { useAuth } from 'contexts';
 
 export function RoomPage(): ReactElement {
-  const params = useParams();
+  const { roomId = '' } = useParams();
   const { user } = useAuth();
 
   const { data: subscriptionData, error: roomSubscriptionError } =
     useRoomSubscription({
-      variables: { roomId: params.id || '' },
-      skip: !params.id,
+      variables: { roomId },
     });
 
   useEffect(() => {
@@ -31,15 +30,15 @@ export function RoomPage(): ReactElement {
   });
 
   useEffect(() => {
-    if (params.id && user) {
+    if (user) {
       joinRoomMutation({
         variables: {
-          roomId: params.id,
+          roomId,
           user: { id: user.id, username: user.username },
         },
       });
     }
-  }, [joinRoomMutation, params.id, user]);
+  }, [joinRoomMutation, roomId, user]);
 
   const room = subscriptionData?.room || joinRoomData?.joinRoom;
 
@@ -59,7 +58,11 @@ export function RoomPage(): ReactElement {
                 margin: '0 auto',
               }}
             >
-              <Deck cards={room.deck.cards} />
+              <Deck
+                cards={room.deck.cards}
+                roomId={roomId}
+                table={room.game.table}
+              />
             </Box>
           </>
         )}
