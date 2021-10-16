@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import { ReactElement, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 
 import { useJoinRoomMutation, useRoomSubscription } from 'api';
@@ -11,14 +12,23 @@ export function RoomPage(): ReactElement {
   const params = useParams();
   const { user } = useAuth();
 
-  const { data: subscriptionData } = useRoomSubscription({
-    variables: { roomId: params.id || '' },
-    skip: !params.id,
+  const { data: subscriptionData, error: roomSubscriptionError } =
+    useRoomSubscription({
+      variables: { roomId: params.id || '' },
+      skip: !params.id,
+    });
+
+  useEffect(() => {
+    if (roomSubscriptionError) {
+      toast.error(`Room subscription: ${roomSubscriptionError.message}`);
+    }
+  }, [roomSubscriptionError]);
+
+  const [joinRoomMutation, { data: joinRoomData }] = useJoinRoomMutation({
+    onError: (error) => {
+      toast.error(`Join room: ${error.message}`);
+    },
   });
-
-  const [joinRoomMutation, { data: joinRoomData }] = useJoinRoomMutation();
-
-  const room = subscriptionData?.room || joinRoomData?.joinRoom;
 
   useEffect(() => {
     if (params.id && user) {
@@ -30,6 +40,8 @@ export function RoomPage(): ReactElement {
       });
     }
   }, [joinRoomMutation, params.id, user]);
+
+  const room = subscriptionData?.room || joinRoomData?.joinRoom;
 
   return (
     <>

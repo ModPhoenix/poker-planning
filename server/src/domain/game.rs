@@ -11,7 +11,6 @@ pub struct Game {
 
 #[derive(Clone, Debug, SimpleObject)]
 pub struct UserCard {
-    pub id: EntityId,
     pub user_id: i32,
     pub card: Card,
 }

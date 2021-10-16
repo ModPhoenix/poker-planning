@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { ReactElement } from 'react';
+import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 import { useCreateRoomMutation } from 'api';
@@ -12,13 +13,14 @@ import { PageLayout } from 'components';
 export function HomePage(): ReactElement {
   const navigate = useNavigate();
 
-  const [createRoomMutation, { loading, error }] = useCreateRoomMutation({
+  const [createRoomMutation, { loading }] = useCreateRoomMutation({
     onCompleted: (data) => {
       navigate(`/room/${data.createRoom.id}`);
     },
+    onError: (error) => {
+      toast.error(`Create room: ${error.message}`);
+    },
   });
-
-  console.log(`error`, error);
 
   function onCreateRoom() {
     createRoomMutation();

@@ -36,10 +36,9 @@ export type UserFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	username?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type UserCardKeySpecifier = ('card' | 'id' | 'userId' | UserCardKeySpecifier)[];
+export type UserCardKeySpecifier = ('card' | 'userId' | UserCardKeySpecifier)[];
 export type UserCardFieldPolicy = {
 	card?: FieldPolicy<any> | FieldReadFunction<any>,
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	userId?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type StrictTypedTypePolicies = {

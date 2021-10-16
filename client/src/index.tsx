@@ -3,6 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import { render } from 'react-dom';
+import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { client } from 'api';
@@ -16,6 +17,7 @@ render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Toaster />
       <ApolloProvider client={client}>
         <Router>
           <AuthProvider>

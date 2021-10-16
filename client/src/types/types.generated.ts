@@ -90,7 +90,6 @@ export type User = {
 export type UserCard = {
   __typename?: 'UserCard';
   card: Scalars['String'];
-  id: Scalars['UUID'];
   userId: Scalars['Int'];
 };
 

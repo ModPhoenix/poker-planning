@@ -9,7 +9,6 @@ fragment DeckFragment on Deck {
 }
 
 fragment UserCardFragment on UserCard {
-  id
   userId
   card
 }
