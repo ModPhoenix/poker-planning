@@ -13,8 +13,9 @@ const CardButton = styled(Button)<ButtonProps>({
 
 interface CardProps {
   children: ReactNode;
+  onClick?(): void;
 }
 
-export function Card({ children }: CardProps): ReactElement {
-  return <CardButton>{children}</CardButton>;
+export function Card({ children, onClick }: CardProps): ReactElement {
+  return <CardButton onClick={onClick}>{children}</CardButton>;
 }

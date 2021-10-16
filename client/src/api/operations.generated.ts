@@ -7,18 +7,18 @@ export type UserFragmentFragment = { __typename?: 'User', id: string, username: 
 
 export type DeckFragmentFragment = { __typename?: 'Deck', id: string, cards: Array<string> };
 
-export type UserCardFragmentFragment = { __typename?: 'UserCard', userId: number, card: string };
+export type UserCardFragmentFragment = { __typename?: 'UserCard', userId: string, card: string };
 
-export type GameFragmentFragment = { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', userId: number, card: string }> };
+export type GameFragmentFragment = { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', userId: string, card: string }> };
 
-export type RoomFragmentFragment = { __typename?: 'Room', id: string, name?: string | null | undefined, users: Array<{ __typename?: 'User', id: string, username: string }>, deck: { __typename?: 'Deck', id: string, cards: Array<string> }, game: { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', userId: number, card: string }> } };
+export type RoomFragmentFragment = { __typename?: 'Room', id: string, name?: string | null | undefined, users: Array<{ __typename?: 'User', id: string, username: string }>, deck: { __typename?: 'Deck', id: string, cards: Array<string> }, game: { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', userId: string, card: string }> } };
 
 export type CreateRoomMutationVariables = Types.Exact<{
   name?: Types.Maybe<Types.Scalars['String']>;
 }>;
 
 
-export type CreateRoomMutation = { __typename?: 'MutationRoot', createRoom: { __typename?: 'Room', id: string, name?: string | null | undefined, users: Array<{ __typename?: 'User', id: string, username: string }>, deck: { __typename?: 'Deck', id: string, cards: Array<string> }, game: { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', userId: number, card: string }> } } };
+export type CreateRoomMutation = { __typename?: 'MutationRoot', createRoom: { __typename?: 'Room', id: string, name?: string | null | undefined, users: Array<{ __typename?: 'User', id: string, username: string }>, deck: { __typename?: 'Deck', id: string, cards: Array<string> }, game: { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', userId: string, card: string }> } } };
 
 export type CreateUserMutationVariables = Types.Exact<{
   username: Types.Scalars['String'];
@@ -33,14 +33,23 @@ export type JoinRoomMutationVariables = Types.Exact<{
 }>;
 
 
-export type JoinRoomMutation = { __typename?: 'MutationRoot', joinRoom?: { __typename?: 'Room', id: string, name?: string | null | undefined, users: Array<{ __typename?: 'User', id: string, username: string }>, deck: { __typename?: 'Deck', id: string, cards: Array<string> }, game: { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', userId: number, card: string }> } } | null | undefined };
+export type JoinRoomMutation = { __typename?: 'MutationRoot', joinRoom?: { __typename?: 'Room', id: string, name?: string | null | undefined, users: Array<{ __typename?: 'User', id: string, username: string }>, deck: { __typename?: 'Deck', id: string, cards: Array<string> }, game: { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', userId: string, card: string }> } } | null | undefined };
+
+export type PickCardMutationVariables = Types.Exact<{
+  userId: Types.Scalars['UUID'];
+  roomId: Types.Scalars['UUID'];
+  card: Types.Scalars['String'];
+}>;
+
+
+export type PickCardMutation = { __typename?: 'MutationRoot', pickCard: { __typename?: 'Room', id: string, name?: string | null | undefined, users: Array<{ __typename?: 'User', id: string, username: string }>, deck: { __typename?: 'Deck', id: string, cards: Array<string> }, game: { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', userId: string, card: string }> } } };
 
 export type RoomSubscriptionVariables = Types.Exact<{
   roomId: Types.Scalars['UUID'];
 }>;
 
 
-export type RoomSubscription = { __typename?: 'SubscriptionRoot', room: { __typename?: 'Room', id: string, name?: string | null | undefined, users: Array<{ __typename?: 'User', id: string, username: string }>, deck: { __typename?: 'Deck', id: string, cards: Array<string> }, game: { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', userId: number, card: string }> } } };
+export type RoomSubscription = { __typename?: 'SubscriptionRoot', room: { __typename?: 'Room', id: string, name?: string | null | undefined, users: Array<{ __typename?: 'User', id: string, username: string }>, deck: { __typename?: 'Deck', id: string, cards: Array<string> }, game: { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', userId: string, card: string }> } } };
 
 export const UserFragmentFragmentDoc = gql`
     fragment UserFragment on User {
@@ -185,6 +194,41 @@ export function useJoinRoomMutation(baseOptions?: Apollo.MutationHookOptions<Joi
 export type JoinRoomMutationHookResult = ReturnType<typeof useJoinRoomMutation>;
 export type JoinRoomMutationResult = Apollo.MutationResult<JoinRoomMutation>;
 export type JoinRoomMutationOptions = Apollo.BaseMutationOptions<JoinRoomMutation, JoinRoomMutationVariables>;
+export const PickCardDocument = gql`
+    mutation PickCard($userId: UUID!, $roomId: UUID!, $card: String!) {
+  pickCard(userId: $userId, roomId: $roomId, card: $card) {
+    ...RoomFragment
+  }
+}
+    ${RoomFragmentFragmentDoc}`;
+export type PickCardMutationFn = Apollo.MutationFunction<PickCardMutation, PickCardMutationVariables>;
+
+/**
+ * __usePickCardMutation__
+ *
+ * To run a mutation, you first call `usePickCardMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePickCardMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pickCardMutation, { data, loading, error }] = usePickCardMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      roomId: // value for 'roomId'
+ *      card: // value for 'card'
+ *   },
+ * });
+ */
+export function usePickCardMutation(baseOptions?: Apollo.MutationHookOptions<PickCardMutation, PickCardMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PickCardMutation, PickCardMutationVariables>(PickCardDocument, options);
+      }
+export type PickCardMutationHookResult = ReturnType<typeof usePickCardMutation>;
+export type PickCardMutationResult = Apollo.MutationResult<PickCardMutation>;
+export type PickCardMutationOptions = Apollo.BaseMutationOptions<PickCardMutation, PickCardMutationVariables>;
 export const RoomDocument = gql`
     subscription Room($roomId: UUID!) {
   room(roomId: $roomId) {

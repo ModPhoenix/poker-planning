@@ -11,7 +11,7 @@ pub struct Game {
 
 #[derive(Clone, Debug, SimpleObject)]
 pub struct UserCard {
-    pub user_id: i32,
+    pub user_id: EntityId,
     pub card: Card,
 }
 
@@ -21,5 +21,11 @@ impl Game {
             id: Uuid::new_v4(),
             table: vec![],
         }
+    }
+}
+
+impl UserCard {
+    pub fn new(user_id: EntityId, card: Card) -> Self {
+        UserCard { user_id, card }
     }
 }

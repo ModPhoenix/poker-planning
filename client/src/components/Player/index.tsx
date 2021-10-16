@@ -6,9 +6,10 @@ import { Card } from 'components/Card';
 
 interface PlayerProps {
   username: string;
+  card?: string;
 }
 
-export function Player({ username }: PlayerProps): ReactElement {
+export function Player({ username, card }: PlayerProps): ReactElement {
   return (
     <Box
       sx={{
@@ -17,7 +18,7 @@ export function Player({ username }: PlayerProps): ReactElement {
         alignItems: 'center',
       }}
     >
-      <Card>1</Card>
+      <Card>{card || '😴'}</Card>
       <Typography component="span">{username}</Typography>
     </Box>
   );
