@@ -38,8 +38,10 @@ export type MutationRoot = {
   __typename?: 'MutationRoot';
   createRoom: Room;
   createUser: User;
-  joinRoom?: Maybe<Room>;
+  joinRoom: Room;
   pickCard: Room;
+  resetGame: Room;
+  showCards: Room;
 };
 
 
@@ -65,6 +67,16 @@ export type MutationRootPickCardArgs = {
   userId: Scalars['UUID'];
 };
 
+
+export type MutationRootResetGameArgs = {
+  roomId: Scalars['UUID'];
+};
+
+
+export type MutationRootShowCardsArgs = {
+  roomId: Scalars['UUID'];
+};
+
 export type QueryRoot = {
   __typename?: 'QueryRoot';
   rooms: Array<Room>;
@@ -75,6 +87,7 @@ export type Room = {
   deck: Deck;
   game: Game;
   id: Scalars['UUID'];
+  isShownCards: Scalars['Boolean'];
   name?: Maybe<Scalars['String']>;
   users: Array<User>;
 };
@@ -97,7 +110,7 @@ export type User = {
 
 export type UserCard = {
   __typename?: 'UserCard';
-  card: Scalars['String'];
+  card?: Maybe<Scalars['String']>;
   userId: Scalars['UUID'];
 };
 

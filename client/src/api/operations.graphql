@@ -23,6 +23,7 @@ fragment GameFragment on Game {
 fragment RoomFragment on Room {
   id
   name
+  isShownCards
   users {
     ...UserFragment
   }
@@ -54,6 +55,18 @@ mutation JoinRoom($roomId: UUID!, $user: UserInput!) {
 
 mutation PickCard($userId: UUID!, $roomId: UUID!, $card: String!) {
   pickCard(userId: $userId, roomId: $roomId, card: $card) {
+    ...RoomFragment
+  }
+}
+
+mutation ShowCards($roomId: UUID!) {
+  showCards(roomId: $roomId) {
+    ...RoomFragment
+  }
+}
+
+mutation ResetGame($roomId: UUID!) {
+  resetGame(roomId: $roomId) {
     ...RoomFragment
   }
 }

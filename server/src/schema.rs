@@ -1,6 +1,6 @@
 use crate::{
     domain::{
-        game::UserCard,
+        game::{Game, UserCard},
         room::Room,
         user::{User, UserInput},
     },
@@ -17,10 +17,10 @@ pub struct QueryRoot;
 
 #[Object]
 impl QueryRoot {
-    async fn rooms(&self, ctx: &Context<'_>) -> Vec<Room> {
-        let storage = ctx.data_unchecked::<Storage>().lock().unwrap();
+    async fn rooms(&self, ctx: &Context<'_>) -> Result<Vec<Room>> {
+        let storage = ctx.data_unchecked::<Storage>().lock()?;
 
-        storage.clone().into_iter().map(|(_, room)| room).collect()
+        Ok(storage.clone().into_iter().map(|(_, room)| room).collect())
     }
 }
 
@@ -28,15 +28,15 @@ pub struct MutationRoot;
 
 #[Object]
 impl MutationRoot {
-    async fn create_room(&self, ctx: &Context<'_>, name: Option<String>) -> Room {
-        let mut storage = ctx.data_unchecked::<Storage>().lock().unwrap();
+    async fn create_room(&self, ctx: &Context<'_>, name: Option<String>) -> Result<Room> {
+        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
         let room = Room::new(name);
 
         storage.insert(room.id.clone(), room.clone());
 
         SimpleBroker::publish(room.get_room());
 
-        room.get_room()
+        Ok(room.get_room())
     }
 
     async fn create_user(&self, username: String) -> User {
@@ -48,8 +48,8 @@ impl MutationRoot {
         ctx: &Context<'_>,
         room_id: EntityId,
         user: UserInput,
-    ) -> Option<Room> {
-        let mut storage = ctx.data_unchecked::<Storage>().lock().unwrap();
+    ) -> Result<Room> {
+        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
 
         match storage.get_mut(&room_id) {
             Some(room) => {
@@ -58,14 +58,14 @@ impl MutationRoot {
 
                     SimpleBroker::publish(room.get_room());
 
-                    Some(room.get_room())
+                    Ok(room.get_room())
                 } else {
                     SimpleBroker::publish(room.get_room());
 
-                    Some(room.get_room())
+                    Ok(room.get_room())
                 }
             }
-            None => None,
+            None => Err(Error::new("Room not found")),
         }
     }
 
@@ -78,23 +78,57 @@ impl MutationRoot {
     ) -> Result<Room> {
         let mut storage = ctx.data_unchecked::<Storage>().lock()?;
 
-        let room = storage.get_mut(&room_id).unwrap();
+        match storage.get_mut(&room_id) {
+            Some(room) => {
+                let mut table: Vec<UserCard> = room
+                    .game
+                    .table
+                    .clone()
+                    .into_iter()
+                    .filter(|u| u.user_id != user_id)
+                    .collect();
 
-        let mut table: Vec<UserCard> = room
-            .game
-            .table
-            .clone()
-            .into_iter()
-            .filter(|u| u.user_id != user_id)
-            .collect();
+                table.push(UserCard::new(user_id, card));
 
-        table.push(UserCard::new(user_id, card));
+                room.game.table = table.clone();
 
-        room.game.table = table.clone();
+                SimpleBroker::publish(room.get_room());
 
-        SimpleBroker::publish(room.get_room());
+                Ok(room.get_room())
+            }
+            None => Err(Error::new("Room not found")),
+        }
+    }
 
-        Ok(room.get_room())
+    async fn show_cards(&self, ctx: &Context<'_>, room_id: EntityId) -> Result<Room> {
+        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
+
+        match storage.get_mut(&room_id) {
+            Some(room) => {
+                room.is_shown_cards = true;
+
+                SimpleBroker::publish(room.get_room());
+
+                Ok(room.get_room())
+            }
+            None => Err(Error::new("Room not found")),
+        }
+    }
+
+    async fn reset_game(&self, ctx: &Context<'_>, room_id: EntityId) -> Result<Room> {
+        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
+
+        match storage.get_mut(&room_id) {
+            Some(room) => {
+                room.is_shown_cards = false;
+                room.game = Game::new();
+
+                SimpleBroker::publish(room.get_room());
+
+                Ok(room.get_room())
+            }
+            None => Err(Error::new("Room not found")),
+        }
     }
 }
 

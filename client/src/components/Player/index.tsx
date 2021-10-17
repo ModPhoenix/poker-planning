@@ -7,7 +7,7 @@ import { Card } from 'components/Card';
 interface PlayerProps {
   username: string;
   isCardPicked: boolean;
-  card: string | undefined;
+  card: string | null | undefined;
 }
 
 export function Player({
