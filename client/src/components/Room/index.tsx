@@ -42,7 +42,7 @@ export function Room({ room }: RoomProps): ReactElement {
           );
         })}
       </Stack>
-      <Table />
+      <Table isShownCards={room.isShownCards} roomId={room.id} />
       <Stack direction="row" spacing={2} sx={{ marginTop: 2 }}>
         {bottomUsersHalf.map(({ id, username }) => {
           const pickedCart = getPickedUserCard(id, room.game.table);
