@@ -1,12 +1,12 @@
 import Box from '@mui/material/Box';
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { usePickCardMutation } from 'api';
 import { Card } from 'components/Card';
 import { useAuth } from 'contexts';
 import { UserCard } from 'types';
-import { getUserPickedCart } from 'utils';
+import { getPickedUserCard } from 'utils';
 
 interface DeckProps {
   cards: string[];
@@ -15,6 +15,7 @@ interface DeckProps {
 }
 
 export function Deck({ cards, roomId, table }: DeckProps): ReactElement {
+  const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const { user } = useAuth();
 
   const [pickCardMutation] = usePickCardMutation({
@@ -31,11 +32,13 @@ export function Deck({ cards, roomId, table }: DeckProps): ReactElement {
           roomId,
           card,
         },
+      }).then(() => {
+        setSelectedCard(card);
       });
     }
   };
 
-  const pickedCart = getUserPickedCart(user?.id, table);
+  const pickedCart = getPickedUserCard(user?.id, table);
 
   return (
     <Box
@@ -49,7 +52,7 @@ export function Deck({ cards, roomId, table }: DeckProps): ReactElement {
         <Box
           key={card}
           sx={{
-            marginBottom: pickedCart === card ? '20px' : 0,
+            marginBottom: pickedCart && selectedCard === card ? '20px' : 0,
           }}
         >
           <Card onClick={handleCardClick(card)}>{card}</Card>

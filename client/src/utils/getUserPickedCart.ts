@@ -1,13 +1,13 @@
 import { UserCard } from 'types';
 
-export function getUserPickedCart(
+export function getPickedUserCard(
   userId?: string,
   table?: UserCard[],
-): string | undefined {
+): UserCard | undefined {
   const userCard = table?.find((userCard) => userCard.userId === userId);
 
   if (userCard) {
-    return userCard.card;
+    return userCard;
   }
 
   return undefined;

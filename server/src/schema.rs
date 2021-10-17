@@ -34,9 +34,9 @@ impl MutationRoot {
 
         storage.insert(room.id.clone(), room.clone());
 
-        SimpleBroker::publish(room.clone());
+        SimpleBroker::publish(room.get_room());
 
-        room
+        room.get_room()
     }
 
     async fn create_user(&self, username: String) -> User {
@@ -56,13 +56,13 @@ impl MutationRoot {
                 if !room.users.iter().any(|u| u.id == user.id) {
                     room.users.push(user.into());
 
-                    SimpleBroker::publish(room.clone());
+                    SimpleBroker::publish(room.get_room());
 
-                    Some(room.clone())
+                    Some(room.get_room())
                 } else {
-                    SimpleBroker::publish(room.clone());
+                    SimpleBroker::publish(room.get_room());
 
-                    Some(room.clone())
+                    Some(room.get_room())
                 }
             }
             None => None,
@@ -92,9 +92,9 @@ impl MutationRoot {
 
         room.game.table = table.clone();
 
-        SimpleBroker::publish(room.clone());
+        SimpleBroker::publish(room.get_room());
 
-        Ok(room.clone())
+        Ok(room.get_room())
     }
 }
 
