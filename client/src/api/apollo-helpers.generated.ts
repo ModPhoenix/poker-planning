@@ -9,22 +9,25 @@ export type GameFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	table?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationRootKeySpecifier = ('createRoom' | 'createUser' | 'joinRoom' | 'pickCard' | MutationRootKeySpecifier)[];
+export type MutationRootKeySpecifier = ('createRoom' | 'createUser' | 'joinRoom' | 'pickCard' | 'resetGame' | 'showCards' | MutationRootKeySpecifier)[];
 export type MutationRootFieldPolicy = {
 	createRoom?: FieldPolicy<any> | FieldReadFunction<any>,
 	createUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	joinRoom?: FieldPolicy<any> | FieldReadFunction<any>,
-	pickCard?: FieldPolicy<any> | FieldReadFunction<any>
+	pickCard?: FieldPolicy<any> | FieldReadFunction<any>,
+	resetGame?: FieldPolicy<any> | FieldReadFunction<any>,
+	showCards?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type QueryRootKeySpecifier = ('rooms' | QueryRootKeySpecifier)[];
 export type QueryRootFieldPolicy = {
 	rooms?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type RoomKeySpecifier = ('deck' | 'game' | 'id' | 'name' | 'users' | RoomKeySpecifier)[];
+export type RoomKeySpecifier = ('deck' | 'game' | 'id' | 'isShownCards' | 'name' | 'users' | RoomKeySpecifier)[];
 export type RoomFieldPolicy = {
 	deck?: FieldPolicy<any> | FieldReadFunction<any>,
 	game?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	isShownCards?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	users?: FieldPolicy<any> | FieldReadFunction<any>
 };

@@ -3,7 +3,11 @@ use uuid::Uuid;
 
 use crate::types::EntityId;
 
-use super::{deck::Deck, game::Game, user::User};
+use super::{
+    deck::Deck,
+    game::{Game, UserCard},
+    user::User,
+};
 
 #[derive(Clone, Debug, SimpleObject)]
 pub struct Room {
@@ -12,6 +16,7 @@ pub struct Room {
     pub users: Vec<User>,
     pub deck: Deck,
     pub game: Game,
+    pub is_shown_cards: bool,
 }
 
 impl Room {
@@ -22,6 +27,32 @@ impl Room {
             users: vec![],
             deck: Deck::new(),
             game: Game::new(),
+            is_shown_cards: false,
+        }
+    }
+
+    pub fn get_room(&self) -> Room {
+        if self.is_shown_cards {
+            self.clone()
+        } else {
+            let table: Vec<UserCard> = self
+                .clone()
+                .game
+                .table
+                .iter()
+                .map(|user_card| UserCard {
+                    user_id: user_card.user_id,
+                    card: None,
+                })
+                .collect();
+
+            Room {
+                game: Game {
+                    table,
+                    ..self.game.clone()
+                },
+                ..self.clone()
+            }
         }
     }
 }

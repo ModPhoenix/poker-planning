@@ -12,7 +12,7 @@ pub struct Game {
 #[derive(Clone, Debug, SimpleObject)]
 pub struct UserCard {
     pub user_id: EntityId,
-    pub card: Card,
+    pub card: Option<Card>,
 }
 
 impl Game {
@@ -26,6 +26,9 @@ impl Game {
 
 impl UserCard {
     pub fn new(user_id: EntityId, card: Card) -> Self {
-        UserCard { user_id, card }
+        UserCard {
+            user_id,
+            card: Some(card),
+        }
     }
 }

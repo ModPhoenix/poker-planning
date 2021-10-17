@@ -6,10 +6,27 @@ import { Card } from 'components/Card';
 
 interface PlayerProps {
   username: string;
-  card?: string;
+  isCardPicked: boolean;
+  card: string | null | undefined;
 }
 
-export function Player({ username, card }: PlayerProps): ReactElement {
+export function Player({
+  username,
+  isCardPicked,
+  card,
+}: PlayerProps): ReactElement {
+  let cardSymbol;
+
+  if (isCardPicked) {
+    if (card) {
+      cardSymbol = card;
+    } else {
+      cardSymbol = '👌';
+    }
+  } else {
+    cardSymbol = '😴';
+  }
+
   return (
     <Box
       sx={{
@@ -18,7 +35,7 @@ export function Player({ username, card }: PlayerProps): ReactElement {
         alignItems: 'center',
       }}
     >
-      <Card>{card || '😴'}</Card>
+      <Card>{cardSymbol}</Card>
       <Typography component="span">{username}</Typography>
     </Box>
   );
