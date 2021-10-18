@@ -7,6 +7,10 @@ use async_graphql_actix_web::{Request, Response, WSSubscription};
 
 use crate::schema::PokerPlanningSchema;
 
+pub async fn health_check() -> HttpResponse {
+    HttpResponse::Ok().finish()
+}
+
 pub async fn index(schema: web::Data<PokerPlanningSchema>, req: Request) -> Response {
     schema.execute(req.into_inner()).await.into()
 }

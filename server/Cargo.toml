@@ -10,6 +10,7 @@ edition = "2018"
 [dependencies]
 config = "0.11.0"
 serde = { version = "1.0.130", features = ["derive"]}
+serde-aux = "2.3.0"
 
 actix-web = "3.3.2"
 actix-rt = "2.2.0"
