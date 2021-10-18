@@ -28,3 +28,12 @@ cp .env.local.example .env.local
 npm i
 npm start
 ```
+
+### Digitalocean CLI
+
+```sh
+doctl auth init
+doctl apps create --spec spec.yaml
+doctl apps list
+doctl apps update APP-ID --spec=spec.yaml
+```

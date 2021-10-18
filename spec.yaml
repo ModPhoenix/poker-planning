@@ -36,10 +36,10 @@ static_sites:
     envs:
       - key: REACT_APP_GRAPHQL_ENDPOINT
         scope: BUILD_TIME
-        value: /graphql
+        value: https://poker-planning-39gkk.ondigitalocean.app/graphql
       - key: REACT_APP_GRAPHQL_WS_ENDPOINT
         scope: BUILD_TIME
-        value: /graphql
+        value: wss://poker-planning-39gkk.ondigitalocean.app/graphql
     github:
       branch: main
       deploy_on_push: true
