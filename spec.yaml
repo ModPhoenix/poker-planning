@@ -4,7 +4,7 @@ name: poker-planning
 # `fra` stands for Frankfurt (Germany - EU)
 region: fra
 services:
-  - name: poker-planning
+  - name: server
     # Relative to the repository root
     dockerfile_path: Dockerfile
     source_dir: .
@@ -25,8 +25,26 @@ services:
     instance_size_slug: basic-xxs
     # All incoming requests should be routed to our app
     routes:
-      - path: /
+      - path: /graphql
     envs:
       - key: APP_APPLICATION__BASE_URL
         scope: RUN_TIME
         value: ${APP_URL}
+static_sites:
+  - build_command: npm run build
+    environment_slug: node-js
+    envs:
+      - key: REACT_APP_GRAPHQL_ENDPOINT
+        scope: BUILD_TIME
+        value: /graphql
+      - key: REACT_APP_GRAPHQL_WS_ENDPOINT
+        scope: BUILD_TIME
+        value: /graphql
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: ModPhoenix/poker-planning
+    name: client
+    routes:
+      - path: /
+    source_dir: /client
