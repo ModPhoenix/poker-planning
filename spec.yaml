@@ -45,6 +45,7 @@ static_sites:
       deploy_on_push: true
       repo: ModPhoenix/poker-planning
     name: client
+    catchall_document: index.html
     routes:
       - path: /
     source_dir: /client
