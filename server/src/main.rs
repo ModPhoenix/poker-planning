@@ -4,9 +4,9 @@ use std::{
 };
 
 use crate::{
-    handlers::{index, index_playground, index_ws},
+    configuration::get_configuration,
+    handlers::{health_check, index, index_playground, index_ws},
     schema::{MutationRoot, QueryRoot, SubscriptionRoot},
-    settings::get_settings,
     types::Storage,
 };
 
@@ -14,10 +14,10 @@ use actix_cors::Cors;
 use actix_web::{guard, http::header, middleware, web, App, HttpServer};
 use async_graphql::Schema;
 
+mod configuration;
 mod domain;
 mod handlers;
 mod schema;
-mod settings;
 mod simple_broker;
 mod types;
 
@@ -26,7 +26,7 @@ async fn main() -> std::io::Result<()> {
     println!("Hello, world! This is the pokerplanning.org");
     env_logger::init();
 
-    let settings = get_settings().expect("Failed to read settings.");
+    let settings = get_configuration().expect("Failed to read settings.");
     let server_address = settings.get_server_address();
 
     let storage: Storage = Arc::new(Mutex::new(HashMap::new()));
@@ -59,6 +59,11 @@ async fn main() -> std::io::Result<()> {
                     .to(index_ws),
             )
             .service(web::resource("/").guard(guard::Get()).to(index_playground))
+            .service(
+                web::resource("/health_check")
+                    .guard(guard::Get())
+                    .to(health_check),
+            )
     })
     .bind(server_address)?
     .run()

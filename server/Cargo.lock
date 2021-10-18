@@ -1688,6 +1688,7 @@ dependencies = [
  "futures-timer",
  "once_cell",
  "serde 1.0.130",
+ "serde-aux",
  "slab",
  "uuid",
 ]
@@ -1952,6 +1953,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f12d06de37cf59146fbdecab66aa99f9fe4f78722e3607577a5375d66bd0c913"
 dependencies = [
  "serde_derive",
+]
+
+[[package]]
+name = "serde-aux"
+version = "2.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "907c320ef8f45ce134b28ca9567ec58ec0d51dcae4e1ffe7ee0cc15517243810"
+dependencies = [
+ "chrono",
+ "serde 1.0.130",
+ "serde_json",
 ]
 
 [[package]]
