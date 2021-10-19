@@ -1,5 +1,6 @@
 use std::{
     collections::HashMap,
+    env,
     sync::{Arc, Mutex},
 };
 
@@ -23,6 +24,7 @@ mod types;
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     println!("Hello, world! This is the pokerplanning.org");
+    env::set_var("RUST_LOG", "actix_web=info");
     env_logger::init();
 
     let settings = get_configuration().expect("Failed to read settings.");
