@@ -6,7 +6,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  ReactElement,
+  useEffect,
+  useState,
+  KeyboardEvent,
+} from 'react';
 
 import { useCreateUserMutation } from 'api';
 import { useAuth } from 'contexts';
@@ -49,6 +55,12 @@ export function CreateUserDialog(): ReactElement {
     setUsername(value);
   };
 
+  const onKeyPressUsername = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
+  };
+
   return (
     <Dialog open={open}>
       <DialogTitle>Enter your Username</DialogTitle>
@@ -80,6 +92,7 @@ export function CreateUserDialog(): ReactElement {
           type="text"
           fullWidth
           onChange={onChangeUsername}
+          onKeyPress={onKeyPressUsername}
           value={username}
           error={isUsernameError}
           helperText={isUsernameError ? 'Username cannot be empty' : ' '}

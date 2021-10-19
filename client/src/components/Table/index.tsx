@@ -1,6 +1,7 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
 import { ReactElement } from 'react';
+import { toast } from 'react-hot-toast';
 
 import { useResetGameMutation, useShowCardsMutation } from 'api';
 
@@ -11,10 +12,18 @@ interface TableProps {
 
 export function Table({ isShownCards, roomId }: TableProps): ReactElement {
   const [showCardsMutation, { loading: showCardLoading }] =
-    useShowCardsMutation();
+    useShowCardsMutation({
+      onError: (error) => {
+        toast.error(`Show cards: ${error.message}`);
+      },
+    });
 
   const [resetGameMutation, { loading: resetGameLoading }] =
-    useResetGameMutation();
+    useResetGameMutation({
+      onError: (error) => {
+        toast.error(`Reset game: ${error.message}`);
+      },
+    });
 
   function handleShowCards() {
     showCardsMutation({
