@@ -2,6 +2,10 @@
 
 Mono repository for scrum poker tool [pokerplanning.org](https://pokerplanning.org/)
 
+## Alpha version
+
+Alpha version is available at the following link [Poker Planning Alpha](https://poker-planning-39gkk.ondigitalocean.app/)
+
 ## Getting Started
 
 ### Setup environment
