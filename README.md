@@ -1,10 +1,23 @@
 # PokerPlanning.org
 
-Mono repository for scrum poker tool [pokerplanning.org](https://pokerplanning.org/)
+The main mission of this project is to make **online planning poker** super easy 🤩 and enjoyable 🥰. And also free to use for people from all over the world 🌍🌎🌏!
 
-## Alpha version
+Mono repository for scrum poker tool [PokerPlanning.org](https://pokerplanning.org/)
+
+## Alpha version 🏗
 
 Alpha version is available at the following link [Poker Planning Alpha](https://poker-planning-39gkk.ondigitalocean.app/)
+
+## Fancy technologies
+
+- Server 🚀
+  - Rust 🦀
+  - async-graphql 😱
+- Client 🦄
+  - TypeScript 😻
+  - React ⚛️
+  - apollo-client 🤌
+  - material-ui 😎
 
 ## Getting Started
 
