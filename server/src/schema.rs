@@ -88,6 +88,10 @@ impl MutationRoot {
                     .filter(|u| u.user_id != user_id)
                     .collect();
 
+                if room.is_game_over {
+                    return Err(Error::new("Game over"));
+                }
+
                 table.push(UserCard::new(user_id, card));
 
                 room.game.table = table.clone();
@@ -105,7 +109,7 @@ impl MutationRoot {
 
         match storage.get_mut(&room_id) {
             Some(room) => {
-                room.is_shown_cards = true;
+                room.is_game_over = true;
 
                 SimpleBroker::publish(room.get_room());
 
@@ -120,7 +124,7 @@ impl MutationRoot {
 
         match storage.get_mut(&room_id) {
             Some(room) => {
-                room.is_shown_cards = false;
+                room.is_game_over = false;
                 room.game = Game::new();
 
                 SimpleBroker::publish(room.get_room());

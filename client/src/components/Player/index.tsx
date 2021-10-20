@@ -7,12 +7,14 @@ import { Card } from 'components/Card';
 interface PlayerProps {
   username: string;
   isCardPicked: boolean;
+  isGameOver: boolean;
   card: string | null | undefined;
 }
 
 export function Player({
   username,
   isCardPicked,
+  isGameOver,
   card,
 }: PlayerProps): ReactElement {
   let cardSymbol;
@@ -21,10 +23,14 @@ export function Player({
     if (card) {
       cardSymbol = card;
     } else {
-      cardSymbol = '👌';
+      cardSymbol = '✅';
     }
   } else {
-    cardSymbol = '😴';
+    if (isGameOver) {
+      cardSymbol = '😴';
+    } else {
+      cardSymbol = '🤔';
+    }
   }
 
   return (
@@ -35,7 +41,9 @@ export function Player({
         alignItems: 'center',
       }}
     >
-      <Card>{cardSymbol}</Card>
+      <Card disableRipple disableElevation>
+        {cardSymbol}
+      </Card>
       <Typography component="span">{username}</Typography>
     </Box>
   );
