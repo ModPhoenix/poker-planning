@@ -87,7 +87,7 @@ export type Room = {
   deck: Deck;
   game: Game;
   id: Scalars['UUID'];
-  isShownCards: Scalars['Boolean'];
+  isGameOver: Scalars['Boolean'];
   name?: Maybe<Scalars['String']>;
   users: Array<User>;
 };

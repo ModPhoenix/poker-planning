@@ -16,7 +16,7 @@ pub struct Room {
     pub users: Vec<User>,
     pub deck: Deck,
     pub game: Game,
-    pub is_shown_cards: bool,
+    pub is_game_over: bool,
 }
 
 impl Room {
@@ -27,12 +27,12 @@ impl Room {
             users: vec![],
             deck: Deck::new(),
             game: Game::new(),
-            is_shown_cards: false,
+            is_game_over: false,
         }
     }
 
     pub fn get_room(&self) -> Room {
-        if self.is_shown_cards {
+        if self.is_game_over {
             self.clone()
         } else {
             let table: Vec<UserCard> = self

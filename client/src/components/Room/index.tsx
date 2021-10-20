@@ -37,12 +37,17 @@ export function Room({ room }: RoomProps): ReactElement {
               key={id}
               username={username}
               isCardPicked={Boolean(pickedCart)}
+              isGameOver={room.isGameOver}
               card={pickedCart?.card}
             />
           );
         })}
       </Stack>
-      <Table isShownCards={room.isShownCards} roomId={room.id} />
+      <Table
+        roomId={room.id}
+        isCardsPicked={Boolean(room.game.table.length)}
+        isGameOver={room.isGameOver}
+      />
       <Stack direction="row" spacing={2} sx={{ marginTop: 2 }}>
         {bottomUsersHalf.map(({ id, username }) => {
           const pickedCart = getPickedUserCard(id, room.game.table);
@@ -52,6 +57,7 @@ export function Room({ room }: RoomProps): ReactElement {
               username={username}
               isCardPicked={Boolean(pickedCart)}
               card={pickedCart?.card}
+              isGameOver={room.isGameOver}
             />
           );
         })}

@@ -59,8 +59,9 @@ export function RoomPage(): ReactElement {
               }}
             >
               <Deck
-                cards={room.deck.cards}
                 roomId={roomId}
+                isGameOver={room.isGameOver}
+                cards={room.deck.cards}
                 table={room.game.table}
               />
             </Box>

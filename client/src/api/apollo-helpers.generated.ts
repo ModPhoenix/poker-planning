@@ -22,12 +22,12 @@ export type QueryRootKeySpecifier = ('rooms' | QueryRootKeySpecifier)[];
 export type QueryRootFieldPolicy = {
 	rooms?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type RoomKeySpecifier = ('deck' | 'game' | 'id' | 'isShownCards' | 'name' | 'users' | RoomKeySpecifier)[];
+export type RoomKeySpecifier = ('deck' | 'game' | 'id' | 'isGameOver' | 'name' | 'users' | RoomKeySpecifier)[];
 export type RoomFieldPolicy = {
 	deck?: FieldPolicy<any> | FieldReadFunction<any>,
 	game?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	isShownCards?: FieldPolicy<any> | FieldReadFunction<any>,
+	isGameOver?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	users?: FieldPolicy<any> | FieldReadFunction<any>
 };

@@ -23,7 +23,7 @@ fragment GameFragment on Game {
 fragment RoomFragment on Room {
   id
   name
-  isShownCards
+  isGameOver
   users {
     ...UserFragment
   }
