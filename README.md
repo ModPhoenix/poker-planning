@@ -1,4 +1,4 @@
-# PokerPlanning.org
+# PokerPlanning.org 🃏
 
 The main mission of this project is to make **online planning poker** super easy 🤩 and enjoyable 🥰. And also free to use for people from all over the world 🌍🌎🌏!
 
@@ -8,7 +8,7 @@ Mono repository for scrum poker tool [PokerPlanning.org](https://pokerplanning.o
 
 Alpha version is available at the following link [Poker Planning Alpha](https://poker-planning-39gkk.ondigitalocean.app/)
 
-## Fancy technologies
+## Fancy technologies 🌈
 
 - Server 🚀
   - Rust 🦀
@@ -19,7 +19,7 @@ Alpha version is available at the following link [Poker Planning Alpha](https://
   - apollo-client 🤌
   - material-ui 😎
 
-## Getting Started
+## Getting Started 🛠
 
 ### Setup environment
 
