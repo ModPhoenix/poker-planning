@@ -1,11 +1,13 @@
 import IosShareIcon from '@mui/icons-material/IosShare';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { Avatar, Typography } from '@mui/material';
+import { Avatar, AvatarGroup, IconButton, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 import { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
+
+import { AccountMenu } from 'components/AccountMenu';
+import { avatarNameToColor } from 'utils';
 
 const List = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -13,12 +15,10 @@ const List = styled('div')(({ theme }) => ({
   width: 'fit-content',
   borderRadius: theme.spacing(1),
   background: theme.palette.background.paper,
-  '& svg': {
-    margin: theme.spacing(1.5),
-  },
+  padding: `${theme.spacing(0.5)} ${theme.spacing(2)}`,
   '& hr': {
-    marginLeft: theme.spacing(0.5),
-    marginRight: theme.spacing(0.5),
+    marginLeft: theme.spacing(1.5),
+    marginRight: theme.spacing(1.5),
   },
 }));
 
@@ -34,25 +34,37 @@ export function Header(): ReactElement {
         <Link to="/">
           <Typography
             component="span"
-            variant="h6"
             sx={{
-              marginLeft: 2,
-              marginRight: 2,
+              marginLeft: 1,
             }}
           >
-            Poker Planning
+            PokerPlanning
           </Typography>
         </Link>
         <Divider orientation="vertical" variant="middle" flexItem />
-        <Typography component="span" sx={{ marginLeft: 2, marginRight: 2 }}>
-          Room Name
-        </Typography>
+        <Typography component="span">Room Name</Typography>
         <Divider orientation="vertical" variant="middle" flexItem />
-        <IosShareIcon />
-        <SettingsIcon />
+        <IconButton
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+        >
+          <IosShareIcon />
+        </IconButton>
       </List>
       <List>
-        <Avatar sx={{ width: 24, height: 24, m: 1.5 }}>U</Avatar>
+        <AvatarGroup max={4}>
+          <Avatar alt="Remy Sharp" {...avatarNameToColor('Kent Dodds')} />
+          <Avatar alt="Travis Howard" {...avatarNameToColor('Travis Howard')} />
+          <Avatar alt="Cindy Baker" {...avatarNameToColor('Cindy Baker')} />
+          <Avatar alt="Agnes Walker" {...avatarNameToColor('Agnes Walker')} />
+          <Avatar
+            alt="Trevor Henderson"
+            {...avatarNameToColor('Trevor Henderson')}
+          />
+        </AvatarGroup>
+        <Divider orientation="vertical" variant="middle" flexItem />
+        <AccountMenu />
       </List>
     </Box>
   );
