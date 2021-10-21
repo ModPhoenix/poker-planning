@@ -44,7 +44,7 @@ export function RoomPage(): ReactElement {
 
   return (
     <>
-      <PageLayout>
+      <PageLayout users={room?.users}>
         {room && (
           <>
             <Room room={room} />
