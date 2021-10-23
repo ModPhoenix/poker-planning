@@ -9,39 +9,30 @@ import TextField from '@mui/material/TextField';
 import {
   ChangeEvent,
   ReactElement,
-  useEffect,
   useState,
   KeyboardEvent,
+  Dispatch,
+  SetStateAction,
 } from 'react';
 
-import { useCreateUserMutation } from 'api';
+import { useEditUserMutation } from 'api';
 import { useAuth } from 'contexts';
-import { User } from 'types';
 
-interface CreateUserDialogProps {
-  handleJoinRoomMutation(user: User): void;
+interface EditUserDialogProps {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export function CreateUserDialog({
-  handleJoinRoomMutation,
-}: CreateUserDialogProps): ReactElement {
+// TODO: reuse code between two similar components CreateUserDialog and EditUserDialog
+export function EditUserDialog({
+  open,
+  setOpen,
+}: EditUserDialogProps): ReactElement {
   const { user, login } = useAuth();
-  const [open, setOpen] = useState<boolean>(!Boolean(user));
   const [username, setUsername] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  useEffect(() => {
-    setOpen(!Boolean(user));
-  }, [user]);
-
-  const [createUserMutation, { loading, error }] = useCreateUserMutation({
-    variables: {
-      username,
-    },
-    onCompleted(data) {
-      handleJoinRoomMutation(data.createUser);
-    },
-  });
+  const [editUserMutation, { loading, error }] = useEditUserMutation();
 
   const isUsernameEmpty = !Boolean(username);
   const isUsernameError = isSubmitted && isUsernameEmpty;
@@ -49,11 +40,20 @@ export function CreateUserDialog({
   const handleSubmit = async () => {
     setIsSubmitted(true);
 
-    if (!isUsernameEmpty) {
+    if (!isUsernameEmpty && user) {
       try {
-        const res = await createUserMutation();
+        const res = await editUserMutation({
+          variables: {
+            userId: user.id,
+            username,
+          },
+        });
+
         if (res.data) {
-          login?.(res.data.createUser);
+          login?.({
+            id: res.data.editUser.id,
+            username: res.data.editUser.username,
+          });
           setOpen(false);
         }
       } catch {}
@@ -72,7 +72,12 @@ export function CreateUserDialog({
   };
 
   return (
-    <Dialog open={open}>
+    <Dialog
+      open={open}
+      onClose={() => {
+        setOpen(false);
+      }}
+    >
       <DialogTitle>Enter your Username</DialogTitle>
       <DialogContent
         sx={{

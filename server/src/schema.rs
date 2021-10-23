@@ -69,6 +69,34 @@ impl MutationRoot {
         }
     }
 
+    async fn edit_user(
+        &self,
+        ctx: &Context<'_>,
+        user_id: EntityId,
+        username: String,
+    ) -> Result<User> {
+        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
+
+        *storage = storage
+            .clone()
+            .into_iter()
+            .map(|(key, mut room)| {
+                if room.is_user_exist(user_id) {
+                    room.edit_user(user_id, username.clone());
+
+                    SimpleBroker::publish(room.get_room());
+                }
+
+                (key, room)
+            })
+            .collect();
+
+        Ok(User {
+            id: user_id,
+            username,
+        })
+    }
+
     async fn logout(&self, ctx: &Context<'_>, user_id: EntityId) -> Result<bool> {
         let mut storage = ctx.data_unchecked::<Storage>().lock()?;
 

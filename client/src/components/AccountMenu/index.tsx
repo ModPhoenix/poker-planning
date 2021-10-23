@@ -11,11 +11,13 @@ import { ReactElement, useState, MouseEvent } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { useLogoutMutation } from 'api';
+import { EditUserDialog } from 'components/EditUserDialog';
 import { useAuth } from 'contexts';
 import { avatarNameToColor } from 'utils';
 
 export function AccountMenu(): ReactElement {
   const { user, logout } = useAuth();
+  const [openEditUserDialog, setOpenEditUserDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [logoutMutation] = useLogoutMutation({
     onCompleted() {
@@ -44,6 +46,10 @@ export function AccountMenu(): ReactElement {
         },
       });
     }
+  }
+
+  function handleOpenEditUserDialog() {
+    setOpenEditUserDialog(true);
   }
 
   return (
@@ -94,7 +100,7 @@ export function AccountMenu(): ReactElement {
           <Avatar /> {user?.username}
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={handleOpenEditUserDialog}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
@@ -107,6 +113,10 @@ export function AccountMenu(): ReactElement {
           Logout
         </MenuItem>
       </Menu>
+      <EditUserDialog
+        open={openEditUserDialog}
+        setOpen={setOpenEditUserDialog}
+      />
     </>
   );
 }

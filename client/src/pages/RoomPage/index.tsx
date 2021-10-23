@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 import { toast } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 
@@ -7,10 +7,12 @@ import { useJoinRoomMutation, useRoomSubscription } from 'api';
 import { Deck, PageLayout, Room } from 'components';
 import { CreateUserDialog } from 'components/CreateUserDialog';
 import { useAuth } from 'contexts';
+import { User } from 'types';
 
 export function RoomPage(): ReactElement {
   const { roomId = '' } = useParams();
   const { user } = useAuth();
+  const isJoinRoomCalledRef = useRef(false);
 
   const { data: subscriptionData, error: roomSubscriptionError } =
     useRoomSubscription({
@@ -30,15 +32,29 @@ export function RoomPage(): ReactElement {
   });
 
   useEffect(() => {
-    if (user) {
+    if (user && !isJoinRoomCalledRef.current) {
       joinRoomMutation({
         variables: {
           roomId,
-          user: { id: user.id, username: user.username },
+          user: {
+            id: user.id,
+            username: user.username,
+          },
         },
       });
+
+      isJoinRoomCalledRef.current = true;
     }
   }, [joinRoomMutation, roomId, user]);
+
+  function handleJoinRoomMutation(user: User) {
+    joinRoomMutation({
+      variables: {
+        roomId,
+        user: { id: user.id, username: user.username },
+      },
+    });
+  }
 
   const room = subscriptionData?.room || joinRoomData?.joinRoom;
 
@@ -68,7 +84,7 @@ export function RoomPage(): ReactElement {
           </>
         )}
       </PageLayout>
-      <CreateUserDialog />
+      <CreateUserDialog handleJoinRoomMutation={handleJoinRoomMutation} />
     </>
   );
 }

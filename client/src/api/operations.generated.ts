@@ -35,6 +35,14 @@ export type JoinRoomMutationVariables = Types.Exact<{
 
 export type JoinRoomMutation = { __typename?: 'MutationRoot', joinRoom: { __typename?: 'Room', id: string, name?: string | null | undefined, isGameOver: boolean, users: Array<{ __typename?: 'User', id: string, username: string }>, deck: { __typename?: 'Deck', id: string, cards: Array<string> }, game: { __typename?: 'Game', id: string, table: Array<{ __typename?: 'UserCard', userId: string, card?: string | null | undefined }> } } };
 
+export type EditUserMutationVariables = Types.Exact<{
+  userId: Types.Scalars['UUID'];
+  username: Types.Scalars['String'];
+}>;
+
+
+export type EditUserMutation = { __typename?: 'MutationRoot', editUser: { __typename?: 'User', id: string, username: string } };
+
 export type LogoutMutationVariables = Types.Exact<{
   userId: Types.Scalars['UUID'];
 }>;
@@ -216,6 +224,40 @@ export function useJoinRoomMutation(baseOptions?: Apollo.MutationHookOptions<Joi
 export type JoinRoomMutationHookResult = ReturnType<typeof useJoinRoomMutation>;
 export type JoinRoomMutationResult = Apollo.MutationResult<JoinRoomMutation>;
 export type JoinRoomMutationOptions = Apollo.BaseMutationOptions<JoinRoomMutation, JoinRoomMutationVariables>;
+export const EditUserDocument = gql`
+    mutation EditUser($userId: UUID!, $username: String!) {
+  editUser(userId: $userId, username: $username) {
+    ...UserFragment
+  }
+}
+    ${UserFragmentFragmentDoc}`;
+export type EditUserMutationFn = Apollo.MutationFunction<EditUserMutation, EditUserMutationVariables>;
+
+/**
+ * __useEditUserMutation__
+ *
+ * To run a mutation, you first call `useEditUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editUserMutation, { data, loading, error }] = useEditUserMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useEditUserMutation(baseOptions?: Apollo.MutationHookOptions<EditUserMutation, EditUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditUserMutation, EditUserMutationVariables>(EditUserDocument, options);
+      }
+export type EditUserMutationHookResult = ReturnType<typeof useEditUserMutation>;
+export type EditUserMutationResult = Apollo.MutationResult<EditUserMutation>;
+export type EditUserMutationOptions = Apollo.BaseMutationOptions<EditUserMutation, EditUserMutationVariables>;
 export const LogoutDocument = gql`
     mutation Logout($userId: UUID!) {
   logout(userId: $userId)

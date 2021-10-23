@@ -38,6 +38,7 @@ export type MutationRoot = {
   __typename?: 'MutationRoot';
   createRoom: Room;
   createUser: User;
+  editUser: User;
   joinRoom: Room;
   logout: Scalars['Boolean'];
   pickCard: Room;
@@ -52,6 +53,12 @@ export type MutationRootCreateRoomArgs = {
 
 
 export type MutationRootCreateUserArgs = {
+  username: Scalars['String'];
+};
+
+
+export type MutationRootEditUserArgs = {
+  userId: Scalars['UUID'];
   username: Scalars['String'];
 };
 

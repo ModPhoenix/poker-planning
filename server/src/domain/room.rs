@@ -60,6 +60,25 @@ impl Room {
         self.users.iter().any(|user| user.id == user_id)
     }
 
+    pub fn edit_user(&mut self, user_id: EntityId, username: String) {
+        let users: Vec<User> = self
+            .users
+            .clone()
+            .into_iter()
+            .map(|mut user| {
+                if user.id == user_id {
+                    user.username = username.clone();
+
+                    user
+                } else {
+                    user
+                }
+            })
+            .collect();
+
+        self.users = users;
+    }
+
     pub fn remove_user(&mut self, user_id: EntityId) {
         let users: Vec<User> = self
             .users

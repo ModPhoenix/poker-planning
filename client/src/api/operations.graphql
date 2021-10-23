@@ -53,6 +53,12 @@ mutation JoinRoom($roomId: UUID!, $user: UserInput!) {
   }
 }
 
+mutation EditUser($userId: UUID!, $username: String!) {
+  editUser(userId: $userId, username: $username) {
+    ...UserFragment
+  }
+}
+
 mutation Logout($userId: UUID!) {
   logout(userId: $userId)
 }
