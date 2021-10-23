@@ -7,6 +7,7 @@ import { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 
 import { AccountMenu } from 'components/AccountMenu';
+import { useAuth } from 'contexts';
 import { User } from 'types';
 import { avatarNameToColor } from 'utils';
 
@@ -28,6 +29,8 @@ interface HeaderProps {
 }
 
 export function Header({ users }: HeaderProps): ReactElement {
+  const { user } = useAuth();
+
   return (
     <Box
       sx={{
@@ -57,23 +60,25 @@ export function Header({ users }: HeaderProps): ReactElement {
           <IosShareIcon />
         </IconButton>
       </List>
-      <List>
-        {users && (
-          <>
-            <AvatarGroup max={4}>
-              {users.map((user) => (
-                <Avatar
-                  key={user.id}
-                  alt={user.username}
-                  {...avatarNameToColor(user.username)}
-                />
-              ))}
-            </AvatarGroup>
-            <Divider orientation="vertical" variant="middle" flexItem />
-          </>
-        )}
-        <AccountMenu />
-      </List>
+      {user && (
+        <List>
+          {users && (
+            <>
+              <AvatarGroup max={4}>
+                {users.map((user) => (
+                  <Avatar
+                    key={user.id}
+                    alt={user.username}
+                    {...avatarNameToColor(user.username)}
+                  />
+                ))}
+              </AvatarGroup>
+              <Divider orientation="vertical" variant="middle" flexItem />
+            </>
+          )}
+          <AccountMenu />
+        </List>
+      )}
     </Box>
   );
 }

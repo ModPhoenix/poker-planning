@@ -69,6 +69,26 @@ impl MutationRoot {
         }
     }
 
+    async fn logout(&self, ctx: &Context<'_>, user_id: EntityId) -> Result<bool> {
+        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
+
+        *storage = storage
+            .clone()
+            .into_iter()
+            .map(|(key, mut room)| {
+                if room.is_user_exist(user_id) {
+                    room.remove_user(user_id);
+
+                    SimpleBroker::publish(room.get_room());
+                }
+
+                (key, room)
+            })
+            .collect();
+
+        Ok(true)
+    }
+
     async fn pick_card(
         &self,
         ctx: &Context<'_>,
