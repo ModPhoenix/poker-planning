@@ -8,13 +8,26 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 import { ReactElement, useState, MouseEvent } from 'react';
+import { toast } from 'react-hot-toast';
 
+import { useLogoutMutation } from 'api';
+import { EditUserDialog } from 'components/EditUserDialog';
 import { useAuth } from 'contexts';
 import { avatarNameToColor } from 'utils';
 
 export function AccountMenu(): ReactElement {
   const { user, logout } = useAuth();
+  const [openEditUserDialog, setOpenEditUserDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [logoutMutation] = useLogoutMutation({
+    onCompleted() {
+      logout?.();
+    },
+    onError: (error) => {
+      toast.error(`Logout: ${error.message}`);
+    },
+  });
+
   const open = Boolean(anchorEl);
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -24,6 +37,20 @@ export function AccountMenu(): ReactElement {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  function handleLogout() {
+    if (user) {
+      logoutMutation({
+        variables: {
+          userId: user.id,
+        },
+      });
+    }
+  }
+
+  function handleOpenEditUserDialog() {
+    setOpenEditUserDialog(true);
+  }
 
   return (
     <>
@@ -73,19 +100,23 @@ export function AccountMenu(): ReactElement {
           <Avatar /> {user?.username}
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={handleOpenEditUserDialog}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
           Change username
         </MenuItem>
-        <MenuItem onClick={logout}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
           Logout
         </MenuItem>
       </Menu>
+      <EditUserDialog
+        open={openEditUserDialog}
+        setOpen={setOpenEditUserDialog}
+      />
     </>
   );
 }

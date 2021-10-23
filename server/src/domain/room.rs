@@ -55,4 +55,47 @@ impl Room {
             }
         }
     }
+
+    pub fn is_user_exist(&self, user_id: EntityId) -> bool {
+        self.users.iter().any(|user| user.id == user_id)
+    }
+
+    pub fn edit_user(&mut self, user_id: EntityId, username: String) {
+        let users: Vec<User> = self
+            .users
+            .clone()
+            .into_iter()
+            .map(|mut user| {
+                if user.id == user_id {
+                    user.username = username.clone();
+
+                    user
+                } else {
+                    user
+                }
+            })
+            .collect();
+
+        self.users = users;
+    }
+
+    pub fn remove_user(&mut self, user_id: EntityId) {
+        let users: Vec<User> = self
+            .users
+            .clone()
+            .into_iter()
+            .filter(|user| user.id != user_id)
+            .collect();
+
+        let table: Vec<UserCard> = self
+            .game
+            .table
+            .clone()
+            .into_iter()
+            .filter(|user_card| user_card.user_id != user_id)
+            .collect();
+
+        self.users = users;
+        self.game.table = table;
+    }
 }

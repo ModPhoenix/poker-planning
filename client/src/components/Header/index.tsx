@@ -7,6 +7,8 @@ import { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 
 import { AccountMenu } from 'components/AccountMenu';
+import { useAuth } from 'contexts';
+import { User } from 'types';
 import { avatarNameToColor } from 'utils';
 
 const List = styled('div')(({ theme }) => ({
@@ -22,7 +24,13 @@ const List = styled('div')(({ theme }) => ({
   },
 }));
 
-export function Header(): ReactElement {
+interface HeaderProps {
+  users?: User[];
+}
+
+export function Header({ users }: HeaderProps): ReactElement {
+  const { user } = useAuth();
+
   return (
     <Box
       sx={{
@@ -52,20 +60,25 @@ export function Header(): ReactElement {
           <IosShareIcon />
         </IconButton>
       </List>
-      <List>
-        <AvatarGroup max={4}>
-          <Avatar alt="Remy Sharp" {...avatarNameToColor('Kent Dodds')} />
-          <Avatar alt="Travis Howard" {...avatarNameToColor('Travis Howard')} />
-          <Avatar alt="Cindy Baker" {...avatarNameToColor('Cindy Baker')} />
-          <Avatar alt="Agnes Walker" {...avatarNameToColor('Agnes Walker')} />
-          <Avatar
-            alt="Trevor Henderson"
-            {...avatarNameToColor('Trevor Henderson')}
-          />
-        </AvatarGroup>
-        <Divider orientation="vertical" variant="middle" flexItem />
-        <AccountMenu />
-      </List>
+      {user && (
+        <List>
+          {users && (
+            <>
+              <AvatarGroup max={4}>
+                {users.map((user) => (
+                  <Avatar
+                    key={user.id}
+                    alt={user.username}
+                    {...avatarNameToColor(user.username)}
+                  />
+                ))}
+              </AvatarGroup>
+              <Divider orientation="vertical" variant="middle" flexItem />
+            </>
+          )}
+          <AccountMenu />
+        </List>
+      )}
     </Box>
   );
 }
