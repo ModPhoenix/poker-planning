@@ -5,6 +5,7 @@ import { toast } from 'react-hot-toast';
 import { usePickCardMutation } from 'api';
 import { Card } from 'components/Card';
 import { useAuth } from 'contexts';
+import { useKeyboardControls } from 'hooks';
 import { UserCard } from 'types';
 import { getPickedUserCard } from 'utils';
 
@@ -23,6 +24,7 @@ export function Deck({
 }: DeckProps): ReactElement {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const { user } = useAuth();
+  const { cardsContainerRef } = useKeyboardControls();
 
   const [pickCardMutation] = usePickCardMutation({
     onError(error) {
@@ -54,6 +56,7 @@ export function Deck({
         justifyContent: 'space-between',
         alignItems: 'flex-end',
       }}
+      ref={cardsContainerRef}
     >
       {cards.map((card) => {
         const isCardPicked = pickedCart && selectedCard === card;
