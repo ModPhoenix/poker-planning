@@ -78,7 +78,6 @@ export function RoomPage(): ReactElement {
                 roomId={roomId}
                 isGameOver={room.isGameOver}
                 cards={room.deck.cards}
-                table={room.game.table}
               />
             </Box>
           </>
