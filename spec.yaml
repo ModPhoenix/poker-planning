@@ -6,8 +6,8 @@ region: fra
 services:
   - name: server
     # Relative to the repository root
-    dockerfile_path: Dockerfile
-    source_dir: .
+    dockerfile_path: /server/Dockerfile
+    source_dir: /server
     github:
       branch: main
       deploy_on_push: true
