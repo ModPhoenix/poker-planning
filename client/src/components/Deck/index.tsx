@@ -6,22 +6,14 @@ import { usePickCardMutation } from 'api';
 import { Card } from 'components/Card';
 import { useAuth } from 'contexts';
 import { useKeyboardControls } from 'hooks';
-import { UserCard } from 'types';
-import { getPickedUserCard } from 'utils';
 
 interface DeckProps {
   roomId: string;
   isGameOver: boolean;
   cards: string[];
-  table: UserCard[] | undefined;
 }
 
-export function Deck({
-  roomId,
-  isGameOver,
-  cards,
-  table,
-}: DeckProps): ReactElement {
+export function Deck({ roomId, isGameOver, cards }: DeckProps): ReactElement {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const { user } = useAuth();
   const { cardsContainerRef } = useKeyboardControls();
@@ -47,8 +39,6 @@ export function Deck({
     }
   };
 
-  const pickedCart = getPickedUserCard(user?.id, table);
-
   return (
     <Box
       sx={{
@@ -59,13 +49,13 @@ export function Deck({
       ref={cardsContainerRef}
     >
       {cards.map((card) => {
-        const isCardPicked = pickedCart && selectedCard === card;
+        const isCardPicked = selectedCard === card;
         return (
           <Box
             key={card}
             sx={{
               marginBottom: isCardPicked ? '12px' : 0,
-              transition: 'margin-Bottom 0.2s ease-in-out',
+              transition: 'margin-Bottom 0.1s ease-in-out',
             }}
           >
             <Card
