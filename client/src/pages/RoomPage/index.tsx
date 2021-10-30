@@ -60,7 +60,7 @@ export function RoomPage(): ReactElement {
 
   return (
     <>
-      <PageLayout users={room?.users}>
+      <PageLayout room={room} users={room?.users}>
         {room && (
           <>
             <Room room={room} />
@@ -78,6 +78,7 @@ export function RoomPage(): ReactElement {
                 roomId={roomId}
                 isGameOver={room.isGameOver}
                 cards={room.deck.cards}
+                table={room.game.table}
               />
             </Box>
           </>

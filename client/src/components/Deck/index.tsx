@@ -1,19 +1,27 @@
 import Box from '@mui/material/Box';
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { usePickCardMutation } from 'api';
 import { Card } from 'components/Card';
 import { useAuth } from 'contexts';
 import { useKeyboardControls } from 'hooks';
+import { UserCard } from 'types';
+import { getPickedUserCard } from 'utils';
 
 interface DeckProps {
   roomId: string;
   isGameOver: boolean;
   cards: string[];
+  table: UserCard[] | undefined;
 }
 
-export function Deck({ roomId, isGameOver, cards }: DeckProps): ReactElement {
+export function Deck({
+  roomId,
+  isGameOver,
+  cards,
+  table,
+}: DeckProps): ReactElement {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const { user } = useAuth();
   const { cardsContainerRef } = useKeyboardControls();
@@ -24,6 +32,13 @@ export function Deck({ roomId, isGameOver, cards }: DeckProps): ReactElement {
       toast.error(`Pick card: ${error.message}`);
     },
   });
+
+  useEffect(() => {
+    const pickedCart = getPickedUserCard(user?.id, table);
+    if (!pickedCart) {
+      setSelectedCard(null);
+    }
+  }, [table, user?.id]);
 
   const handleCardClick = (card: string) => () => {
     if (user) {

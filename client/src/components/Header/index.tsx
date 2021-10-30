@@ -1,14 +1,18 @@
-import IosShareIcon from '@mui/icons-material/IosShare';
-import { Avatar, AvatarGroup, IconButton, Typography } from '@mui/material';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Avatar from '@mui/material/Avatar';
+import AvatarGroup from '@mui/material/AvatarGroup';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
 import { styled } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 import { ReactElement } from 'react';
-import { Link } from 'react-router-dom';
 
 import { AccountMenu } from 'components/AccountMenu';
 import { useAuth } from 'contexts';
-import { User } from 'types';
+import { Room, User } from 'types';
 import { avatarNameToColor } from 'utils';
 
 const List = styled('div')(({ theme }) => ({
@@ -25,10 +29,11 @@ const List = styled('div')(({ theme }) => ({
 }));
 
 interface HeaderProps {
+  room?: Room;
   users?: User[];
 }
 
-export function Header({ users }: HeaderProps): ReactElement {
+export function Header({ room, users }: HeaderProps): ReactElement {
   const { user } = useAuth();
 
   return (
@@ -39,26 +44,39 @@ export function Header({ users }: HeaderProps): ReactElement {
       }}
     >
       <List>
-        <Link to="/">
-          <Typography
-            component="span"
-            sx={{
-              marginLeft: 1,
-            }}
-          >
-            PokerPlanning
-          </Typography>
-        </Link>
-        <Divider orientation="vertical" variant="middle" flexItem />
-        <Typography component="span">Room Name</Typography>
-        <Divider orientation="vertical" variant="middle" flexItem />
-        <IconButton
-          color="primary"
-          aria-label="upload picture"
-          component="span"
-        >
-          <IosShareIcon />
-        </IconButton>
+        <Tooltip title="Click to go back to the home page">
+          <Link href="/" underline="none">
+            <Typography
+              component="span"
+              sx={{
+                marginLeft: 1,
+              }}
+            >
+              PokerPlanning{' '}
+              <span role="img" aria-labelledby="logo">
+                🃏
+              </span>
+            </Typography>
+          </Link>
+        </Tooltip>
+        {room && (
+          <>
+            <Divider orientation="vertical" variant="middle" flexItem />
+            <Tooltip title="This is part of the unique room ID">
+              <Typography component="span">{room.id.split('-')[0]}</Typography>
+            </Tooltip>
+            <Divider orientation="vertical" variant="middle" flexItem />
+            <Tooltip title="Copy room link">
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+              >
+                <ContentCopyIcon />
+              </IconButton>
+            </Tooltip>
+          </>
+        )}
       </List>
       {user && (
         <List>

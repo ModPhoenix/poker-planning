@@ -2,14 +2,19 @@ import Box from '@mui/material/Box';
 import { ReactElement, ReactNode } from 'react';
 
 import { Header } from 'components/Header';
-import { User } from 'types';
+import { Room, User } from 'types';
 
 interface PageLayoutProps {
   children: ReactNode;
+  room?: Room;
   users?: User[];
 }
 
-export function PageLayout({ children, users }: PageLayoutProps): ReactElement {
+export function PageLayout({
+  children,
+  room,
+  users,
+}: PageLayoutProps): ReactElement {
   return (
     <Box
       sx={{
@@ -21,7 +26,7 @@ export function PageLayout({ children, users }: PageLayoutProps): ReactElement {
       }}
     >
       <Box sx={{ position: 'absolute', top: 10, left: 10, right: 10 }}>
-        <Header users={users} />
+        <Header room={room} users={users} />
       </Box>
       <Box sx={{ flexGrow: 1, marginTop: 10 }}>{children}</Box>
     </Box>
