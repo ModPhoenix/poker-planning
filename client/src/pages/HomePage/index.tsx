@@ -5,17 +5,21 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { ReactElement } from 'react';
 import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { generatePath, useNavigate } from 'react-router-dom';
 
 import { useCreateRoomMutation } from 'api';
 import { PageLayout } from 'components';
+import { useCopyRoomUrlToClipboard } from 'hooks';
+import { Path } from 'settings';
 
 export function HomePage(): ReactElement {
   const navigate = useNavigate();
+  const { copyRoomUrlToClipboard } = useCopyRoomUrlToClipboard();
 
   const [createRoomMutation, { loading }] = useCreateRoomMutation({
     onCompleted: (data) => {
-      navigate(`/room/${data.createRoom.id}`);
+      navigate(generatePath(Path.Room, { roomId: data.createRoom.id }));
+      copyRoomUrlToClipboard(data.createRoom.id);
     },
     onError: (error) => {
       toast.error(`Create room: ${error.message}`);

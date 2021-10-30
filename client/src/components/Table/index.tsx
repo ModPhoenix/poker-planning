@@ -83,7 +83,7 @@ export function Table({
           </LoadingButton>
         )
       ) : (
-        <Typography>Pick your cards!</Typography>
+        <Typography>Just start picking cards!</Typography>
       )}
     </Box>
   );

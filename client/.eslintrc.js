@@ -45,6 +45,7 @@ module.exports = {
     ], // forbids naming interfaces in lower case
     'react/jsx-uses-react': 'off', // off because New JSX Transform - https://uk.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#eslint
     'react/react-in-jsx-scope': 'off', // off because New JSX Transform
+    'react/prop-types': 'off', // off because TypeScript
     '@typescript-eslint/no-unused-vars': 'off', // off because tsconfig have noUnusedLocals, noUnusedParameters
     'import/order': [
       'error',
