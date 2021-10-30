@@ -12,6 +12,8 @@ import { ReactElement } from 'react';
 
 import { AccountMenu } from 'components/AccountMenu';
 import { useAuth } from 'contexts';
+import { useCopyRoomUrlToClipboard } from 'hooks';
+import { Path } from 'settings';
 import { Room, User } from 'types';
 import { avatarNameToColor } from 'utils';
 
@@ -35,6 +37,13 @@ interface HeaderProps {
 
 export function Header({ room, users }: HeaderProps): ReactElement {
   const { user } = useAuth();
+  const { copyRoomUrlToClipboard } = useCopyRoomUrlToClipboard();
+
+  async function handleCopyRoomUrl() {
+    if (room) {
+      await copyRoomUrlToClipboard(room.id);
+    }
+  }
 
   return (
     <Box
@@ -45,7 +54,7 @@ export function Header({ room, users }: HeaderProps): ReactElement {
     >
       <List>
         <Tooltip title="Click to go back to the home page">
-          <Link href="/" underline="none">
+          <Link href={Path.Home} underline="none">
             <Typography
               component="span"
               sx={{
@@ -71,6 +80,7 @@ export function Header({ room, users }: HeaderProps): ReactElement {
                 color="primary"
                 aria-label="upload picture"
                 component="span"
+                onClick={handleCopyRoomUrl}
               >
                 <ContentCopyIcon />
               </IconButton>
