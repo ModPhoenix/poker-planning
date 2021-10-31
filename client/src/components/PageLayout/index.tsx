@@ -16,19 +16,15 @@ export function PageLayout({
   users,
 }: PageLayoutProps): ReactElement {
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        bgcolor: 'background.default',
-        minHeight: '100vh',
-      }}
-    >
-      <Box sx={{ position: 'absolute', top: 10, left: 10, right: 10 }}>
-        <Header room={room} users={users} />
+    <>
+      <Header
+        room={room}
+        users={users}
+        sx={{ position: 'absolute', top: 0, left: 0, right: 0 }}
+      />
+      <Box sx={{ flexGrow: 1, marginTop: 10 }} component="main">
+        {children}
       </Box>
-      <Box sx={{ flexGrow: 1, marginTop: 10 }}>{children}</Box>
-    </Box>
+    </>
   );
 }
