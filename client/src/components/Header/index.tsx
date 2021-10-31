@@ -8,6 +8,7 @@ import Link from '@mui/material/Link';
 import { styled } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import { SxProps, Theme } from '@mui/system';
 import { ReactElement } from 'react';
 
 import { AccountMenu } from 'components/AccountMenu';
@@ -33,9 +34,10 @@ const List = styled('div')(({ theme }) => ({
 interface HeaderProps {
   room?: Room;
   users?: User[];
+  sx?: SxProps<Theme>;
 }
 
-export function Header({ room, users }: HeaderProps): ReactElement {
+export function Header({ room, users, sx }: HeaderProps): ReactElement {
   const { user } = useAuth();
   const { copyRoomUrlToClipboard } = useCopyRoomUrlToClipboard();
 
@@ -50,30 +52,30 @@ export function Header({ room, users }: HeaderProps): ReactElement {
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
+        height: 58,
+        ...sx,
       }}
+      component="header"
     >
       <List>
-        <Tooltip title="Click to go back to the home page">
-          <Link href={Path.Home} underline="none">
-            <Typography
-              component="span"
-              sx={{
-                marginLeft: 1,
-              }}
-            >
-              PokerPlanning{' '}
-              <span role="img" aria-labelledby="logo">
-                🃏
-              </span>
-            </Typography>
-          </Link>
-        </Tooltip>
+        <Link href={Path.Home} underline="none">
+          <Typography
+            component="span"
+            sx={{
+              marginLeft: 1,
+            }}
+          >
+            PokerPlanning{' '}
+            <span role="img" aria-labelledby="logo">
+              🃏
+            </span>
+          </Typography>
+        </Link>
+
         {room && (
           <>
             <Divider orientation="vertical" variant="middle" flexItem />
-            <Tooltip title="This is part of the unique room ID">
-              <Typography component="span">{room.id.split('-')[0]}</Typography>
-            </Tooltip>
+            <Typography component="span">{room.id.split('-')[0]}</Typography>
             <Divider orientation="vertical" variant="middle" flexItem />
             <Tooltip title="Copy room link">
               <IconButton
