@@ -1,12 +1,8 @@
 # PokerPlanning.org 🃏
 
-The main mission of this project is to make **online planning poker** super easy 🤩 and enjoyable 🥰. And also free to use for people from all over the world 🌍🌎🌏!
+The main mission of this project is to make **online planning poker** super easy and enjoyable 🥰. And also free to use for people from all over the world 🌍🌎🌏!
 
 Mono repository for scrum poker tool [PokerPlanning.org](https://pokerplanning.org/)
-
-## Alpha version 🏗
-
-Alpha version is available at the following link [Poker Planning Alpha](https://poker-planning-39gkk.ondigitalocean.app/)
 
 ## Fancy technologies 🌈
 
