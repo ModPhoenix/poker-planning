@@ -22,6 +22,27 @@ impl QueryRoot {
 
         Ok(storage.clone().into_iter().map(|(_, room)| room).collect())
     }
+
+    async fn user_rooms(&self, ctx: &Context<'_>, user_id: EntityId) -> Result<Vec<Room>> {
+        let storage = ctx.data_unchecked::<Storage>().lock()?;
+
+        let rooms = storage
+            .clone()
+            .into_iter()
+            .fold(vec![], |mut acc, (_, room)| {
+                if room
+                    .users
+                    .iter()
+                    .any(|user_in_room| user_in_room.id == user_id)
+                {
+                    acc.push(room);
+                }
+
+                acc
+            });
+
+        Ok(rooms)
+    }
 }
 
 pub struct MutationRoot;
