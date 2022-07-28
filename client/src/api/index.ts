@@ -1,8 +1,9 @@
 export * from './operations.generated';
 
 import { ApolloClient, HttpLink, InMemoryCache, split } from '@apollo/client';
-import { WebSocketLink } from '@apollo/client/link/ws';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { createClient } from 'graphql-ws';
 
 import { GRAPHQL_ENDPOINT, GRAPHQL_WS_ENDPOINT } from 'settings';
 
@@ -10,12 +11,11 @@ const httpLink = new HttpLink({
   uri: GRAPHQL_ENDPOINT,
 });
 
-const wsLink = new WebSocketLink({
-  uri: GRAPHQL_WS_ENDPOINT,
-  options: {
-    reconnect: true,
-  },
-});
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: GRAPHQL_WS_ENDPOINT,
+  }),
+);
 
 const splitLink = split(
   ({ query }) => {
