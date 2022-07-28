@@ -20,9 +20,10 @@ export type MutationRootFieldPolicy = {
 	resetGame?: FieldPolicy<any> | FieldReadFunction<any>,
 	showCards?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type QueryRootKeySpecifier = ('rooms' | QueryRootKeySpecifier)[];
+export type QueryRootKeySpecifier = ('rooms' | 'userRooms' | QueryRootKeySpecifier)[];
 export type QueryRootFieldPolicy = {
-	rooms?: FieldPolicy<any> | FieldReadFunction<any>
+	rooms?: FieldPolicy<any> | FieldReadFunction<any>,
+	userRooms?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type RoomKeySpecifier = ('deck' | 'game' | 'id' | 'isGameOver' | 'name' | 'users' | RoomKeySpecifier)[];
 export type RoomFieldPolicy = {
