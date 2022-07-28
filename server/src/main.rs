@@ -1,9 +1,3 @@
-use std::{
-    collections::HashMap,
-    env,
-    sync::{Arc, Mutex},
-};
-
 use crate::{
     configuration::get_configuration,
     handlers::{health_check, index, index_playground, index_ws},
@@ -11,8 +5,13 @@ use crate::{
     types::Storage,
 };
 
-use actix_web::{guard, middleware, web, App, HttpServer};
+use actix_web::{
+    guard, middleware,
+    web::{self, Data},
+    App, HttpServer,
+};
 use async_graphql::Schema;
+use env_logger::Env;
 
 mod configuration;
 mod domain;
@@ -21,16 +20,17 @@ mod schema;
 mod simple_broker;
 mod types;
 
-#[actix_web::main]
+#[tokio::main]
 async fn main() -> std::io::Result<()> {
-    println!("Hello, world! This is the pokerplanning.org");
-    env::set_var("RUST_LOG", "actix_web=info");
-    env_logger::init();
+    println!("Hello, world! This is the server for pokerplanning.org");
+
+    let env = Env::default().filter_or("RUST_LOG", "actix_web=trace");
+    env_logger::init_from_env(env);
 
     let settings = get_configuration().expect("Failed to read settings.");
     let server_address = settings.get_server_address();
 
-    let storage: Storage = Arc::new(Mutex::new(HashMap::new()));
+    let storage: Storage = Storage::default();
 
     let schema = Schema::build(QueryRoot, MutationRoot, SubscriptionRoot)
         .data(storage.clone())
@@ -40,7 +40,7 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         App::new()
-            .data(schema.clone())
+            .app_data(Data::new(schema.clone()))
             .wrap(middleware::Logger::default())
             .service(web::resource("/").guard(guard::Post()).to(index))
             .service(

@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use crate::{
     domain::{
         game::{Game, UserCard},
@@ -8,8 +10,12 @@ use crate::{
     types::{EntityId, Storage},
 };
 use async_graphql::*;
-use futures::{Stream, StreamExt};
-use std::iter::Iterator;
+use futures_util::{lock::MutexGuard, Stream, StreamExt};
+use uuid::Uuid;
+
+async fn get_storage<'a>(ctx: &'a Context<'_>) -> MutexGuard<'a, HashMap<Uuid, Room>> {
+    ctx.data_unchecked::<Storage>().lock().await
+}
 
 pub type PokerPlanningSchema = Schema<QueryRoot, MutationRoot, SubscriptionRoot>;
 
@@ -18,13 +24,13 @@ pub struct QueryRoot;
 #[Object]
 impl QueryRoot {
     async fn rooms(&self, ctx: &Context<'_>) -> Result<Vec<Room>> {
-        let storage = ctx.data_unchecked::<Storage>().lock()?;
+        let storage = get_storage(ctx).await;
 
         Ok(storage.clone().into_iter().map(|(_, room)| room).collect())
     }
 
     async fn user_rooms(&self, ctx: &Context<'_>, user_id: EntityId) -> Result<Vec<Room>> {
-        let storage = ctx.data_unchecked::<Storage>().lock()?;
+        let storage = get_storage(ctx).await;
 
         let rooms = storage
             .clone()
@@ -50,7 +56,7 @@ pub struct MutationRoot;
 #[Object]
 impl MutationRoot {
     async fn create_room(&self, ctx: &Context<'_>, name: Option<String>) -> Result<Room> {
-        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
+        let mut storage = get_storage(ctx).await;
         let room = Room::new(name);
 
         storage.insert(room.id.clone(), room.clone());
@@ -70,7 +76,7 @@ impl MutationRoot {
         room_id: EntityId,
         user: UserInput,
     ) -> Result<Room> {
-        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
+        let mut storage = get_storage(ctx).await;
 
         match storage.get_mut(&room_id) {
             Some(room) => {
@@ -96,7 +102,7 @@ impl MutationRoot {
         user_id: EntityId,
         username: String,
     ) -> Result<User> {
-        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
+        let mut storage = get_storage(ctx).await;
 
         *storage = storage
             .clone()
@@ -119,7 +125,7 @@ impl MutationRoot {
     }
 
     async fn logout(&self, ctx: &Context<'_>, user_id: EntityId) -> Result<bool> {
-        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
+        let mut storage = get_storage(ctx).await;
 
         *storage = storage
             .clone()
@@ -145,7 +151,7 @@ impl MutationRoot {
         room_id: EntityId,
         card: String,
     ) -> Result<Room> {
-        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
+        let mut storage = get_storage(ctx).await;
 
         match storage.get_mut(&room_id) {
             Some(room) => {
@@ -174,7 +180,7 @@ impl MutationRoot {
     }
 
     async fn show_cards(&self, ctx: &Context<'_>, room_id: EntityId) -> Result<Room> {
-        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
+        let mut storage = get_storage(ctx).await;
 
         match storage.get_mut(&room_id) {
             Some(room) => {
@@ -189,7 +195,7 @@ impl MutationRoot {
     }
 
     async fn reset_game(&self, ctx: &Context<'_>, room_id: EntityId) -> Result<Room> {
-        let mut storage = ctx.data_unchecked::<Storage>().lock()?;
+        let mut storage = get_storage(ctx).await;
 
         match storage.get_mut(&room_id) {
             Some(room) => {
