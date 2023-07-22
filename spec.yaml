@@ -34,12 +34,12 @@ static_sites:
   - build_command: npm run build
     environment_slug: node-js
     envs:
-      - key: REACT_APP_GRAPHQL_ENDPOINT
+      - key: VITE_GRAPHQL_ENDPOINT
         scope: BUILD_TIME
-        value: ${REACT_APP_GRAPHQL_ENDPOINT}
-      - key: REACT_APP_GRAPHQL_WS_ENDPOINT
+        value: ${VITE_GRAPHQL_ENDPOINT}
+      - key: VITE_GRAPHQL_WS_ENDPOINT
         scope: BUILD_TIME
-        value: ${REACT_APP_GRAPHQL_WS_ENDPOINT}
+        value: ${VITE_GRAPHQL_WS_ENDPOINT}
     github:
       branch: main
       deploy_on_push: true

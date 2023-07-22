@@ -26,7 +26,7 @@ impl QueryRoot {
     async fn rooms(&self, ctx: &Context<'_>) -> Result<Vec<Room>> {
         let storage = get_storage(ctx).await;
 
-        Ok(storage.clone().into_iter().map(|(_, room)| room).collect())
+        Ok(storage.clone().into_values().collect())
     }
 
     async fn user_rooms(&self, ctx: &Context<'_>, user_id: EntityId) -> Result<Vec<Room>> {
@@ -59,7 +59,7 @@ impl MutationRoot {
         let mut storage = get_storage(ctx).await;
         let room = Room::new(name);
 
-        storage.insert(room.id.clone(), room.clone());
+        storage.insert(room.id, room.clone());
 
         SimpleBroker::publish(room.get_room());
 

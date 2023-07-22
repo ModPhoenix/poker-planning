@@ -4,6 +4,7 @@ use crate::{
     schema::{MutationRoot, QueryRoot, SubscriptionRoot},
     types::Storage,
 };
+use actix_cors::Cors;
 
 use actix_web::{
     guard, middleware,
@@ -41,6 +42,7 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .app_data(Data::new(schema.clone()))
+            .wrap(Cors::permissive())
             .wrap(middleware::Logger::default())
             .service(web::resource("/").guard(guard::Post()).to(index))
             .service(
