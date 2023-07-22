@@ -16,7 +16,6 @@ export default defineConfig(({ mode }) => {
         '/api': {
           target: GRAPHQL_ENDPOINT,
           changeOrigin: true,
-          secure: false,
           ws: true,
         },
       },
