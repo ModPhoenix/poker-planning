@@ -39,7 +39,7 @@ cargo watch -x run
 cd client
 cp .env.local.example .env.local
 npm i
-npm start
+npm run dev
 ```
 
 ### Digitalocean CLI

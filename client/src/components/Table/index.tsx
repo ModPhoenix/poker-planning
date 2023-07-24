@@ -5,6 +5,7 @@ import { ReactElement } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { useResetGameMutation, useShowCardsMutation } from 'api';
+import { useModal } from 'components';
 
 interface TableProps {
   roomId: string;
@@ -17,6 +18,12 @@ export function Table({
   isCardsPicked,
   isGameOver,
 }: TableProps): ReactElement {
+  const startNewGame = useModal({
+    title: 'Are you sure you want to start a new game?',
+    description: 'This will reset the current game.',
+    confirmationText: 'Start new game',
+    cancellationText: 'Cancel',
+  });
   const [showCardsMutation, { loading: showCardLoading }] =
     useShowCardsMutation({
       onError: (error) => {
@@ -40,10 +47,12 @@ export function Table({
   }
 
   function handleResetGame() {
-    resetGameMutation({
-      variables: {
-        roomId,
-      },
+    startNewGame().then(() => {
+      resetGameMutation({
+        variables: {
+          roomId,
+        },
+      });
     });
   }
 
