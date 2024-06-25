@@ -58,8 +58,13 @@ export function Deck({
     <Box
       sx={{
         display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
+        flexWrap: 'wrap', // Allows cards to wrap to the next line
+        justifyContent: 'center', // Center the cards
+        alignItems: 'flex-start', // Align cards to the top
+        gap: '8px', // Add space between the cards
+        maxWidth: '100%', // Ensure the container does not exceed the width of the viewport
+        padding: '0 16px', // Add some padding to prevent cards from touching the edges
+        boxSizing: 'border-box', // Include padding in the element's total width and height
       }}
       ref={cardsContainerRef}
     >
@@ -70,7 +75,8 @@ export function Deck({
             key={card}
             sx={{
               marginBottom: isCardPicked ? '12px' : 0,
-              transition: 'margin-Bottom 0.1s ease-in-out',
+              transition: 'margin-bottom 0.1s ease-in-out',
+              flex: '0 1 100px', // Make each card take a minimum width of 100px and allow them to grow
             }}
           >
             <Card
