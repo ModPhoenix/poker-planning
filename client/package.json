@@ -2,10 +2,6 @@
   "name": "poker-planning",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": "16",
-    "npm": "8"
-  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
