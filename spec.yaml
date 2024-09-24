@@ -3,6 +3,9 @@ name: poker-planning
 # You can get region slugs from https://www.digitalocean.com/docs/platform/availability-matrix/
 # `fra` stands for Frankfurt (Germany - EU)
 region: fra
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
 services:
   - name: server
     # Relative to the repository root
@@ -31,8 +34,7 @@ services:
         scope: RUN_TIME
         value: ${APP_URL}
 static_sites:
-  - build_command: npm run build
-    environment_slug: node-js
+  - environment_slug: node-js
     envs:
       - key: VITE_GRAPHQL_ENDPOINT
         scope: BUILD_TIME
