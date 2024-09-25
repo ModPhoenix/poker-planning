@@ -1,17 +1,17 @@
-import { LoadingButton } from '@mui/lab';
-import Dialog, { DialogProps } from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { useState } from 'react';
+import { LoadingButton } from "@mui/lab";
+import Dialog, { DialogProps } from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { useState } from "react";
 
-import { ModalOptions } from './types';
+import { ModalOptions } from "./types";
 
 type ModalHandler = () => void;
 
 export interface ConfirmationDialogProps
-  extends Pick<DialogProps, 'open' | 'onClose'> {
+  extends Pick<DialogProps, "open" | "onClose"> {
   onCancel?: ModalHandler;
   onConfirm: ModalHandler;
   options: ModalOptions;

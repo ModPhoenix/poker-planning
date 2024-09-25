@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 
 interface UseKeyboardControlsReturn {
   cardsContainerRef: RefObject<HTMLDivElement>;
@@ -28,8 +28,8 @@ export function useKeyboardControls(): UseKeyboardControlsReturn {
         return;
       }
 
-      const isArrowLeftKey = event.code === 'ArrowLeft';
-      const isArrowRightKey = event.code === 'ArrowRight';
+      const isArrowLeftKey = event.code === "ArrowLeft";
+      const isArrowRightKey = event.code === "ArrowRight";
 
       if (!isArrowLeftKey && !isArrowRightKey) {
         return;
@@ -69,10 +69,10 @@ export function useKeyboardControls(): UseKeyboardControlsReturn {
   );
 
   useEffect(() => {
-    document.body.addEventListener('keydown', handleKeyDown);
+    document.body.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.removeEventListener('keydown', handleKeyDown);
+      document.body.removeEventListener("keydown", handleKeyDown);
     };
   }, [handleKeyDown]);
 

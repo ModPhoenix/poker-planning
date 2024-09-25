@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 
-import { PageLayout } from 'components';
+import { PageLayout } from '@/components';
 
 export function NotFoundPage(): ReactElement {
   return (

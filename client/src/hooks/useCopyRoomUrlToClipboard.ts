@@ -1,9 +1,9 @@
-import { useCallback, useMemo } from 'react';
-import { toast } from 'react-hot-toast';
-import { generatePath } from 'react-router-dom';
+import { useCallback, useMemo } from "react";
+import { toast } from "react-hot-toast";
+import { generatePath } from "react-router-dom";
 
-import { Path } from 'settings';
-import { copyTextToClipboard } from 'utils';
+import { Path } from "@/settings";
+import { copyTextToClipboard } from "@/utils";
 
 interface UseCopyRoomUrlReturn {
   copyRoomUrlToClipboard: (roomId: string) => Promise<void>;
@@ -17,7 +17,7 @@ export function useCopyRoomUrlToClipboard(): UseCopyRoomUrlReturn {
     const isCopySuccess = await copyTextToClipboard(`${origin}${roomPath}`);
 
     if (isCopySuccess) {
-      toast.success('Invite link copied to clipboard');
+      toast.success("Invite link copied to clipboard");
     } else {
       toast.error(
         "When copying a invite link something went wrong. But don't be discouraged, just copy it yourself from the browser.",

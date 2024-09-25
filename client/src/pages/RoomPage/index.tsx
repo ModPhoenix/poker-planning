@@ -3,11 +3,11 @@ import { ReactElement, useEffect, useRef } from 'react';
 import { toast } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 
-import { useJoinRoomMutation, useRoomSubscription } from 'api';
-import { Deck, PageLayout, Room } from 'components';
-import { CreateUserDialog } from 'components/CreateUserDialog';
-import { useAuth } from 'contexts';
-import { User } from 'types';
+import { useJoinRoomMutation, useRoomSubscription } from '@/api';
+import { Deck, PageLayout, Room } from '@/components';
+import { CreateUserDialog } from '@/components/CreateUserDialog';
+import { useAuth } from '@/contexts';
+import { User } from '@/types';
 
 export function RoomPage(): ReactElement {
   const { roomId = '' } = useParams();

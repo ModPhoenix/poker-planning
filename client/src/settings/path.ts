@@ -1,4 +1,5 @@
 export enum Path {
-  Home = '/',
-  Room = '/room/:roomId',
+  Home = "/",
+  OldHome = "/old",
+  Room = "/room/:roomId",
 }

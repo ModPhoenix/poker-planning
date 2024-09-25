@@ -1,39 +1,39 @@
-import { ModalOptions } from './types';
+import { ModalOptions } from "./types";
 
 export const defaultOptions: ModalOptions = {
-  title: 'Are you sure?',
-  description: '',
+  title: "Are you sure?",
+  description: "",
   content: null,
-  confirmationText: 'Ok',
-  cancellationText: 'Cancel',
+  confirmationText: "Ok",
+  cancellationText: "Cancel",
   dialogProps: {
-    maxWidth: 'xs',
+    maxWidth: "xs",
     PaperProps: { elevation: 0 },
     sx: (theme) => ({
-      '.MuiDialogTitle-root': {
+      ".MuiDialogTitle-root": {
         borderBottom: `1px solid ${theme.palette.grey[200]}`,
       },
-      '.MuiDialogContent-root': {
+      ".MuiDialogContent-root": {
         marginTop: theme.spacing(2),
       },
-      '.MuiDialogActions-spacing': {
+      ".MuiDialogActions-spacing": {
         padding: theme.spacing(2),
-        '> :not(:first-of-type)': {
+        "> :not(:first-of-type)": {
           marginLeft: theme.spacing(2),
         },
       },
     }),
   },
   confirmationButtonProps: {
-    variant: 'contained',
-    color: 'secondary',
+    variant: "contained",
+    color: "secondary",
   },
   cancellationButtonProps: {
-    variant: 'outlined',
-    color: 'secondary',
+    variant: "outlined",
+    color: "secondary",
   },
   titleProps: {
-    variant: 'h3',
+    variant: "h3",
   },
   contentProps: {},
   allowClose: true,

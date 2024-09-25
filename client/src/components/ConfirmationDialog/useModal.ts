@@ -5,13 +5,13 @@ import {
   useEffect,
   useId,
   useMemo,
-} from 'react';
+} from "react";
 
-import { ConfirmationDialogContext } from './ConfirmationDialogProvider';
-import { ModalOptions } from './types';
+import { ConfirmationDialogContext } from "./ConfirmationDialogProvider";
+import { ModalOptions } from "./types";
 
 export const useModal = (
-  options?: Omit<ModalOptions, 'resolve' | 'reject'>,
+  options?: Omit<ModalOptions, "resolve" | "reject">,
   deps: DependencyList = [],
 ): ((
   options?: ModalOptions | ((close: () => void) => ModalOptions),
@@ -20,7 +20,7 @@ export const useModal = (
   const handlers = useContext(ConfirmationDialogContext);
 
   if (!handlers) {
-    throw new Error('useModal must be used within a ModalProvider');
+    throw new Error("useModal must be used within a ModalProvider");
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,7 +34,7 @@ export const useModal = (
     (options?: ModalOptions | ((close: () => void) => ModalOptions)) => {
       let newOptions: ModalOptions | undefined;
 
-      if (typeof options === 'function') {
+      if (typeof options === "function") {
         newOptions = options(closeModalHandler);
       } else {
         newOptions = options;

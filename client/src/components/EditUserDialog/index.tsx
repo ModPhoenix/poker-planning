@@ -1,11 +1,11 @@
-import LoadingButton from '@mui/lab/LoadingButton';
-import Alert from '@mui/material/Alert';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
+import LoadingButton from "@mui/lab/LoadingButton";
+import Alert from "@mui/material/Alert";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
 import {
   ChangeEvent,
   ReactElement,
@@ -13,10 +13,10 @@ import {
   KeyboardEvent,
   Dispatch,
   SetStateAction,
-} from 'react';
+} from "react";
 
-import { useEditUserMutation } from 'api';
-import { useAuth } from 'contexts';
+import { useEditUserMutation } from "@/api";
+import { useAuth } from "@/contexts";
 
 interface EditUserDialogProps {
   open: boolean;
@@ -29,7 +29,7 @@ export function EditUserDialog({
   setOpen,
 }: EditUserDialogProps): ReactElement {
   const { user, login } = useAuth();
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [editUserMutation, { loading, error }] = useEditUserMutation();
@@ -66,7 +66,7 @@ export function EditUserDialog({
   };
 
   const onKeyPressUsername = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleSubmit();
     }
   };
@@ -110,7 +110,7 @@ export function EditUserDialog({
           onKeyPress={onKeyPressUsername}
           value={username}
           error={isUsernameError}
-          helperText={isUsernameError ? 'Username cannot be empty' : ' '}
+          helperText={isUsernameError ? "Username cannot be empty" : " "}
         />
       </DialogContent>
       <DialogActions

@@ -1,11 +1,11 @@
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import { ReactElement } from 'react';
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import { ReactElement } from "react";
 
-import { Player } from 'components/Player';
-import { Table } from 'components/Table';
-import { Room as RoomType } from 'types';
-import { getPickedUserCard } from 'utils';
+import { Player } from "@/components/Player";
+import { Table } from "@/components/Table";
+import { Room as RoomType } from "@/types";
+import { getPickedUserCard } from "@/utils";
 
 interface RoomProps {
   room: RoomType;
@@ -20,13 +20,13 @@ export function Room({ room }: RoomProps): ReactElement {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: 'calc(100vh - 80px)',
-        paddingBottom: '100px',
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "calc(100vh - 80px)",
+        paddingBottom: "100px",
       }}
     >
       <Stack direction="row" spacing={2} sx={{ marginBottom: 2 }}>

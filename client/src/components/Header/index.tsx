@@ -1,31 +1,31 @@
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import Avatar from '@mui/material/Avatar';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Link from '@mui/material/Link';
-import { styled } from '@mui/material/styles';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
-import { SxProps, Theme } from '@mui/system';
-import { ReactElement } from 'react';
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/AvatarGroup";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Link from "@mui/material/Link";
+import { styled } from "@mui/material/styles";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import { SxProps, Theme } from "@mui/system";
+import { ReactElement } from "react";
 
-import { AccountMenu } from 'components/AccountMenu';
-import { useAuth } from 'contexts';
-import { useCopyRoomUrlToClipboard } from 'hooks';
-import { Path } from 'settings';
-import { Room, User } from 'types';
-import { avatarNameToColor } from 'utils';
+import { AccountMenu } from "@/components/AccountMenu";
+import { useAuth } from "@/contexts";
+import { useCopyRoomUrlToClipboard } from "@/hooks";
+import { Path } from "@/settings";
+import { Room, User } from "@/types";
+import { avatarNameToColor } from "@/utils";
 
-const List = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  width: 'fit-content',
+const List = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  width: "fit-content",
   borderRadius: theme.spacing(1),
   background: theme.palette.background.paper,
   padding: `${theme.spacing(0.5)} ${theme.spacing(2)}`,
-  '& hr': {
+  "& hr": {
     marginLeft: theme.spacing(1.5),
     marginRight: theme.spacing(1.5),
   },
@@ -50,8 +50,8 @@ export function Header({ room, users, sx }: HeaderProps): ReactElement {
   return (
     <Box
       sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
+        display: "flex",
+        justifyContent: "space-between",
         height: 58,
         ...sx,
       }}
@@ -65,7 +65,7 @@ export function Header({ room, users, sx }: HeaderProps): ReactElement {
               marginLeft: 1,
             }}
           >
-            PokerPlanning{' '}
+            PokerPlanning{" "}
             <span role="img" aria-labelledby="logo">
               🃏
             </span>
@@ -75,7 +75,7 @@ export function Header({ room, users, sx }: HeaderProps): ReactElement {
         {room && (
           <>
             <Divider orientation="vertical" variant="middle" flexItem />
-            <Typography component="span">{room.id.split('-')[0]}</Typography>
+            <Typography component="span">{room.id.split("-")[0]}</Typography>
             <Divider orientation="vertical" variant="middle" flexItem />
             <Tooltip title="Copy room link">
               <IconButton

@@ -1,11 +1,11 @@
-export * from './operations.generated';
+export * from "./operations.generated";
 
-import { ApolloClient, HttpLink, InMemoryCache, split } from '@apollo/client';
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-import { getMainDefinition } from '@apollo/client/utilities';
-import { createClient } from 'graphql-ws';
+import { ApolloClient, HttpLink, InMemoryCache, split } from "@apollo/client";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { createClient } from "graphql-ws";
 
-import { GRAPHQL_ENDPOINT, GRAPHQL_WS_ENDPOINT } from 'settings';
+import { GRAPHQL_ENDPOINT, GRAPHQL_WS_ENDPOINT } from "@/settings";
 
 const httpLink = new HttpLink({
   uri: GRAPHQL_ENDPOINT,
@@ -21,8 +21,8 @@ const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
     return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
     );
   },
   wsLink,

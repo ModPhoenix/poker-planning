@@ -1,13 +1,13 @@
-import Box from '@mui/material/Box';
-import { ReactElement, useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
+import Box from "@mui/material/Box";
+import { ReactElement, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
-import { usePickCardMutation } from 'api';
-import { Card } from 'components/Card';
-import { useAuth } from 'contexts';
-import { useKeyboardControls } from 'hooks';
-import { UserCard } from 'types';
-import { getPickedUserCard } from 'utils';
+import { usePickCardMutation } from "@/api";
+import { Card } from "@/components/Card";
+import { useAuth } from "@/contexts";
+import { useKeyboardControls } from "@/hooks";
+import { UserCard } from "@/types";
+import { getPickedUserCard } from "@/utils";
 
 interface DeckProps {
   roomId: string;
@@ -57,9 +57,9 @@ export function Deck({
   return (
     <Box
       sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "flex-end",
       }}
       ref={cardsContainerRef}
     >
@@ -69,14 +69,14 @@ export function Deck({
           <Box
             key={card}
             sx={{
-              marginBottom: isCardPicked ? '12px' : 0,
-              transition: 'margin-Bottom 0.1s ease-in-out',
+              marginBottom: isCardPicked ? "12px" : 0,
+              transition: "margin-Bottom 0.1s ease-in-out",
             }}
           >
             <Card
               onClick={handleCardClick(card)}
               disabled={isGameOver}
-              variant={isCardPicked ? 'contained' : 'outlined'}
+              variant={isCardPicked ? "contained" : "outlined"}
               disableElevation
             >
               {card}

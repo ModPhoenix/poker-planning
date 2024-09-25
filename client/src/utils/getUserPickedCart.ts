@@ -1,4 +1,4 @@
-import { UserCard } from 'types';
+import { UserCard } from '@/types';
 
 export function getPickedUserCard(
   userId?: string,

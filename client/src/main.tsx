@@ -6,13 +6,14 @@ import { createRoot } from 'react-dom/client';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { client } from 'api';
-import { ConfirmationDialogProvider } from 'components';
-import { AuthProvider } from 'contexts';
-import { theme } from 'styles';
+import { client } from '@/api';
+import { ConfirmationDialogProvider } from '@/components';
+import { AuthProvider } from '@/contexts';
+import { theme } from '@/styles';
 
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
+import './index.css';
 
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);

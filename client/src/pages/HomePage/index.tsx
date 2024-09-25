@@ -9,10 +9,10 @@ import { ReactElement } from 'react';
 import { toast } from 'react-hot-toast';
 import { generatePath, useNavigate } from 'react-router-dom';
 
-import { useCreateRoomMutation } from 'api';
-import { PageLayout } from 'components';
-import { useCopyRoomUrlToClipboard } from 'hooks';
-import { Path } from 'settings';
+import { useCreateRoomMutation } from '@/api';
+import { PageLayout } from '@/components';
+import { useCopyRoomUrlToClipboard } from '@/hooks';
+import { Path } from '@/settings';
 
 const Section = styled('section')``;
 

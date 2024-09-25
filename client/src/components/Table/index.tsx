@@ -1,11 +1,11 @@
-import LoadingButton from '@mui/lab/LoadingButton';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { ReactElement } from 'react';
-import { toast } from 'react-hot-toast';
+import LoadingButton from "@mui/lab/LoadingButton";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import { ReactElement } from "react";
+import { toast } from "react-hot-toast";
 
-import { useResetGameMutation, useShowCardsMutation } from 'api';
-import { useModal } from 'components';
+import { useResetGameMutation, useShowCardsMutation } from "@/api";
+import { useModal } from "@/components";
 
 interface TableProps {
   roomId: string;
@@ -19,10 +19,10 @@ export function Table({
   isGameOver,
 }: TableProps): ReactElement {
   const startNewGame = useModal({
-    title: 'Are you sure you want to start a new game?',
-    description: 'This will reset the current game.',
-    confirmationText: 'Start new game',
-    cancellationText: 'Cancel',
+    title: "Are you sure you want to start a new game?",
+    description: "This will reset the current game.",
+    confirmationText: "Start new game",
+    cancellationText: "Cancel",
   });
   const [showCardsMutation, { loading: showCardLoading }] =
     useShowCardsMutation({
@@ -59,13 +59,13 @@ export function Table({
   return (
     <Box
       sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '300px',
-        height: '150px',
-        border: '1px solid',
-        borderColor: 'primary.main',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "300px",
+        height: "150px",
+        border: "1px solid",
+        borderColor: "primary.main",
         borderRadius: 8,
       }}
     >
