@@ -1,129 +1,90 @@
-import LoadingButton from "@mui/lab/LoadingButton";
-import Alert from "@mui/material/Alert";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import TextField from "@mui/material/TextField";
-import {
-  ChangeEvent,
-  ReactElement,
-  useEffect,
-  useState,
-  KeyboardEvent,
-} from "react";
+import { FC, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 import { useCreateUserMutation } from "@/api";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts";
 import { User } from "@/types";
 
 interface CreateUserDialogProps {
-  handleJoinRoomMutation(user: User): void;
+  handleJoinRoomMutation: (user: User) => void;
 }
 
-export function CreateUserDialog({
+export const CreateUserDialog: FC<CreateUserDialogProps> = ({
   handleJoinRoomMutation,
-}: CreateUserDialogProps): ReactElement {
+}) => {
   const { user, login } = useAuth();
-  const [open, setOpen] = useState<boolean>(!Boolean(user));
   const [username, setUsername] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [open, setOpen] = useState<boolean>(!Boolean(user));
 
   useEffect(() => {
     setOpen(!Boolean(user));
-  }, [user]);
+  }, [setOpen, user]);
 
-  const [createUserMutation, { loading, error }] = useCreateUserMutation({
-    variables: {
-      username,
-    },
-    onCompleted(data) {
+  const [createUserMutation, { loading }] = useCreateUserMutation({
+    onCompleted: (data) => {
+      login?.({
+        id: data.createUser.id,
+        username: data.createUser.username,
+      });
+      setOpen(false);
       handleJoinRoomMutation(data.createUser);
+      toast.success("User created successfully");
+    },
+    onError: (error) => {
+      toast.error(`Failed to create user: ${error.message}`);
     },
   });
 
-  const isUsernameEmpty = !Boolean(username);
-  const isUsernameError = isSubmitted && isUsernameEmpty;
-
   const handleSubmit = async () => {
-    setIsSubmitted(true);
-
-    if (!isUsernameEmpty) {
-      try {
-        const res = await createUserMutation();
-        if (res.data) {
-          login?.(res.data.createUser);
-          setOpen(false);
-        }
-      } catch {}
+    if (!username.trim()) {
+      toast.error("Username cannot be empty");
+      return;
     }
-  };
 
-  const onChangeUsername = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setUsername(value);
-  };
-
-  const onKeyPressUsername = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      handleSubmit();
-    }
+    await createUserMutation({
+      variables: {
+        username: username.trim(),
+      },
+    });
   };
 
   return (
-    <Dialog open={open}>
-      <DialogTitle>Enter your Username</DialogTitle>
-      <DialogContent
-        sx={{
-          paddingBottom: 0,
-        }}
-      >
-        <DialogContentText
-          sx={{
-            marginBottom: 2,
-          }}
-        >
-          To be recognized by others, please enter your username.
-        </DialogContentText>
-        {error && (
-          <Alert
-            severity="error"
-            sx={{
-              marginBottom: 2,
-            }}
-          >
-            {error.message}
-          </Alert>
-        )}
-        <TextField
-          id="username"
-          label="Your username"
-          type="text"
-          fullWidth
-          onChange={onChangeUsername}
-          onKeyPress={onKeyPressUsername}
-          value={username}
-          error={isUsernameError}
-          helperText={isUsernameError ? "Username cannot be empty" : " "}
-        />
-      </DialogContent>
-      <DialogActions
-        sx={{
-          paddingLeft: 3,
-          paddingRight: 3,
-          paddingBottom: 3,
-        }}
-      >
-        <LoadingButton
-          onClick={handleSubmit}
-          loading={loading}
-          loadingPosition="center"
-          size="large"
-        >
-          Done
-        </LoadingButton>
-      </DialogActions>
-    </Dialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Create User</AlertDialogTitle>
+          <AlertDialogDescription>
+            Enter a username to create your account.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid w-full items-center gap-1.5">
+            <Label htmlFor="username">Username</Label>
+            <Input
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="col-span-3"
+            />
+          </div>
+        </div>
+        <AlertDialogFooter>
+          <AlertDialogAction onClick={handleSubmit} disabled={loading}>
+            {loading ? "Creating..." : "Create User"}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
-}
+};

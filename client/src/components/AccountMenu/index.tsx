@@ -1,24 +1,26 @@
-import Logout from "@mui/icons-material/Logout";
-import Settings from "@mui/icons-material/Settings";
-import Avatar from "@mui/material/Avatar";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Tooltip from "@mui/material/Tooltip";
-import { ReactElement, useState, MouseEvent } from "react";
+import { LogOut, Settings } from "lucide-react";
+import { ReactElement, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import { useLogoutMutation } from "@/api";
 import { EditUserDialog } from "@/components/EditUserDialog";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/contexts";
 import { avatarNameToColor } from "@/utils";
 
 export function AccountMenu(): ReactElement {
   const { user, logout } = useAuth();
   const [openEditUserDialog, setOpenEditUserDialog] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [logoutMutation] = useLogoutMutation({
     onCompleted() {
       logout?.();
@@ -27,16 +29,6 @@ export function AccountMenu(): ReactElement {
       toast.error(`Logout: ${error.message}`);
     },
   });
-
-  const open = Boolean(anchorEl);
-
-  const handleClick = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   function handleLogout() {
     if (user) {
@@ -55,64 +47,39 @@ export function AccountMenu(): ReactElement {
   return (
     <>
       {user && (
-        <Tooltip title="Account settings">
-          <IconButton onClick={handleClick} size="small">
-            <Avatar {...avatarNameToColor(user.username)} />
-          </IconButton>
-        </Tooltip>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+              <Avatar className="h-10 w-10">
+                <AvatarFallback {...avatarNameToColor(user.username)}>
+                  {user.username[0].toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56" align="end" forceMount>
+            <DropdownMenuLabel className="font-normal">
+              <div className="flex flex-col space-y-1">
+                <p className="text-sm font-medium leading-none">
+                  {user.username}
+                </p>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem onClick={handleOpenEditUserDialog}>
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Change username</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Log out</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       )}
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            minWidth: "150px",
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.1))",
-            mt: 1.5,
-            "& .MuiAvatar-root": {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-            "&:before": {
-              content: '""',
-              display: "block",
-              position: "absolute",
-              top: 0,
-              right: 20,
-              width: 10,
-              height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
-              zIndex: 0,
-            },
-          },
-        }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      >
-        <MenuItem disableRipple>
-          <Avatar /> {user?.username}
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleOpenEditUserDialog}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Change username
-        </MenuItem>
-        <MenuItem onClick={handleLogout}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
-      </Menu>
       <EditUserDialog
         open={openEditUserDialog}
         setOpen={setOpenEditUserDialog}

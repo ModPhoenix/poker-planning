@@ -1,11 +1,33 @@
 import { FC } from "react";
+import { toast } from "react-hot-toast";
+import { generatePath, useNavigate } from "react-router-dom";
 
+import { useCreateRoomMutation } from "@/api";
 import { ModeToggle } from "@/components";
 import { Button } from "@/components/ui/button";
+import { useCopyRoomUrlToClipboard } from "@/hooks";
+import { Path } from "@/settings";
 
 import { FeatureSections } from "./feature-sections";
 
 export const NewHomePage: FC = () => {
+  const navigate = useNavigate();
+  const { copyRoomUrlToClipboard } = useCopyRoomUrlToClipboard();
+
+  const [createRoomMutation, { loading }] = useCreateRoomMutation({
+    onCompleted: (data) => {
+      navigate(generatePath(Path.Room, { roomId: data.createRoom.id }));
+      copyRoomUrlToClipboard(data.createRoom.id);
+    },
+    onError: (error) => {
+      toast.error(`Create room: ${error.message}`);
+    },
+  });
+
+  function onCreateRoom() {
+    createRoomMutation();
+  }
+
   return (
     <div className="bg-white dark:bg-gray-900">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -54,7 +76,12 @@ export const NewHomePage: FC = () => {
               fun, and effective.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Button size="lg" className="h-12">
+              <Button
+                size="lg"
+                className="h-12"
+                onClick={onCreateRoom}
+                disabled={loading}
+              >
                 Start Estimating
               </Button>
               <a

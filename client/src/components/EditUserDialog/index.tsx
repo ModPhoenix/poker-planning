@@ -1,134 +1,85 @@
-import LoadingButton from "@mui/lab/LoadingButton";
-import Alert from "@mui/material/Alert";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import TextField from "@mui/material/TextField";
-import {
-  ChangeEvent,
-  ReactElement,
-  useState,
-  KeyboardEvent,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { FC, useState } from "react";
+import { toast } from "react-hot-toast";
 
 import { useEditUserMutation } from "@/api";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts";
 
 interface EditUserDialogProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  setOpen: (open: boolean) => void;
 }
 
-// TODO: reuse code between two similar components CreateUserDialog and EditUserDialog
-export function EditUserDialog({
-  open,
-  setOpen,
-}: EditUserDialogProps): ReactElement {
+export const EditUserDialog: FC<EditUserDialogProps> = ({ open, setOpen }) => {
   const { user, login } = useAuth();
   const [username, setUsername] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const [editUserMutation, { loading, error }] = useEditUserMutation();
-
-  const isUsernameEmpty = !Boolean(username);
-  const isUsernameError = isSubmitted && isUsernameEmpty;
+  const [editUserMutation, { loading }] = useEditUserMutation({
+    onCompleted: (data) => {
+      login?.({
+        id: data.editUser.id,
+        username: data.editUser.username,
+      });
+      setOpen(false);
+      toast.success("Username updated successfully");
+    },
+    onError: (error) => {
+      toast.error(`Failed to update username: ${error.message}`);
+    },
+  });
 
   const handleSubmit = async () => {
-    setIsSubmitted(true);
-
-    if (!isUsernameEmpty && user) {
-      try {
-        const res = await editUserMutation({
-          variables: {
-            userId: user.id,
-            username,
-          },
-        });
-
-        if (res.data) {
-          login?.({
-            id: res.data.editUser.id,
-            username: res.data.editUser.username,
-          });
-          setOpen(false);
-        }
-      } catch {}
+    if (!username.trim()) {
+      toast.error("Username cannot be empty");
+      return;
     }
-  };
 
-  const onChangeUsername = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setUsername(value);
-  };
-
-  const onKeyPressUsername = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      handleSubmit();
+    if (user) {
+      await editUserMutation({
+        variables: {
+          userId: user.id,
+          username: username.trim(),
+        },
+      });
     }
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={() => {
-        setOpen(false);
-      }}
-    >
-      <DialogTitle>Enter your Username</DialogTitle>
-      <DialogContent
-        sx={{
-          paddingBottom: 0,
-        }}
-      >
-        <DialogContentText
-          sx={{
-            marginBottom: 2,
-          }}
-        >
-          To be recognized by others, please enter your username.
-        </DialogContentText>
-        {error && (
-          <Alert
-            severity="error"
-            sx={{
-              marginBottom: 2,
-            }}
-          >
-            {error.message}
-          </Alert>
-        )}
-        <TextField
-          id="username"
-          label="Your username"
-          type="text"
-          fullWidth
-          onChange={onChangeUsername}
-          onKeyPress={onKeyPressUsername}
-          value={username}
-          error={isUsernameError}
-          helperText={isUsernameError ? "Username cannot be empty" : " "}
-        />
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Change Username</DialogTitle>
+          <DialogDescription>
+            Enter your new username below. Click save when you&apos;re done.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="username">Username</Label>
+            <Input
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="col-span-3"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button onClick={handleSubmit} disabled={loading}>
+            {loading ? "Saving..." : "Save changes"}
+          </Button>
+        </DialogFooter>
       </DialogContent>
-      <DialogActions
-        sx={{
-          paddingLeft: 3,
-          paddingRight: 3,
-          paddingBottom: 3,
-        }}
-      >
-        <LoadingButton
-          onClick={handleSubmit}
-          loading={loading}
-          loadingPosition="center"
-          size="large"
-        >
-          Done
-        </LoadingButton>
-      </DialogActions>
     </Dialog>
   );
-}
+};
