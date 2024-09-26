@@ -1,13 +1,12 @@
 import { ApolloProvider } from "@apollo/client";
-import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import { client } from "@/api";
-import { ConfirmationDialogProvider } from "@/components";
+import { ConfirmationDialogProvider, ThemeProvider } from "@/components";
 import { AuthProvider } from "@/contexts";
 import { theme } from "@/styles";
 
@@ -20,10 +19,9 @@ const root = createRoot(container);
 
 root.render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <MuiThemeProvider theme={theme}>
       <Toaster />
-      <div className="dark">
+      <ThemeProvider defaultTheme="dark">
         <ApolloProvider client={client}>
           <Router>
             <AuthProvider>
@@ -33,8 +31,8 @@ root.render(
             </AuthProvider>
           </Router>
         </ApolloProvider>
-      </div>
-    </ThemeProvider>
+      </ThemeProvider>
+    </MuiThemeProvider>
   </StrictMode>,
 );
 

@@ -1,5 +1,6 @@
 import { FC } from "react";
 
+import { ModeToggle } from "@/components";
 import { Button } from "@/components/ui/button";
 
 import { FeatureSections } from "./feature-sections";
@@ -21,6 +22,9 @@ export const NewHomePage: FC = () => {
                 className="h-8 w-auto"
               />
             </a>
+          </div>
+          <div className="flex lg:flex-1 justify-end">
+            <ModeToggle />
           </div>
         </nav>
       </header>
