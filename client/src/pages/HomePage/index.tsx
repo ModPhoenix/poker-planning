@@ -1,28 +1,16 @@
-import GitHubIcon from "@mui/icons-material/GitHub";
-import LoadingButton from "@mui/lab/LoadingButton";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import { Box, styled } from "@mui/system";
-import { ReactElement } from "react";
+import { FC } from "react";
 import { toast } from "react-hot-toast";
 import { generatePath, useNavigate } from "react-router-dom";
 
 import { useCreateRoomMutation } from "@/api";
-import { PageLayout } from "@/components";
+import { ModeToggle } from "@/components";
+import { Button } from "@/components/ui/button";
 import { useCopyRoomUrlToClipboard } from "@/hooks";
 import { Path } from "@/settings";
 
-const Section = styled("section")``;
+import { FeatureSections } from "./feature-sections";
 
-const Divider = styled("div")(({ theme }) => ({
-  width: "100%",
-  height: "10px",
-  background: theme.palette.primary.dark,
-}));
-
-export function HomePage(): ReactElement {
+export const HomePage: FC = () => {
   const navigate = useNavigate();
   const { copyRoomUrlToClipboard } = useCopyRoomUrlToClipboard();
 
@@ -41,86 +29,80 @@ export function HomePage(): ReactElement {
   }
 
   return (
-    <PageLayout>
-      <Section>
-        <Container
-          sx={{
-            pt: 8,
-            pb: 8,
-          }}
+    <div className="bg-white dark:bg-gray-900">
+      <header className="absolute inset-x-0 top-0 z-50">
+        <nav
+          aria-label="Global"
+          className="flex items-center justify-between p-6 lg:px-8"
         >
-          <Grid container>
-            <Grid item md={8} container spacing={2}>
-              <Grid item>
-                <Typography variant="h2">
-                  Planning poker tool for estimating in story points.
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant="h6"
-                  component="p"
-                  style={{
-                    fontWeight: 300,
-                  }}
-                >
-                  PokerPlanning.org is an open-source tool for easy online
-                  estimation in story points for teams around the world.
-                  Planning poker, also called Scrum poker, is a consensus-based,
-                  gamified technique for estimating, mostly used for timeboxing
-                  in Agile principles.
-                </Typography>
-              </Grid>
-              <Grid item container spacing={2}>
-                <Grid item xs={12} sm={6} lg="auto">
-                  <LoadingButton
-                    onClick={onCreateRoom}
-                    loading={loading}
-                    loadingPosition="end"
-                    variant="contained"
-                    size="large"
-                    disableElevation
-                    fullWidth
-                  >
-                    Create a room
-                  </LoadingButton>
-                </Grid>
-                <Grid item xs={12} sm={6} lg="auto">
-                  <Button
-                    href="https://github.com/ModPhoenix/poker-planning"
-                    startIcon={<GitHubIcon />}
-                    variant="outlined"
-                    size="large"
-                    fullWidth
-                    LinkComponent="a"
-                  >
-                    View on Github
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              md={4}
-              sx={{
-                pl: 3,
-              }}
-            >
-              <Box
-                sx={{
-                  minHeight: "100%",
-                  width: "100%",
-                  backgroundSize: "18px 18px",
-                  backgroundImage:
-                    "radial-gradient(rgb(74, 20, 140) 20%, transparent 20%)",
-                  opacity: "0.3",
-                }}
-              />
-            </Grid>
-          </Grid>
-        </Container>
-      </Section>
-      <Divider />
-    </PageLayout>
+          <div className="flex lg:flex-1">
+            <a href="/" className="-m-1.5 p-1.5">
+              <span className="sr-only">Poker Planning</span>
+              <span className="text-2xl font-bold">Poker Planning 🃏</span>
+            </a>
+          </div>
+          <div className="flex lg:flex-1 justify-end">
+            <ModeToggle />
+          </div>
+        </nav>
+      </header>
+
+      <div className="relative isolate px-6 pt-14 lg:px-8">
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+        >
+          <div
+            style={{
+              clipPath:
+                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+            }}
+            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+          />
+        </div>
+        <div className="mx-auto max-w-2xl py-32 sm:py-38 lg:py-46">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
+              Streamline Your Agile Estimations with Planning Poker
+            </h1>
+            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+              PokerPlanning.org offers an open-source, intuitive platform for
+              teams to collaboratively estimate story points online. Perfect for
+              Agile workflows, our tool makes consensus-based estimation simple,
+              fun, and effective.
+            </p>
+            <div className="mt-10 flex items-center justify-center gap-x-6">
+              <Button
+                size="lg"
+                className="h-12"
+                onClick={onCreateRoom}
+                disabled={loading}
+              >
+                Start Estimating
+              </Button>
+              <a
+                href="https://github.com/ModPhoenix/poker-planning"
+                className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-300"
+              >
+                Code on GitHub <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+        >
+          <div
+            style={{
+              clipPath:
+                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+            }}
+            className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+          />
+        </div>
+      </div>
+      <FeatureSections />
+    </div>
   );
-}
+};
