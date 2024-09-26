@@ -1,11 +1,19 @@
-import Button, { ButtonProps } from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
+import { FC } from "react";
 
-export const Card = styled(Button)<ButtonProps>({
-  height: "80px",
-  minWidth: "52px",
-  fontSize: 20,
-  padding: "24px 12px",
-  border: "2px solid",
-  lineHeight: 1.5,
-});
+import { Button, ButtonProps } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+export const Card: FC<ButtonProps> = ({ children, className, ...props }) => {
+  return (
+    <Button
+      className={cn(
+        "h-20 min-w-[52px] text-xl py-6 px-3 border-2 leading-normal",
+        className,
+      )}
+      variant="outline"
+      {...props}
+    >
+      {children}
+    </Button>
+  );
+};

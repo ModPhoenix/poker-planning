@@ -1,16 +1,15 @@
-import Box from '@mui/material/Box';
-import { ReactElement, useEffect, useRef } from 'react';
-import { toast } from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
+import { ReactElement, useEffect, useRef } from "react";
+import { toast } from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
-import { useJoinRoomMutation, useRoomSubscription } from '@/api';
-import { Deck, PageLayout, Room } from '@/components';
-import { CreateUserDialog } from '@/components/CreateUserDialog';
-import { useAuth } from '@/contexts';
-import { User } from '@/types';
+import { useJoinRoomMutation, useRoomSubscription } from "@/api";
+import { Deck, PageLayout, Room } from "@/components";
+import { CreateUserDialog } from "@/components/CreateUserDialog";
+import { useAuth } from "@/contexts";
+import { User } from "@/types";
 
 export function RoomPage(): ReactElement {
-  const { roomId = '' } = useParams();
+  const { roomId = "" } = useParams();
   const { user } = useAuth();
   const isJoinRoomCalledRef = useRef(false);
 
@@ -64,23 +63,14 @@ export function RoomPage(): ReactElement {
         {room && (
           <>
             <Room room={room} />
-            <Box
-              sx={{
-                position: 'absolute',
-                left: 0,
-                right: 0,
-                bottom: 24,
-                maxWidth: 900,
-                margin: '0 auto',
-              }}
-            >
+            <div className="absolute left-0 right-0 bottom-6 mx-auto my-0 max-w-4xl">
               <Deck
                 roomId={roomId}
                 isGameOver={room.isGameOver}
                 cards={room.deck.cards}
                 table={room.game.table}
               />
-            </Box>
+            </div>
           </>
         )}
       </PageLayout>
