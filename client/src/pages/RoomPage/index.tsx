@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useJoinRoomMutation, useRoomSubscription } from "@/api";
 import { Deck, PageLayout, Room } from "@/components";
 import { CreateUserDialog } from "@/components/CreateUserDialog";
+import { VoteDistributionChart } from "@/components/vote-distribution-chart";
 import { useAuth } from "@/contexts";
 import { User } from "@/types";
 
@@ -64,12 +65,18 @@ export function RoomPage(): ReactElement {
           <>
             <Room room={room} />
             <div className="absolute left-0 right-0 bottom-6 mx-auto my-0 max-w-4xl">
-              <Deck
-                roomId={roomId}
-                isGameOver={room.isGameOver}
-                cards={room.deck.cards}
-                table={room.game.table}
-              />
+              {room.isGameOver ? (
+                <div className="flex justify-center">
+                  <VoteDistributionChart room={room} />
+                </div>
+              ) : (
+                <Deck
+                  roomId={roomId}
+                  isGameOver={room.isGameOver}
+                  cards={room.deck.cards}
+                  table={room.game.table}
+                />
+              )}
             </div>
           </>
         )}

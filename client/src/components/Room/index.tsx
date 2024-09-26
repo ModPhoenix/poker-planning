@@ -36,7 +36,7 @@ export function Room({ room }: RoomProps): ReactElement {
         isCardsPicked={Boolean(room.game.table.length)}
         isGameOver={room.isGameOver}
       />
-      <div className="flex flex-row gap-2 mt-2">
+      <div className="flex flex-row flex-wrap gap-2 mt-2 justify-center">
         {bottomUsersHalf.map(({ id, username }) => {
           const pickedCart = getPickedUserCard(id, room.game.table);
           return (
