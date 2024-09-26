@@ -1,17 +1,22 @@
-import { LoadingButton } from '@mui/lab';
-import Dialog, { DialogProps } from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { useState } from 'react';
+import { useState } from "react";
 
-import { ModalOptions } from './types';
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
+import { ModalOptions } from "./types";
 
 type ModalHandler = () => void;
 
-export interface ConfirmationDialogProps
-  extends Pick<DialogProps, 'open' | 'onClose'> {
+export interface ConfirmationDialogProps {
+  open: boolean;
+  onClose: () => void;
   onCancel?: ModalHandler;
   onConfirm: ModalHandler;
   options: ModalOptions;
@@ -31,67 +36,48 @@ const ModalDialog = ({
     title,
     description,
     content,
-    dialogActionsProps,
     confirmationText,
     cancellationText,
-    dialogProps,
-    confirmationButtonProps,
-    cancellationButtonProps,
-    titleProps,
-    contentProps,
     allowClose,
   } = options;
 
   return (
-    <Dialog
-      fullWidth
-      {...dialogProps}
-      open={open}
-      onClose={
-        allowClose && !waitingConfirmation && !waitingCancellation
-          ? onClose
-          : undefined
-      }
-    >
-      {title ? <DialogTitle {...titleProps}>{title}</DialogTitle> : null}
-      {content ? (
-        <DialogContent {...contentProps}>{content}</DialogContent>
-      ) : (
-        description && (
-          <DialogContent {...contentProps}>
-            <DialogContentText>{description}</DialogContentText>
-          </DialogContent>
-        )
-      )}
-      <DialogActions {...dialogActionsProps}>
-        <LoadingButton
-          loading={waitingCancellation}
-          {...cancellationButtonProps}
-          disabled={waitingConfirmation || waitingCancellation}
-          onClick={async (e) => {
-            setWaitingCancellation(true);
-            await cancellationButtonProps?.onClick?.(e);
-            setWaitingCancellation(false);
-            onCancel?.();
-          }}
-        >
-          {cancellationText}
-        </LoadingButton>
-        <LoadingButton
-          color="primary"
-          loading={waitingConfirmation}
-          {...confirmationButtonProps}
-          disabled={waitingConfirmation || waitingCancellation}
-          onClick={async (e) => {
-            setWaitingConfirmation(true);
-            await confirmationButtonProps?.onClick?.(e);
-            setWaitingConfirmation(false);
-            onConfirm();
-          }}
-        >
-          {confirmationText}
-        </LoadingButton>
-      </DialogActions>
+    <Dialog open={open} onOpenChange={allowClose ? onClose : undefined}>
+      <DialogContent>
+        {title && (
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+          </DialogHeader>
+        )}
+        {content ? (
+          <div>{content}</div>
+        ) : (
+          description && <DialogDescription>{description}</DialogDescription>
+        )}
+        <DialogFooter>
+          <Button
+            variant="outline"
+            disabled={waitingConfirmation || waitingCancellation}
+            onClick={async () => {
+              setWaitingCancellation(true);
+              await onCancel?.();
+              setWaitingCancellation(false);
+            }}
+          >
+            {cancellationText}
+          </Button>
+          <Button
+            disabled={waitingConfirmation || waitingCancellation}
+            onClick={async () => {
+              setWaitingConfirmation(true);
+              await onConfirm();
+              setWaitingConfirmation(false);
+            }}
+          >
+            {confirmationText}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   );
 };

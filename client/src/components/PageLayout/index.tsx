@@ -1,8 +1,7 @@
-import Box from '@mui/material/Box';
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from "react";
 
-import { Header } from 'components/Header';
-import { Room, User } from 'types';
+import { Header } from "@/components/Header";
+import { Room, User } from "@/types";
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -17,14 +16,8 @@ export function PageLayout({
 }: PageLayoutProps): ReactElement {
   return (
     <>
-      <Header
-        room={room}
-        users={users}
-        sx={{ position: 'absolute', top: 0, left: 0, right: 0 }}
-      />
-      <Box sx={{ flexGrow: 1, marginTop: 10 }} component="main">
-        {children}
-      </Box>
+      <Header room={room} users={users} />
+      <main className="flex-grow">{children}</main>
     </>
   );
 }

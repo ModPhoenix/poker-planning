@@ -1,8 +1,6 @@
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { ReactElement } from 'react';
+import { ReactElement } from "react";
 
-import { Card } from 'components/Card';
+import { Card } from "@/components/Card";
 
 interface PlayerProps {
   username: string;
@@ -23,28 +21,20 @@ export function Player({
     if (card) {
       cardSymbol = card;
     } else {
-      cardSymbol = '✅';
+      cardSymbol = "✅";
     }
   } else {
     if (isGameOver) {
-      cardSymbol = '😴';
+      cardSymbol = "😴";
     } else {
-      cardSymbol = '🤔';
+      cardSymbol = "🤔";
     }
   }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <Card disableRipple disableElevation>
-        {cardSymbol}
-      </Card>
-      <Typography component="span">{username}</Typography>
-    </Box>
+    <div className="flex flex-col items-center">
+      <Card>{cardSymbol}</Card>
+      <span className="text-sm mb-1">{username}</span>
+    </div>
   );
 }

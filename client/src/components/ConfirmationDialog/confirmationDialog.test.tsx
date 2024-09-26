@@ -1,22 +1,20 @@
-import userEvent from '@testing-library/user-event';
-import { vi } from 'vitest';
+import userEvent from "@testing-library/user-event";
+import { vi } from "vitest";
 
-import { render, screen } from 'test';
+import { render, screen } from "@/test";
 
-import ModalDialog from './ConfirmationDialog';
-import { ModalOptions } from './types';
+import ModalDialog from "./ConfirmationDialog";
+import { ModalOptions } from "./types";
 
 const mockDefaultOptions: ModalOptions = {
-  title: 'Are you sure?',
-  description: '',
+  title: "Are you sure?",
+  description: "",
   content: null,
-  confirmationText: 'Ok',
-  cancellationText: 'Cancel',
+  confirmationText: "Ok",
+  cancellationText: "Cancel",
   dialogProps: {},
   confirmationButtonProps: {},
   cancellationButtonProps: {},
-  titleProps: {},
-  contentProps: {},
   allowClose: true,
 };
 
@@ -30,19 +28,21 @@ const mockWithDescriptionOptions: ModalOptions = {
   description: <div>description</div>,
 };
 
-describe('<ConfirmationDialog />', () => {
-  test('modal window is not rendered', () => {
+describe("<ConfirmationDialog />", () => {
+  test("modal window is not rendered", () => {
     render(
       <ModalDialog
         open={false}
         options={mockDefaultOptions}
         onCancel={() => null}
         onConfirm={() => null}
+        onClose={() => null}
       />,
     );
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
-  test('should render modal window with title and content and confirm window', async () => {
+
+  test("should render modal window with title and content and confirm window", async () => {
     const mockConfirmHandler = vi.fn();
     const mockCancelHandler = vi.fn();
     render(
@@ -51,21 +51,22 @@ describe('<ConfirmationDialog />', () => {
         options={mockWithContentOptions}
         onCancel={mockCancelHandler}
         onConfirm={mockConfirmHandler}
+        onClose={() => null}
       />,
     );
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
 
     expect(
       screen.getByText(mockWithContentOptions.title as string),
     ).toBeInTheDocument();
 
-    expect(screen.getByRole('dialog')).toContainElement(
-      screen.getByText('content'),
+    expect(screen.getByRole("dialog")).toContainElement(
+      screen.getByText("content"),
     );
-    const confirmationButton = screen.getByRole('button', {
+    const confirmationButton = screen.getByRole("button", {
       name: mockWithContentOptions.confirmationText as string,
     });
-    const cancellationButton = screen.getByRole('button', {
+    const cancellationButton = screen.getByRole("button", {
       name: mockWithContentOptions.cancellationText as string,
     });
     expect(confirmationButton).toBeInTheDocument();
@@ -77,7 +78,7 @@ describe('<ConfirmationDialog />', () => {
     expect(mockCancelHandler).toHaveBeenCalledTimes(0);
   });
 
-  test('should render modal window with description and cancel window', async () => {
+  test("should render modal window with description and cancel window", async () => {
     const mockConfirmHandler = vi.fn();
     const mockCancelHandler = vi.fn();
     render(
@@ -86,22 +87,23 @@ describe('<ConfirmationDialog />', () => {
         options={mockWithDescriptionOptions}
         onCancel={mockCancelHandler}
         onConfirm={mockConfirmHandler}
+        onClose={() => null}
       />,
     );
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
 
     expect(
       screen.getByText(mockWithDescriptionOptions.title as string),
     ).toBeInTheDocument();
 
-    expect(screen.getByRole('dialog')).toContainElement(
-      screen.getByText('description'),
+    expect(screen.getByRole("dialog")).toContainElement(
+      screen.getByText("description"),
     );
 
-    const confirmationButton = screen.getByRole('button', {
+    const confirmationButton = screen.getByRole("button", {
       name: mockWithContentOptions.confirmationText as string,
     });
-    const cancellationButton = screen.getByRole('button', {
+    const cancellationButton = screen.getByRole("button", {
       name: mockWithContentOptions.cancellationText as string,
     });
     expect(confirmationButton).toBeInTheDocument();

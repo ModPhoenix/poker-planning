@@ -1,11 +1,9 @@
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import { ReactElement } from 'react';
+import { ReactElement } from "react";
 
-import { Player } from 'components/Player';
-import { Table } from 'components/Table';
-import { Room as RoomType } from 'types';
-import { getPickedUserCard } from 'utils';
+import { Player } from "@/components/Player";
+import { Table } from "@/components/Table";
+import { Room as RoomType } from "@/types";
+import { getPickedUserCard } from "@/utils";
 
 interface RoomProps {
   room: RoomType;
@@ -18,18 +16,8 @@ export function Room({ room }: RoomProps): ReactElement {
   const bottomUsersHalf = room.users.slice(splitUsersCount, room.users.length);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: 'calc(100vh - 80px)',
-        paddingBottom: '100px',
-      }}
-    >
-      <Stack direction="row" spacing={2} sx={{ marginBottom: 2 }}>
+    <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-80px)]">
+      <div className="flex flex-row gap-2 mb-2">
         {topUsersHalf.map(({ id, username }) => {
           const pickedCart = getPickedUserCard(id, room.game.table);
           return (
@@ -42,13 +30,13 @@ export function Room({ room }: RoomProps): ReactElement {
             />
           );
         })}
-      </Stack>
+      </div>
       <Table
         roomId={room.id}
         isCardsPicked={Boolean(room.game.table.length)}
         isGameOver={room.isGameOver}
       />
-      <Stack direction="row" spacing={2} sx={{ marginTop: 2 }}>
+      <div className="flex flex-row gap-2 mt-2">
         {bottomUsersHalf.map(({ id, username }) => {
           const pickedCart = getPickedUserCard(id, room.game.table);
           return (
@@ -61,7 +49,7 @@ export function Room({ room }: RoomProps): ReactElement {
             />
           );
         })}
-      </Stack>
-    </Box>
+      </div>
+    </div>
   );
 }

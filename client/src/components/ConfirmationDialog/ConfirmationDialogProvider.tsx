@@ -1,7 +1,7 @@
-import { useState, useCallback, createContext, useMemo } from 'react';
+import { useState, useCallback, createContext, useMemo } from "react";
 
-import ModalDialog from './ConfirmationDialog';
-import { ModalOptions } from './types';
+import ModalDialog from "./ConfirmationDialog";
+import { ModalOptions } from "./types";
 
 interface ConfirmationDialogContextValue {
   open: (id: string, options?: ModalOptions) => Promise<void>;
@@ -14,11 +14,11 @@ export const ConfirmationDialogContext =
   createContext<ConfirmationDialogContextValue | null>(null);
 
 const DEFAULT_OPTIONS: ModalOptions = {
-  title: 'Are you sure?',
-  description: '',
+  title: "Are you sure?",
+  description: "",
   content: null,
-  confirmationText: 'Ok',
-  cancellationText: 'Cancel',
+  confirmationText: "Ok",
+  cancellationText: "Cancel",
   dialogProps: {},
   confirmationButtonProps: {},
   cancellationButtonProps: {},

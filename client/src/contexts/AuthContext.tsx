@@ -6,14 +6,14 @@ import {
   useEffect,
   useState,
   useContext,
-} from 'react';
+} from "react";
 
-import { User } from 'types';
+import { User } from "@/types";
 import {
   getUserFromLocalStorage,
   removeUserFromLocalStorage,
   setUserToLocalStorage,
-} from 'utils';
+} from "@/utils";
 
 export interface AuthContextValues {
   user: User | null;

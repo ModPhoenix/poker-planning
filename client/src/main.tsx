@@ -1,27 +1,24 @@
-import { ApolloProvider } from '@apollo/client';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import { Toaster } from 'react-hot-toast';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { ApolloProvider } from "@apollo/client";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { Toaster } from "react-hot-toast";
+import { BrowserRouter as Router } from "react-router-dom";
 
-import { client } from 'api';
-import { ConfirmationDialogProvider } from 'components';
-import { AuthProvider } from 'contexts';
-import { theme } from 'styles';
+import { client } from "@/api";
+import { ConfirmationDialogProvider, ThemeProvider } from "@/components";
+import { AuthProvider } from "@/contexts";
 
-import { App } from './App';
-import reportWebVitals from './reportWebVitals';
+import { App } from "./App";
+import reportWebVitals from "./reportWebVitals";
+import "./index.css";
 
-const container = document.getElementById('root') as HTMLElement;
+const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
 
 root.render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Toaster />
+    <Toaster />
+    <ThemeProvider defaultTheme="dark">
       <ApolloProvider client={client}>
         <Router>
           <AuthProvider>
