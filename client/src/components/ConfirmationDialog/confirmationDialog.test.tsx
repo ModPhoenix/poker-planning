@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
 
-import { render, screen } from "test";
+import { render, screen } from "@/test";
 
 import ModalDialog from "./ConfirmationDialog";
 import { ModalOptions } from "./types";
@@ -15,8 +15,6 @@ const mockDefaultOptions: ModalOptions = {
   dialogProps: {},
   confirmationButtonProps: {},
   cancellationButtonProps: {},
-  titleProps: {},
-  contentProps: {},
   allowClose: true,
 };
 
@@ -38,10 +36,12 @@ describe("<ConfirmationDialog />", () => {
         options={mockDefaultOptions}
         onCancel={() => null}
         onConfirm={() => null}
+        onClose={() => null}
       />,
     );
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
+
   test("should render modal window with title and content and confirm window", async () => {
     const mockConfirmHandler = vi.fn();
     const mockCancelHandler = vi.fn();
@@ -51,6 +51,7 @@ describe("<ConfirmationDialog />", () => {
         options={mockWithContentOptions}
         onCancel={mockCancelHandler}
         onConfirm={mockConfirmHandler}
+        onClose={() => null}
       />,
     );
     expect(screen.getByRole("dialog")).toBeInTheDocument();
@@ -86,6 +87,7 @@ describe("<ConfirmationDialog />", () => {
         options={mockWithDescriptionOptions}
         onCancel={mockCancelHandler}
         onConfirm={mockConfirmHandler}
+        onClose={() => null}
       />,
     );
     expect(screen.getByRole("dialog")).toBeInTheDocument();

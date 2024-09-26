@@ -1,31 +1,24 @@
-import { LoadingButtonProps } from "@mui/lab";
-import {
-  DialogActionsProps,
-  DialogContentProps,
-  DialogTitleProps,
-} from "@mui/material";
-import { DialogProps } from "@mui/material/Dialog";
+import { DialogProps } from "@radix-ui/react-dialog";
 import { ReactNode } from "react";
 
-interface ButtonProps extends LoadingButtonProps {
-  onClick?: (
-    e: Parameters<NonNullable<LoadingButtonProps["onClick"]>>[0],
-  ) => Promise<void> | void;
+import { ButtonProps } from "@/components/ui/button";
+
+interface CustomButtonProps extends ButtonProps {
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void> | void;
 }
 
 export interface ModalOptions {
   open?: boolean;
   title?: ReactNode;
-  titleProps?: DialogTitleProps;
   description?: ReactNode;
   content?: ReactNode | null;
-  contentProps?: DialogContentProps;
-  dialogActionsProps?: DialogActionsProps;
   confirmationText?: ReactNode;
   cancellationText?: ReactNode;
   dialogProps?: Omit<DialogProps, "open">;
-  confirmationButtonProps?: ButtonProps;
-  cancellationButtonProps?: ButtonProps;
+  titleProps?: React.HTMLAttributes<HTMLDivElement>;
+  contentProps?: React.HTMLAttributes<HTMLDivElement>;
+  confirmationButtonProps?: CustomButtonProps;
+  cancellationButtonProps?: CustomButtonProps;
   allowClose?: boolean;
   resolve?: () => void;
   reject?: () => void;

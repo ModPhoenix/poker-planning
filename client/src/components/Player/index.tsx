@@ -34,7 +34,7 @@ export function Player({
   return (
     <div className="flex flex-col items-center">
       <Card>{cardSymbol}</Card>
-      <span className="text-sm text-gray-400 mb-1">{username}</span>
+      <span className="text-sm mb-1">{username}</span>
     </div>
   );
 }
