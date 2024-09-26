@@ -18,13 +18,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.7.17",
-    "@emotion/react": "11.11.1",
-    "@emotion/styled": "11.11.0",
     "@heroicons/react": "2.1.5",
-    "@mui/icons-material": "5.14.1",
-    "@mui/lab": "5.0.0-alpha.137",
-    "@mui/material": "5.14.1",
-    "@mui/system": "5.14.1",
     "@radix-ui/react-alert-dialog": "1.1.1",
     "@radix-ui/react-avatar": "1.1.0",
     "@radix-ui/react-dialog": "1.1.1",
@@ -46,7 +40,6 @@
     "react-router-dom": "6.14.2",
     "tailwind-merge": "2.5.2",
     "tailwindcss-animate": "1.0.7",
-    "vite-tsconfig-paths": "4.2.0",
     "web-vitals": "3.4.0"
   },
   "devDependencies": {
@@ -86,12 +79,6 @@
     "typescript": "5.6.2",
     "vite": "5.4.7",
     "vitest": "2.1.1"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [

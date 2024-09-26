@@ -1,30 +1,17 @@
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { ReactElement } from 'react';
-import { Link } from 'react-router-dom';
+import { ReactElement } from "react";
+import { Link } from "react-router-dom";
 
-import { PageLayout } from '@/components';
+import { PageLayout } from "@/components";
 
 export function NotFoundPage(): ReactElement {
   return (
     <PageLayout>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          flexGrow: 1,
-        }}
-      >
-        <Typography component="h1" variant="h3">
-          Page Not Found
-        </Typography>
+      <div className="flex flex-col items-center flex-grow">
+        <h1 className="text-4xl font-bold">Page Not Found</h1>
         <Link to="/">
-          <Typography component="span" variant="body1">
-            Go to home
-          </Typography>
+          <span className="text-lg">Go to home</span>
         </Link>
-      </Box>
+      </div>
     </PageLayout>
   );
 }

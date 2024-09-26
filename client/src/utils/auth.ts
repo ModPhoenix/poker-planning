@@ -1,5 +1,5 @@
-import { USER_KEY } from '@/settings';
-import { User } from '@/types';
+import { USER_KEY } from "@/settings";
+import { User } from "@/types";
 
 export function getUserFromLocalStorage(): User | null {
   const maybeUser = localStorage.getItem(USER_KEY);

@@ -16,7 +16,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/contexts";
-import { avatarNameToColor } from "@/utils";
 
 export function AccountMenu(): ReactElement {
   const { user, logout } = useAuth();
@@ -51,7 +50,7 @@ export function AccountMenu(): ReactElement {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-10 w-10 rounded-full">
               <Avatar className="h-10 w-10">
-                <AvatarFallback {...avatarNameToColor(user.username)}>
+                <AvatarFallback>
                   {user.username[0].toUpperCase()}
                 </AvatarFallback>
               </Avatar>
