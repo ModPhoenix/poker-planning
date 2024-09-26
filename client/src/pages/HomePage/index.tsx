@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useCopyRoomUrlToClipboard } from "@/hooks";
 import { useToast } from "@/hooks/use-toast";
 
+import { Banner } from "./banner";
 import { FeatureSections } from "./feature-sections";
 
 export const HomePage: FC = () => {
@@ -35,7 +36,8 @@ export const HomePage: FC = () => {
 
   return (
     <div className="bg-white dark:bg-gray-900">
-      <header className="absolute inset-x-0 top-0 z-50">
+      <Banner />
+      <header className="relative z-50">
         <nav
           aria-label="Global"
           className="flex items-center justify-between p-6 lg:px-8"
