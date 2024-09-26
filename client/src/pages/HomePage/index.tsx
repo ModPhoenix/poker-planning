@@ -41,8 +41,8 @@ export const HomePage: FC = () => {
         >
           <div className="flex lg:flex-1">
             <Link to="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">Poker Planning</span>
-              <span className="text-2xl font-bold">Poker Planning 🃏</span>
+              <span className="sr-only">Planning poker / Scrum Poker</span>
+              <span className="text-2xl font-bold">Planning poker 🃏</span>
             </Link>
           </div>
           <div className="flex lg:flex-1 justify-end">

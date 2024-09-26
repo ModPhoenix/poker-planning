@@ -24,6 +24,7 @@ declare module "@tanstack/react-router" {
 }
 
 const container = document.getElementById("root") as HTMLElement;
+container.classList.add("h-full");
 const root = createRoot(container);
 
 root.render(

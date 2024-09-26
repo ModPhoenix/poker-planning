@@ -17,7 +17,7 @@ export function PageLayout({
   return (
     <>
       <Header room={room} users={users} />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow h-[calc(100%-56px)]">{children}</main>
     </>
   );
 }
