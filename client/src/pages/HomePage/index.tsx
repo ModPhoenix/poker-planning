@@ -3,6 +3,7 @@ import { FC } from "react";
 
 import { useCreateRoomMutation } from "@/api";
 import { ModeToggle } from "@/components";
+import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { useCopyRoomUrlToClipboard } from "@/hooks";
 import { useToast } from "@/hooks/use-toast";
@@ -107,6 +108,7 @@ export const HomePage: FC = () => {
         </div>
       </div>
       <FeatureSections />
+      <Footer />
     </div>
   );
 };
