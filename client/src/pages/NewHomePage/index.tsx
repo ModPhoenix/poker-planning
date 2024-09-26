@@ -6,7 +6,7 @@ import { FeatureSections } from "./feature-sections";
 
 export const NewHomePage: FC = () => {
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-gray-900">
       <header className="absolute inset-x-0 top-0 z-50">
         <nav
           aria-label="Global"
@@ -40,10 +40,10 @@ export const NewHomePage: FC = () => {
         </div>
         <div className="mx-auto max-w-2xl py-32 sm:py-38 lg:py-46">
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
               Streamline Your Agile Estimations with Planning Poker
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
+            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
               PokerPlanning.org offers an open-source, intuitive platform for
               teams to collaboratively estimate story points online. Perfect for
               Agile workflows, our tool makes consensus-based estimation simple,
@@ -55,7 +55,7 @@ export const NewHomePage: FC = () => {
               </Button>
               <a
                 href="https://github.com/ModPhoenix/poker-planning"
-                className="text-sm font-semibold leading-6 text-gray-900"
+                className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-300"
               >
                 Code on GitHub <span aria-hidden="true">→</span>
               </a>

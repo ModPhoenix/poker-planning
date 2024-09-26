@@ -1,24 +1,24 @@
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LoadingButton from '@mui/lab/LoadingButton';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { Box, styled } from '@mui/system';
-import { ReactElement } from 'react';
-import { toast } from 'react-hot-toast';
-import { generatePath, useNavigate } from 'react-router-dom';
+import GitHubIcon from "@mui/icons-material/GitHub";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { Box, styled } from "@mui/system";
+import { ReactElement } from "react";
+import { toast } from "react-hot-toast";
+import { generatePath, useNavigate } from "react-router-dom";
 
-import { useCreateRoomMutation } from '@/api';
-import { PageLayout } from '@/components';
-import { useCopyRoomUrlToClipboard } from '@/hooks';
-import { Path } from '@/settings';
+import { useCreateRoomMutation } from "@/api";
+import { PageLayout } from "@/components";
+import { useCopyRoomUrlToClipboard } from "@/hooks";
+import { Path } from "@/settings";
 
-const Section = styled('section')``;
+const Section = styled("section")``;
 
-const Divider = styled('div')(({ theme }) => ({
-  width: '100%',
-  height: '10px',
+const Divider = styled("div")(({ theme }) => ({
+  width: "100%",
+  height: "10px",
   background: theme.palette.primary.dark,
 }));
 
@@ -108,12 +108,12 @@ export function HomePage(): ReactElement {
             >
               <Box
                 sx={{
-                  minHeight: '100%',
-                  width: '100%',
-                  backgroundSize: '18px 18px',
+                  minHeight: "100%",
+                  width: "100%",
+                  backgroundSize: "18px 18px",
                   backgroundImage:
-                    'radial-gradient(rgb(74, 20, 140) 20%, transparent 20%)',
-                  opacity: '0.3',
+                    "radial-gradient(rgb(74, 20, 140) 20%, transparent 20%)",
+                  opacity: "0.3",
                 }}
               />
             </Grid>
