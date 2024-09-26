@@ -36,7 +36,7 @@ export const Header: FC<HeaderProps> = ({ room, users }) => {
     <header className="flex justify-between items-center h-14 px-4 border-b">
       <div className="flex items-center space-x-4">
         <Link to={Path.Home} className="text-lg font-semibold">
-          PokerPlanning 🃏
+          Poker Planning 🃏
         </Link>
         {room && (
           <>
