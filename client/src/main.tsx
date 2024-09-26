@@ -6,10 +6,10 @@ import {
 } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Toaster } from "react-hot-toast";
 
 import { client } from "@/api";
 import { ConfirmationDialogProvider, ThemeProvider } from "@/components";
+import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/contexts";
 import { NotFoundPage } from "@/pages";
 import { Route as rootRoute } from "@/routes/__root.tsx";

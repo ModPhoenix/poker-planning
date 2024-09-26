@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import { toast } from "react-hot-toast";
 
 import { useEditUserMutation } from "@/api";
 import { Button } from "@/components/ui/button";
@@ -14,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts";
+import { useToast } from "@/hooks/use-toast";
 
 interface EditUserDialogProps {
   open: boolean;
@@ -22,6 +22,7 @@ interface EditUserDialogProps {
 
 export const EditUserDialog: FC<EditUserDialogProps> = ({ open, setOpen }) => {
   const { user, login } = useAuth();
+  const { toast } = useToast();
   const [username, setUsername] = useState("");
 
   const [editUserMutation, { loading }] = useEditUserMutation({
@@ -31,16 +32,27 @@ export const EditUserDialog: FC<EditUserDialogProps> = ({ open, setOpen }) => {
         username: data.editUser.username,
       });
       setOpen(false);
-      toast.success("Username updated successfully");
+      toast({
+        title: "Username updated successfully",
+        variant: "default",
+      });
     },
     onError: (error) => {
-      toast.error(`Failed to update username: ${error.message}`);
+      toast({
+        title: "Error",
+        description: `Failed to update username: ${error.message}`,
+        variant: "destructive",
+      });
     },
   });
 
   const handleSubmit = async () => {
     if (!username.trim()) {
-      toast.error("Username cannot be empty");
+      toast({
+        title: "Error",
+        description: "Username cannot be empty",
+        variant: "destructive",
+      });
       return;
     }
 

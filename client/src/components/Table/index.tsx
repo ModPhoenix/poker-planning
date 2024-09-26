@@ -1,10 +1,10 @@
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
-import { toast } from "react-hot-toast";
 
 import { useResetGameMutation, useShowCardsMutation } from "@/api";
 import { useModal } from "@/components";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 interface TableProps {
   roomId: string;
@@ -17,6 +17,8 @@ export function Table({
   isCardsPicked,
   isGameOver,
 }: TableProps): ReactElement {
+  const { toast } = useToast();
+
   const startNewGame = useModal({
     title: "Are you sure you want to start a new game?",
     description: "This will reset the current game.",
@@ -26,14 +28,22 @@ export function Table({
   const [showCardsMutation, { loading: showCardLoading }] =
     useShowCardsMutation({
       onError: (error) => {
-        toast.error(`Show cards: ${error.message}`);
+        toast({
+          title: "Error",
+          description: `Show cards: ${error.message}`,
+          variant: "destructive",
+        });
       },
     });
 
   const [resetGameMutation, { loading: resetGameLoading }] =
     useResetGameMutation({
       onError: (error) => {
-        toast.error(`Reset game: ${error.message}`);
+        toast({
+          title: "Error",
+          description: `Reset game: ${error.message}`,
+          variant: "destructive",
+        });
       },
     });
 

@@ -1,16 +1,17 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { FC } from "react";
-import { toast } from "react-hot-toast";
 
 import { useCreateRoomMutation } from "@/api";
 import { ModeToggle } from "@/components";
 import { Button } from "@/components/ui/button";
 import { useCopyRoomUrlToClipboard } from "@/hooks";
+import { useToast } from "@/hooks/use-toast";
 
 import { FeatureSections } from "./feature-sections";
 
 export const HomePage: FC = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const { copyRoomUrlToClipboard } = useCopyRoomUrlToClipboard();
 
   const [createRoomMutation, { loading }] = useCreateRoomMutation({
@@ -19,7 +20,11 @@ export const HomePage: FC = () => {
       copyRoomUrlToClipboard(data.createRoom.id);
     },
     onError: (error) => {
-      toast.error(`Create room: ${error.message}`);
+      toast({
+        title: "Error",
+        description: `Create room: ${error.message}`,
+        variant: "destructive",
+      });
     },
   });
 

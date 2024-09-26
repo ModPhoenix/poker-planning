@@ -1,6 +1,5 @@
 import { LogOut, Settings } from "lucide-react";
 import { ReactElement, useState } from "react";
-import { toast } from "react-hot-toast";
 
 import { useLogoutMutation } from "@/api";
 import { EditUserDialog } from "@/components/EditUserDialog";
@@ -16,16 +15,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/contexts";
+import { useToast } from "@/hooks/use-toast";
 
 export function AccountMenu(): ReactElement {
   const { user, logout } = useAuth();
+  const { toast } = useToast();
   const [openEditUserDialog, setOpenEditUserDialog] = useState(false);
   const [logoutMutation] = useLogoutMutation({
     onCompleted() {
       logout?.();
     },
     onError: (error) => {
-      toast.error(`Logout: ${error.message}`);
+      toast({
+        title: "Error",
+        description: `Logout: ${error.message}`,
+        variant: "destructive",
+      });
     },
   });
 

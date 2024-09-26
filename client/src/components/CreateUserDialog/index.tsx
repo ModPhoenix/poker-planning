@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
 
 import { useCreateUserMutation } from "@/api";
 import {
@@ -14,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts";
+import { useToast } from "@/hooks/use-toast";
 import { User } from "@/types";
 
 interface CreateUserDialogProps {
@@ -24,6 +24,7 @@ export const CreateUserDialog: FC<CreateUserDialogProps> = ({
   handleJoinRoomMutation,
 }) => {
   const { user, login } = useAuth();
+  const { toast } = useToast();
   const [username, setUsername] = useState("");
   const [open, setOpen] = useState<boolean>(!Boolean(user));
 
@@ -39,16 +40,27 @@ export const CreateUserDialog: FC<CreateUserDialogProps> = ({
       });
       setOpen(false);
       handleJoinRoomMutation(data.createUser);
-      toast.success("User created successfully");
+      toast({
+        title: "User created successfully",
+        variant: "default",
+      });
     },
     onError: (error) => {
-      toast.error(`Failed to create user: ${error.message}`);
+      toast({
+        title: "Error",
+        description: `Failed to create user: ${error.message}`,
+        variant: "destructive",
+      });
     },
   });
 
   const handleSubmit = async () => {
     if (!username.trim()) {
-      toast.error("Username cannot be empty");
+      toast({
+        title: "Error",
+        description: "Username cannot be empty",
+        variant: "destructive",
+      });
       return;
     }
 

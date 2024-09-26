@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from "react";
-import { toast } from "react-hot-toast";
 
 import { copyTextToClipboard } from "@/utils";
+
+import { toast } from "./use-toast";
 
 interface UseCopyRoomUrlReturn {
   copyRoomUrlToClipboard: (roomId: string) => Promise<void>;
@@ -15,11 +16,17 @@ export function useCopyRoomUrlToClipboard(): UseCopyRoomUrlReturn {
     const isCopySuccess = await copyTextToClipboard(`${origin}${roomPath}`);
 
     if (isCopySuccess) {
-      toast.success("Invite link copied to clipboard");
+      toast({
+        title: "Invite link copied to clipboard",
+        variant: "default",
+      });
     } else {
-      toast.error(
-        "When copying a invite link something went wrong. But don't be discouraged, just copy it yourself from the browser.",
-      );
+      toast({
+        title: "Error",
+        description:
+          "When copying a invite link something went wrong. But don't be discouraged, just copy it yourself from the browser.",
+        variant: "destructive",
+      });
     }
   }, []);
 
