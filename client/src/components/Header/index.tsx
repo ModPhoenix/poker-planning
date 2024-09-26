@@ -1,6 +1,6 @@
+import { Link } from "@tanstack/react-router";
 import { Copy } from "lucide-react";
 import { FC } from "react";
-import { Link } from "react-router-dom";
 
 import { AccountMenu } from "@/components/AccountMenu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/tooltip";
 import { useAuth } from "@/contexts";
 import { useCopyRoomUrlToClipboard } from "@/hooks";
-import { Path } from "@/settings";
 import { Room, User } from "@/types";
 
 interface HeaderProps {
@@ -35,7 +34,7 @@ export const Header: FC<HeaderProps> = ({ room, users }) => {
   return (
     <header className="flex justify-between items-center h-14 px-4 border-b">
       <div className="flex items-center space-x-4">
-        <Link to={Path.Home} className="text-lg font-semibold">
+        <Link to="/" className="text-lg font-semibold">
           Poker Planning 🃏
         </Link>
         {room && (

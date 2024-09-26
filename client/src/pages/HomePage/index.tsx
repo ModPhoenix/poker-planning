@@ -1,12 +1,11 @@
+import { Link, useNavigate } from "@tanstack/react-router";
 import { FC } from "react";
 import { toast } from "react-hot-toast";
-import { generatePath, useNavigate } from "react-router-dom";
 
 import { useCreateRoomMutation } from "@/api";
 import { ModeToggle } from "@/components";
 import { Button } from "@/components/ui/button";
 import { useCopyRoomUrlToClipboard } from "@/hooks";
-import { Path } from "@/settings";
 
 import { FeatureSections } from "./feature-sections";
 
@@ -16,7 +15,7 @@ export const HomePage: FC = () => {
 
   const [createRoomMutation, { loading }] = useCreateRoomMutation({
     onCompleted: (data) => {
-      navigate(generatePath(Path.Room, { roomId: data.createRoom.id }));
+      navigate({ to: "/room/$roomId", params: { roomId: data.createRoom.id } });
       copyRoomUrlToClipboard(data.createRoom.id);
     },
     onError: (error) => {
@@ -36,10 +35,10 @@ export const HomePage: FC = () => {
           className="flex items-center justify-between p-6 lg:px-8"
         >
           <div className="flex lg:flex-1">
-            <a href="/" className="-m-1.5 p-1.5">
+            <Link to="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Poker Planning</span>
               <span className="text-2xl font-bold">Poker Planning 🃏</span>
-            </a>
+            </Link>
           </div>
           <div className="flex lg:flex-1 justify-end">
             <ModeToggle />

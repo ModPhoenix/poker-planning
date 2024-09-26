@@ -1,4 +1,3 @@
-export * from './apiUrls';
-export * from './path';
+export * from "./apiUrls";
 
-export const USER_KEY = 'user';
+export const USER_KEY = "user";

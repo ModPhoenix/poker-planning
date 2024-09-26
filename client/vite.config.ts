@@ -1,5 +1,6 @@
 import path from "path";
 
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, loadEnv } from "vite";
 
@@ -11,7 +12,7 @@ export default defineConfig(({ mode }) => {
   console.log("GRAPHQL_ENDPOINT", GRAPHQL_ENDPOINT);
 
   return {
-    plugins: [react()],
+    plugins: [TanStackRouterVite(), react()],
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),

@@ -1,8 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { toast } from "react-hot-toast";
-import { generatePath } from "react-router-dom";
 
-import { Path } from "@/settings";
 import { copyTextToClipboard } from "@/utils";
 
 interface UseCopyRoomUrlReturn {
@@ -12,7 +10,7 @@ interface UseCopyRoomUrlReturn {
 export function useCopyRoomUrlToClipboard(): UseCopyRoomUrlReturn {
   const copyRoomUrlToClipboard = useCallback(async (roomId: string) => {
     const { origin } = window.location;
-    const roomPath = generatePath(Path.Room, { roomId });
+    const roomPath = `/room/${roomId}`;
 
     const isCopySuccess = await copyTextToClipboard(`${origin}${roomPath}`);
 
