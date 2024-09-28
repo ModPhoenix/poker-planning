@@ -9,7 +9,6 @@ import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useAuth } from "@/contexts";
@@ -40,24 +39,16 @@ export const Header: FC<HeaderProps> = ({ room, users }) => {
         {room && (
           <>
             <Separator orientation="vertical" className="h-6" />
-            <span>{room.id.split("-")[0]}</span>
-            <Separator orientation="vertical" className="h-6" />
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={handleCopyRoomUrl}
-                  >
-                    <Copy className="h-4 w-4" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Copy room link</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" onClick={handleCopyRoomUrl}>
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Copy room link</p>
+              </TooltipContent>
+            </Tooltip>
           </>
         )}
       </div>
@@ -67,11 +58,21 @@ export const Header: FC<HeaderProps> = ({ room, users }) => {
             <>
               <div className="flex -space-x-2">
                 {users.slice(0, 5).map((user) => (
-                  <Avatar key={user.id} className="border-2 border-background">
-                    <AvatarFallback>
-                      {user.username[0].toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
+                  <Tooltip key={user.id}>
+                    <TooltipTrigger asChild>
+                      <Avatar
+                        key={user.id}
+                        className="border-2 border-background"
+                      >
+                        <AvatarFallback>
+                          {user.username[0].toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{user.username}</p>
+                    </TooltipContent>
+                  </Tooltip>
                 ))}
                 {users.length > 5 && (
                   <Avatar className="border-2 border-background">

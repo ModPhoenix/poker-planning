@@ -11,6 +11,7 @@ import { NotFoundPage } from "@/pages";
 
 import "./index.css";
 
+import { TooltipProvider } from "./components/ui/tooltip";
 import { routeTree } from "./routeTree.gen";
 
 const router = createRouter({
@@ -32,11 +33,13 @@ root.render(
     <Toaster />
     <ThemeProvider defaultTheme="dark">
       <ApolloProvider client={client}>
-        <AuthProvider>
-          <ConfirmationDialogProvider>
-            <RouterProvider router={router} />
-          </ConfirmationDialogProvider>
-        </AuthProvider>
+        <TooltipProvider>
+          <AuthProvider>
+            <ConfirmationDialogProvider>
+              <RouterProvider router={router} />
+            </ConfirmationDialogProvider>
+          </AuthProvider>
+        </TooltipProvider>
       </ApolloProvider>
     </ThemeProvider>
   </StrictMode>,
