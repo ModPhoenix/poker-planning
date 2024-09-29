@@ -52,7 +52,8 @@ export function Room({ room }: RoomProps): ReactElement {
         } else if (index < topBottomCount + sideCount) {
           // Right side
           x = tableWidth + padding;
-          y = (tableHeight * (index - topBottomCount + 1)) / (sideCount + 1);
+          y =
+            (tableHeight * (index - topBottomCount - 0.3)) / (sideCount - 1.7);
         } else if (index < 2 * topBottomCount + sideCount) {
           // Bottom row
           x =
@@ -63,8 +64,8 @@ export function Room({ room }: RoomProps): ReactElement {
           // Left side
           x = -padding;
           y =
-            (tableHeight * (index - 2 * topBottomCount - sideCount + 1)) /
-            (sideCount + 1);
+            (tableHeight * (index - 2 * topBottomCount - sideCount - 0.3)) /
+            (sideCount - 1.7);
         }
 
         return { x, y };
