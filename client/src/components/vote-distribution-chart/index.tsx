@@ -119,7 +119,7 @@ export const VoteDistributionChart: FC<VoteDistributionChartProps> = ({
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex flex-row items-center justify-between gap-1">
+      <CardFooter className="flex flex-row items-center justify-between gap-1 pb-0">
         <CardTitle className="text-4xl tabular-nums mr-4">
           {averageVote.toFixed(1)}{" "}
           <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground">

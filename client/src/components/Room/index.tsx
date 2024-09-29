@@ -16,7 +16,7 @@ export function Room({ room }: RoomProps): ReactElement {
   const bottomUsersHalf = room.users.slice(splitUsersCount, room.users.length);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-80px)]">
+    <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-120px)]">
       <div className="flex flex-row gap-2 mb-2">
         {topUsersHalf.map(({ id, username }) => {
           const pickedCart = getPickedUserCard(id, room.game.table);
