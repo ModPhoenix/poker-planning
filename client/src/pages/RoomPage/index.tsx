@@ -73,7 +73,7 @@ export function RoomPage(): ReactElement {
         {room && (
           <>
             <Room room={room} />
-            <div className="absolute left-0 right-0 bottom-4 mx-auto my-0 max-w-4xl">
+            <div className="absolute left-0 right-0 bottom-4 mx-auto my-0 max-w-4xl overflow-auto">
               {room.isGameOver ? (
                 <div className="flex justify-center">
                   <VoteDistributionChart room={room} />

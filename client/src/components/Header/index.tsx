@@ -34,7 +34,8 @@ export const Header: FC<HeaderProps> = ({ room, users }) => {
     <header className="flex justify-between items-center h-14 px-4 border-b">
       <div className="flex items-center space-x-4">
         <Link to="/" className="text-lg font-semibold">
-          Poker Planning 🃏
+          <span className="hidden md:block">Poker Planning 🃏</span>
+          <span className="md:hidden">🃏</span>
         </Link>
         {room && (
           <>
@@ -55,7 +56,7 @@ export const Header: FC<HeaderProps> = ({ room, users }) => {
       {user && (
         <div className="flex items-center space-x-4">
           {users && (
-            <>
+            <div className="flex items-center space-x-4 invisible md:visible">
               <div className="flex -space-x-2">
                 {users.slice(0, 5).map((user) => (
                   <Tooltip key={user.id}>
@@ -81,7 +82,7 @@ export const Header: FC<HeaderProps> = ({ room, users }) => {
                 )}
               </div>
               <Separator orientation="vertical" className="h-6" />
-            </>
+            </div>
           )}
           <AccountMenu />
         </div>

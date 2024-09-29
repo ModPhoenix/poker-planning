@@ -10,12 +10,14 @@ interface TableProps {
   roomId: string;
   isCardsPicked: boolean;
   isGameOver: boolean;
+  innerRef: React.RefObject<HTMLDivElement>;
 }
 
 export function Table({
   roomId,
   isCardsPicked,
   isGameOver,
+  innerRef,
 }: TableProps): ReactElement {
   const { toast } = useToast();
 
@@ -66,12 +68,16 @@ export function Table({
   }
 
   return (
-    <div className="flex justify-center items-center w-72 h-36 border border-primary-500 rounded-lg">
+    <div
+      ref={innerRef}
+      className="flex justify-center items-center w-[25vw] max-w-72 min-w-48 h-36 border border-primary-500 rounded-lg"
+    >
       {isCardsPicked ? (
         isGameOver ? (
           <Button
             onClick={handleResetGame}
             disabled={resetGameLoading}
+            className="w-36"
             size="lg"
           >
             {resetGameLoading ? (
