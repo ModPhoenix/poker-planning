@@ -43,9 +43,14 @@ export const HomePage: FC = () => {
           className="flex items-center justify-between p-6 lg:px-8"
         >
           <div className="flex lg:flex-1">
-            <Link to="/" className="-m-1.5 p-1.5">
+            <Link to="/" className="-m-1.5 p-1.5 flex items-center">
+              <img
+                src="/logo.svg"
+                alt="PokerPlanning.org Logo"
+                className="h-8 w-8 mr-2"
+              />
               <span className="sr-only">Planning poker / Scrum Poker</span>
-              <span className="text-2xl font-bold">Planning poker 🃏</span>
+              <span className="text-2xl font-bold">Planning poker</span>
             </Link>
           </div>
           <div className="flex lg:flex-1 justify-end">

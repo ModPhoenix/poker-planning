@@ -30,7 +30,7 @@ export function FeatureSections() {
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
           <div className="lg:pr-8 lg:pt-4">
             <div className="lg:max-w-lg">
-              <h2 className="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">
+              <h2 className="text-base font-semibold leading-7 text-primary dark:text-primary/90">
                 Plan Smarter
               </h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
@@ -47,7 +47,7 @@ export function FeatureSections() {
                     <dt className="inline font-semibold text-gray-900 dark:text-white">
                       <feature.icon
                         aria-hidden="true"
-                        className="absolute left-1 top-1 h-5 w-5 text-indigo-600 dark:text-indigo-400"
+                        className="absolute left-1 top-1 h-5 w-5 text-primary dark:text-primary/90"
                       />
                       {feature.name}
                     </dt>{" "}

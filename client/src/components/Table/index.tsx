@@ -70,7 +70,7 @@ export function Table({
   return (
     <div
       ref={innerRef}
-      className="flex justify-center items-center w-[25vw] max-w-72 min-w-48 h-36 border border-primary-500 rounded-lg"
+      className="flex justify-center items-center w-[25vw] max-w-72 min-w-48 h-36 border border-primary-500 rounded-full"
     >
       {isCardsPicked ? (
         isGameOver ? (

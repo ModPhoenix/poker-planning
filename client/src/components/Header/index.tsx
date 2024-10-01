@@ -33,9 +33,13 @@ export const Header: FC<HeaderProps> = ({ room, users }) => {
   return (
     <header className="flex justify-between items-center h-14 px-4 border-b">
       <div className="flex items-center space-x-4">
-        <Link to="/" className="text-lg font-semibold">
-          <span className="hidden md:block">Poker Planning 🃏</span>
-          <span className="md:hidden">🃏</span>
+        <Link to="/" className="text-lg font-semibold flex items-center">
+          <img
+            src="/logo.svg"
+            alt="PokerPlanning.org Logo"
+            className="h-8 w-8 mr-2"
+          />
+          <span className="hidden md:block">Planning poker</span>
         </Link>
         {room && (
           <>
