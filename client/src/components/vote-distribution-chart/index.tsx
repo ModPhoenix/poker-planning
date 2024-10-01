@@ -8,13 +8,7 @@ import {
   XAxis,
 } from "recharts";
 
-import {
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { CardFooter, CardTitle } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
@@ -29,21 +23,26 @@ interface VoteDistributionChartProps {
 export const VoteDistributionChart: FC<VoteDistributionChartProps> = ({
   room,
 }) => {
-  const chartData = useMemo(() => {
+  const voteCount = useMemo(() => {
     const voteCount: { [key: string]: number } = {};
     room.game.table.forEach((userCard) => {
       if (userCard.card) {
         voteCount[userCard.card] = (voteCount[userCard.card] || 0) + 1;
       }
     });
-    return Object.entries(voteCount).map(([card, count]) => ({
+
+    return voteCount;
+  }, [room.game.table]);
+
+  const chartData = useMemo(() => {
+    return Object.entries(voteCount).map(([card, votes]) => ({
       card,
-      count,
+      votes,
     }));
   }, [room.game.table]);
 
   const maxCardCount = useMemo(() => {
-    return Math.max(...chartData.map((card) => card.count));
+    return Math.max(...chartData.map((card) => card.votes));
   }, [chartData]);
 
   const averageVote = useMemo(() => {
@@ -54,89 +53,82 @@ export const VoteDistributionChart: FC<VoteDistributionChartProps> = ({
     return numericVotes.length > 0 ? sum / numericVotes.length : 0;
   }, [room.game.table]);
 
+  const agreement = useMemo(() => {
+    const totalVotes = room.game.table.length;
+    const mostCommonVotes = Math.max(...Object.values(voteCount));
+    return totalVotes > 0 ? (mostCommonVotes / totalVotes) * 100 : 0;
+  }, [room.game.table, voteCount]);
+
   return (
-    <div>
-      <CardHeader className="space-y-0 pb-2"></CardHeader>
-      <CardContent>
-        <ChartContainer
-          config={{
-            card: {
-              label: "Card",
-              color: "hsl(var(--chart-1))",
-            },
+    <div className="flex flex-col items-center justify-center overflow-hidden">
+      <ChartContainer
+        className="min-h-[150px] max-h-[150px] w-full"
+        config={{
+          card: {
+            label: "Votes",
+            color: "hsl(var(--chart-1))",
+          },
+        }}
+      >
+        <BarChart
+          accessibilityLayer
+          margin={{
+            left: -4,
+            right: -4,
           }}
+          data={chartData}
         >
-          <BarChart
-            accessibilityLayer
-            margin={{
-              left: -4,
-              right: -4,
-            }}
-            data={chartData}
+          <Bar
+            dataKey="votes"
+            fill="hsl(var(--chart-1))"
+            radius={5}
+            fillOpacity={0.6}
+            activeBar={<Rectangle fillOpacity={0.8} />}
+          />
+          <XAxis
+            dataKey="card"
+            tickLine={false}
+            axisLine={false}
+            tickMargin={4}
+          />
+          <ChartTooltip
+            content={
+              <ChartTooltipContent
+                labelFormatter={(value) => `Card: ${value}`}
+              />
+            }
+            cursor={false}
+          />
+          <ReferenceLine
+            y={((maxCardCount * agreement) / 100) * 0.8}
+            stroke="hsl(var(--muted-foreground))"
+            strokeDasharray="3 3"
+            strokeWidth={1}
           >
-            <Bar
-              dataKey="count"
-              fill="hsl(var(--chart-1))"
-              radius={5}
-              fillOpacity={0.6}
-              activeBar={<Rectangle fillOpacity={0.8} />}
+            <Label
+              position="insideBottomLeft"
+              value="Agreement"
+              offset={10}
+              fill="hsl(var(--foreground))"
             />
-            <XAxis
-              dataKey="card"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={4}
+            <Label
+              position="insideTopLeft"
+              value={`${agreement.toFixed(0)}% ${agreement > 95 ? "🎉" : ""}`}
+              className="text-lg"
+              fill="hsl(var(--foreground))"
+              offset={10}
+              startOffset={100}
             />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent
-                  labelFormatter={(value) => `Card: ${value}`}
-                />
-              }
-              cursor={false}
-            />
-            <ReferenceLine
-              y={maxCardCount / 2}
-              stroke="hsl(var(--muted-foreground))"
-              strokeDasharray="3 3"
-              strokeWidth={1}
-            >
-              <Label
-                position="insideBottomLeft"
-                value="Average Vote"
-                offset={10}
-                fill="hsl(var(--foreground))"
-              />
-              <Label
-                position="insideTopLeft"
-                value={averageVote.toFixed(1)}
-                className="text-lg"
-                fill="hsl(var(--foreground))"
-                offset={10}
-                startOffset={100}
-              />
-            </ReferenceLine>
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
-      <CardFooter className="flex flex-row items-center justify-between gap-1 pb-0">
+          </ReferenceLine>
+        </BarChart>
+      </ChartContainer>
+      <CardFooter className="flex flex-row items-center justify-center pb-0">
         <CardTitle className="text-4xl tabular-nums mr-4">
           {averageVote.toFixed(1)}{" "}
           <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground">
             average
           </span>
         </CardTitle>
-        <div className="flex flex-col gap-2">
-          <CardDescription>
-            Most common vote:{" "}
-            <span className="font-medium text-foreground">
-              {chartData.reduce((a, b) => (a.count > b.count ? a : b)).card}
-            </span>
-          </CardDescription>
-          <CardDescription>
-            Total votes: {room.game.table.length}
-          </CardDescription>
-        </div>
       </CardFooter>
     </div>
   );
