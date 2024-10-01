@@ -2,7 +2,7 @@
 
 PokerPlanning.org is an open-source, user-friendly online planning poker tool designed to enhance Scrum team collaboration and improve estimation accuracy. Our mission is to provide a free, accessible, and enjoyable planning poker experience for teams worldwide 🌍🌎🌏!
 
-![PokerPlanning.org Demo](poker-planning-demo.png)
+![PokerPlanning.org Room demo](poker-planning-demo.png "Room Screen")
 
 ## Features 🚀
 
