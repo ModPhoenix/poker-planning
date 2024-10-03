@@ -49,6 +49,7 @@
     "@graphql-codegen/typescript-apollo-client-helpers": "2.2.6",
     "@graphql-codegen/typescript-operations": "4.0.1",
     "@graphql-codegen/typescript-react-apollo": "3.3.7",
+    "@playwright/test": "1.47.2",
     "@tanstack/router-plugin": "1.58.10",
     "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "14.0.0",
