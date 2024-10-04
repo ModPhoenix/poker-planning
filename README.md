@@ -17,7 +17,7 @@ PokerPlanning.org is an open-source, user-friendly online planning poker tool de
 ### Server-side
 
 - Rust 🦀
-- async-graphql
+- async-graphql 🚀
 
 ### Client-side
 
