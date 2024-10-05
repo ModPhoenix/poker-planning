@@ -75,9 +75,9 @@ export const CreateUserDialog: FC<CreateUserDialogProps> = ({
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Create User</AlertDialogTitle>
+          <AlertDialogTitle>Enter your username</AlertDialogTitle>
           <AlertDialogDescription>
-            Enter a username to create your account.
+            Enter your username to join the room.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div className="grid gap-4 py-4">
@@ -93,7 +93,7 @@ export const CreateUserDialog: FC<CreateUserDialogProps> = ({
         </div>
         <AlertDialogFooter>
           <AlertDialogAction onClick={handleSubmit} disabled={loading}>
-            {loading ? "Creating..." : "Create User"}
+            {loading ? "Creating..." : "Join room"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

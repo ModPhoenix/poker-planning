@@ -33,14 +33,14 @@ export const EditUserDialog: FC<EditUserDialogProps> = ({ open, setOpen }) => {
       });
       setOpen(false);
       toast({
-        title: "Username updated successfully",
+        title: "Your username has been updated",
         variant: "default",
       });
     },
     onError: (error) => {
       toast({
         title: "Error",
-        description: `Failed to update username: ${error.message}`,
+        description: `Failed to update your username: ${error.message}`,
         variant: "destructive",
       });
     },
@@ -70,7 +70,7 @@ export const EditUserDialog: FC<EditUserDialogProps> = ({ open, setOpen }) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Change Username</DialogTitle>
+          <DialogTitle>Enter your username</DialogTitle>
           <DialogDescription>
             Enter your new username below. Click save when you&apos;re done.
           </DialogDescription>
@@ -88,7 +88,7 @@ export const EditUserDialog: FC<EditUserDialogProps> = ({ open, setOpen }) => {
         </div>
         <DialogFooter>
           <Button onClick={handleSubmit} disabled={loading}>
-            {loading ? "Saving..." : "Save changes"}
+            {loading ? "Saving..." : "Save"}
           </Button>
         </DialogFooter>
       </DialogContent>
