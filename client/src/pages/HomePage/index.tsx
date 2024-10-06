@@ -72,16 +72,16 @@ export const HomePage: FC = () => {
             className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
           />
         </div>
-        <div className="mx-auto max-w-2xl py-32 sm:py-38 lg:py-46">
+        <div className="mx-auto max-w-4xl py-32 sm:py-38 lg:py-46">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
-              Streamline Your Agile Estimations with Planning Poker
+              Collaborate and Estimate Faster with Planning Poker
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
               PokerPlanning.org offers an open-source, intuitive platform for
-              teams to collaboratively estimate story points online. Perfect for
-              Agile workflows, our tool makes consensus-based estimation simple,
-              fun, and effective.
+              Agile development teams to collaboratively estimate story points
+              online. Perfect for Agile workflows, our tool makes
+              consensus-based estimation simple, fun, and effective.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Button
