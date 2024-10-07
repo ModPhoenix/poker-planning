@@ -83,14 +83,14 @@ export const HomePage: FC = () => {
               online. Perfect for Agile workflows, our tool makes
               consensus-based estimation simple, fun, and effective.
             </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
+            <div className="mt-10 flex items-center justify-center gap-x-10">
               <Button
                 size="lg"
                 className="h-12"
                 onClick={onCreateRoom}
                 disabled={loading}
               >
-                Start Estimating
+                Start New Game
               </Button>
               <a
                 href="https://github.com/ModPhoenix/poker-planning"
