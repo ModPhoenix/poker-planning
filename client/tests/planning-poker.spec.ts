@@ -23,6 +23,7 @@ test.describe("Planning Poker Estimation", () => {
     await pages[0].getByLabel("Username", { exact: true }).fill("User 1");
     await pages[0].getByRole("button", { name: "Join room" }).click();
     await expect(pages[0].getByText("User 1")).toBeVisible();
+    await expect(pages[0].getByText("Just start picking cards!")).toBeVisible();
 
     // Get the room URL
     const roomUrl = pages[0].url();
@@ -78,6 +79,7 @@ test.describe("Planning Poker Estimation", () => {
       await expect(
         page.getByTestId("vote-distribution-chart"),
       ).not.toBeVisible();
+      await expect(page.getByText("Just start picking cards!")).toBeVisible();
     }
   });
 });
