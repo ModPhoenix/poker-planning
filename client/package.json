@@ -14,7 +14,9 @@
     "format": "prettier '**/*.{css,json,js,ts,tsx,md,mdx}'",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@apollo/client": "3.7.17",

@@ -27,8 +27,6 @@ test.describe("Planning Poker Estimation", () => {
     // Get the room URL
     const roomUrl = pages[0].url();
 
-    console.log(roomUrl);
-
     // Create users and join the room
     for (let i = 1; i < pages.length; i++) {
       const username = `User ${i + 1}`;
