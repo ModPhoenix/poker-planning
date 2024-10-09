@@ -83,7 +83,7 @@ export function Table({
             {resetGameLoading ? (
               <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
             ) : null}
-            Start new game
+            Start New Game
           </Button>
         ) : (
           <Button
@@ -94,7 +94,7 @@ export function Table({
             {showCardLoading ? (
               <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
             ) : null}
-            Show cards
+            Reveal cards
           </Button>
         )
       ) : (

@@ -60,7 +60,10 @@ export const VoteDistributionChart: FC<VoteDistributionChartProps> = ({
   }, [room.game.table, voteCount]);
 
   return (
-    <div className="flex flex-col items-center justify-center overflow-hidden">
+    <div
+      className="flex flex-col items-center justify-center overflow-hidden"
+      data-testid="vote-distribution-chart"
+    >
       <ChartContainer
         className="min-h-[150px] max-h-[150px] w-full"
         config={{

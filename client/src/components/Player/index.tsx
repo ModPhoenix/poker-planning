@@ -32,7 +32,7 @@ export function Player({
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center" data-testid="player">
       <Card>{cardSymbol}</Card>
       <span className="text-sm mb-1">{username}</span>
     </div>
