@@ -42,6 +42,9 @@ static_sites:
       - key: VITE_GRAPHQL_WS_ENDPOINT
         scope: BUILD_TIME
         value: ${VITE_GRAPHQL_WS_ENDPOINT}
+      - key: VITE_GOOGLE_ANALYTICS_ID
+        scope: BUILD_TIME
+        value: ${VITE_GOOGLE_ANALYTICS_ID}
     github:
       branch: main
       deploy_on_push: true
