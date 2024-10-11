@@ -21,7 +21,7 @@ PokerPlanning.org is an open-source, user-friendly online planning poker tool de
 
 ### Client-side
 
-- TypeScript
+- TypeScript 🦺
 - React ⚛️
 - Apollo Client
 - shadcn/ui 😮‍💨
