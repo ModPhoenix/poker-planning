@@ -87,6 +87,32 @@ PokerPlanning.org is an open-source, user-friendly online planning poker tool de
    npm run dev
    ```
 
+## Running Tests 🧪
+
+This project uses Vitest for unit and integration tests, and Playwright for end-to-end tests.
+
+### Unit and Integration Tests
+
+To run unit and integration tests:
+
+```sh
+npm t
+```
+
+### End-to-End Tests
+
+To run end-to-end tests:
+
+```sh
+npm run test:e2e
+```
+
+To run end-to-end tests with UI:
+
+```sh
+npm run test:e2e:ui
+```
+
 ## Deployment
 
 This project can be deployed using DigitalOcean App Platform. Use the following commands with the DigitalOcean CLI:
