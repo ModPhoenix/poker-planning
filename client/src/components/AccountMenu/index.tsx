@@ -53,7 +53,11 @@ export function AccountMenu(): ReactElement {
       {user && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+            <Button
+              variant="ghost"
+              className="relative h-10 w-10 rounded-full"
+              aria-label="Account menu"
+            >
               <Avatar className="h-10 w-10">
                 <AvatarFallback>
                   {user.username[0].toUpperCase()}
@@ -79,7 +83,7 @@ export function AccountMenu(): ReactElement {
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout}>
               <LogOut className="mr-2 h-4 w-4" />
-              <span>Log out</span>
+              <span>Logout</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
