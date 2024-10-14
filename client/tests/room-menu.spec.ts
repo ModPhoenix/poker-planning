@@ -30,6 +30,21 @@ test.describe("Room Account Menu Functionality", () => {
     await logout(page);
     await verifyLoggedOut(page);
   });
+
+  test("should allow joining room after logout", async () => {
+    await openMenu(page);
+    await logout(page);
+    await verifyLoggedOut(page);
+
+    const newUsername = "UserComeBack";
+    await page.getByLabel("Username", { exact: true }).fill(newUsername);
+    await page.getByRole("button", { name: "Join room" }).click();
+    await expect(page.getByRole("dialog")).not.toBeVisible();
+    await expect(page.getByText(newUsername)).toBeVisible();
+
+    await openMenu(page);
+    await verifyMenuItems(page, newUsername);
+  });
 });
 
 async function createRoomAndJoin(page: Page, username: string) {
