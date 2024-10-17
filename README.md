@@ -1,4 +1,4 @@
-# PokerPlanning.org 🃏
+# PokerPlanning.org
 
 PokerPlanning.org is an open-source, user-friendly online planning poker tool designed to enhance Scrum team collaboration and improve estimation accuracy. Our mission is to provide a free, accessible, and enjoyable planning poker experience for teams worldwide 🌍🌎🌏!
 
