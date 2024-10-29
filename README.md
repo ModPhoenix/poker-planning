@@ -12,6 +12,10 @@ PokerPlanning.org is an open-source, user-friendly online planning poker tool de
 - Instant results visualization
 - Customizable estimation scales (WIP)
 
+# TODO
+
+- [ ] Spectator mode
+
 ## Technology Stack 🛠️
 
 ### Server-side
